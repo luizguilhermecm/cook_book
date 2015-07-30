@@ -1,0 +1,53 @@
+--------------------------------------------------------------------------------
+How to create a bootable USB stick on OS X
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+#1 Convert the .iso file to .img using hdiutil
+
+
+    $ hdiutil convert -format UDRW -o path_to_target.img path_to_image.iso
+
+PS: OS X tends to put the .dmg ending on the output file (will be name.img.dmg)
+
+--------------------------------------------------------------------------------
+#2 Get the current list of devices then insert the new pendrive to know which 
+    is the new one.
+
+    $ diskutil list
+
+    /* insert USB stick */
+
+    $ diskutil list
+
+PS: the new in the list is the one.
+
+--------------------------------------------------------------------------------
+#3 Unmount the stick.
+
+    $ diskutil unmountDisk /dev/diskN
+
+--------------------------------------------------------------------------------
+#4 Using 'dd' to copy the img inside of the drive
+
+    $ sudo dd if=path_to_image.img of=/dev/rdiskN bs=1m
+
+PS1: Using /dev/rdisk instead of /dev/disk may be faster
+
+PS2: If you see the error dd: 
+    Invalid number '1m', you are using GNU dd. 
+    Use the same command but replace bs=1m with bs=1M
+
+PS3: If you see the error dd: 
+    /dev/diskN: Resource busy, make sure the disk is not in use. 
+    Start the 'Disk Utility.app' and unmount (don't eject) the drive
+
+--------------------------------------------------------------------------------
+#5 Eject the flash media
+
+    $ diskutil eject /dev/diskN
+
+--------------------------------------------------------------------------------
+http://www.ubuntu.com/download/desktop/create-a-usb-stick-on-mac-osx
+--------------------------------------------------------------------------------
+

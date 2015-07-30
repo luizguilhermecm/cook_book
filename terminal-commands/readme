@@ -1,0 +1,29 @@
+Cookbook of terminal commands to solve some issues that I come through.
+
+list:
+
+kill-shotgun-process-by-tcp-port
+
+
+
+
+
+
+-------------------------------------------------------------------------------
+kill-shotgun-process-by-tcp-port
+-------------------------------------------------------------------------------
+PROBLEM:
+    When 'shotgun' is started I dont know how to close it, so I use a ctrl+c, 
+    somethimes it works and it is fully closed, but somethimes shotgun keep
+    the TCP port blocked.
+    
+SOLUTION:
+    Find all the process that is using the port and shut it down.
+
+TAGS:
+    lsof
+    awk
+    sed
+    pipe
+
+-------------------------------------------------------------------------------

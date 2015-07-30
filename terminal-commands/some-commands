@@ -1,0 +1,20 @@
+-------------------------------------------------------------------------------
+Commands that dont have an cookbook yet but will be listed
+-------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------
+$ swapon -s
+
+DESCRIPTION
+    Return a list of swap files that is beeing used by the system.
+
+-------------------------------------------------------------------------------
+$ free 
+
+DESCRIPTION
+    Shows how much ram memory, total, used and free.
+
+    -m      Shows the amount in Megabytes
+
+    -h      Shows in an easy way to understand
+
