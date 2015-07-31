@@ -1,0 +1,10 @@
+Install new plugin on Eclipse with Proxy
+
+#1 Go to preferences and search for proxy, put the user and passwd, most important, set the 'Active Provider' to 'Manual'.
+
+#2 Go to Menu Help => Install new Software
+
+#3 Go to plugin website and copy the link of instalation
+
+#4 Paste the link the pannel "Install" on the field "Work with", and add it.
+
