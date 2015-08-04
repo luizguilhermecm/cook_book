@@ -1,0 +1,33 @@
+--------------------------------------------------------------------------------
+Change which shell is in use
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+#1 See the available shells
+
+    $ cat /etc/shells
+
+# List of acceptable shells for chpass(1).
+# Ftpd will not allow users to connect who are not using
+# one of these shells.
+
+/bin/bash
+/bin/csh
+/bin/ksh
+/bin/sh
+/bin/tcsh
+/bin/zsh
+/usr/local/bin/zsh
+
+--------------------------------------------------------------------------------
+#2 Change to zsh:
+
+    $ chsh -s /usr/local/bin/zsh
+
+--------------------------------------------------------------------------------
+#3 Change to bash:
+
+    $ chsh -s /bin/bash
+
+--------------------------------------------------------------------------------
