@@ -1,0 +1,134 @@
+--------------------------------------------------------------------------------
+Postgres Installation on Ubuntu 14.04
+--------------------------------------------------------------------------------
+
+This cookbook has been done with root user, which means, the 'sudo' can be 
+necessary in some commands.
+
+--------------------------------------------------------------------------------
+To install postgres: 
+First do an update on apt-get. 
+
+    $ sudo apt-get update
+
+If you wanna check which version will be installed:
+
+    $ sudo apt-cache show postgresql
+    
+If the version is ok, install it: 
+
+    $ sudo apt-get install postgresql
+
+The output will show if postgresql database service was started, like:
+
+ * Starting PostgreSQL 9.3 database server [ OK ]
+    
+Other ways to check if it is running;
+See if some process is using the TCP port 5432
+
+    $ lsof -i tcp:5432
+
+Other way to do it is listing the status of all services, using grep if you
+prefer;
+
+................................................................................
+Setting Postgresql Up: * The 'postgres' user:
+................................................................................
+
+The installation process will create the 'postgres' user, to check it out just 
+do a (1) or (2) and it will list all users.
+
+    (1) $ cat /etc/passwd
+
+    (2) $ getent passwd
+
+Change to the postgres user and change its password with psql:
+
+    $ su postgres
+
+    $ psql -d postgres -U postgres psql
+    
+    # ALTER USER postgres with PASSWORD 'new_passwd';
+
+The output of psql will be: 
+    
+    ALTER ROLE
+
+Exit psql, with: 
+
+    \q
+
+................................................................................
+Setting Postgresql Up: * Remote access: 
+................................................................................
+
+Open the 'postgresql.conf' file on '/etc/postgresql/9.3/main'
+
+    $ vi /etc/postgresql/9.3/main/postgresql.conf
+
+Find the (1) line and change it to look like (2) or something else you need.
+
+    (1) listen_addresses = 'localhost'
+
+    (2) listen_addresses = '*'
+
+Restart the postgres service:
+
+    $ service postgresql restart
+
+Getting the output;
+
+    * Restarting PostgreSQL 9.3 database server     [ OK ] 
+
+................................................................................
+Setting Postgresql Up: * Remote access from other networks and users: 
+................................................................................
+
+Open the 'pg_hba.conf' file on '/etc/postgresql/9.3/main'
+
+The original file should look the pg_hba_original. 
+
+To allow other user to connect in the database change the method from 'peer' 
+to 'md5' (both of them).
+
+To allow connections from outside or somewhere else change the address to the 
+specific address that you need or just change to '0.0.0.0/0' and it will allow 
+connection from anywhere.
+
+The 'pg_hba.conf' with both changes will look like the pg_hba_allowed.
+
+================================================================================
+Original pg_hba.conf file                                       pg_hba_original
+================================================================================
+# Database administrative login by Unix domain socket
+local   all             postgres                                peer
+
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+
+# "local" is for Unix domain socket connections only
+local   all             all                                     peer
+# IPv4 local connections:
+host    all             all             127.0.0.1/32            md5
+# IPv6 local connections:
+host    all             all             ::1/128                 md5
+================================================================================
+
+--------------------------------------------------------------------------------
+
+================================================================================
+Changed pg_hba.conf file                                       pg_hba_allowed
+================================================================================
+# Database administrative login by Unix domain socket
+local   all             postgres                                md5
+
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+
+# "local" is for Unix domain socket connections only
+local   all             all                                     md5
+# IPv4 local connections:
+host    all             all             0.0.0.0/0            md5
+# IPv6 local connections:
+host    all             all             ::1/128                 md5
+================================================================================
+
+--------------------------------------------------------------------------------

@@ -1,0 +1,52 @@
+--------------------------------------------------------------------------------
+Ruby and Sinatra Environment
+--------------------------------------------------------------------------------
+
+To make it simple, all this document could be done with two commands:
+
+    $ sudo apt-get update
+
+    $ sudo apt-get install ruby-dev libpq-dev
+
+    $ sudo gem install sinatra shotgun pg sinatra-session
+................................................................................
+Ruby 
+................................................................................
+
+The ruby package could be 'ruby' over 'ruby-dev' but in this setup will be used
+the 'postgresql' gem which requires 'ruby-dev'.
+
+    $ sudo apt-get update
+
+    $ sudo apt-get install ruby-dev
+
+................................................................................
+Sinatra 
+................................................................................
+
+    $ gem install sinatra
+    $ sudo gem install sinatra-session
+
+................................................................................
+Shotgun
+................................................................................
+
+It is not needed in the production environment, but it will be installed just in
+case.
+
+    $ gem install shotgun
+
+................................................................................
+Postgres gem
+................................................................................
+
+The 'pg' gem can or cannot require the postgresql to bee installed but I'm 
+pretty sure that will be needed to run as a server.
+
+The 'libpq-dev' is required to install the gem.
+
+    $ apt-get install libpq-dev
+    $ gem install pg
+
+
+--------------------------------------------------------------------------------
