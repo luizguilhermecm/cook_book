@@ -1,0 +1,13 @@
+................................................................................
+nohup
+................................................................................
+
+Use nohup to make your process ignore the hangup signal:
+
+    $ nohup long-running-process &
+    $ exit
+
+I needed this to run the sinatra app on ramnode without its crashes after 
+logout.
+
+
