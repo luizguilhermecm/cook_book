@@ -2,6 +2,18 @@
 How to create a bootable USB stick on OS X
 --------------------------------------------------------------------------------
 
+#0 Long history short;
+
+    $ hdiutil convert -format UDRW -o path_to_target.img path_to_image.iso
+
+    $ diskutil list
+
+    $ diskutil unmountDisk /dev/diskN
+
+    $ sudo dd if=path_to_image.img of=/dev/rdiskN bs=1m
+
+    $ diskutil eject /dev/diskN
+
 --------------------------------------------------------------------------------
 #1 Convert the .iso file to .img using hdiutil
 

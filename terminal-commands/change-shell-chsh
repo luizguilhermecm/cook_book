@@ -2,6 +2,11 @@
 Change which shell is in use
 --------------------------------------------------------------------------------
 
+#0 Long history short;
+
+    $ chsh -s /usr/local/bin/zsh
+
+    $ chsh -s /bin/bash
 
 --------------------------------------------------------------------------------
 #1 See the available shells

@@ -1,0 +1,11 @@
+Lista todas as extensões do diretório
+
+        find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -u
+
+Contagem dos arquivos encontrados
+
+        find . -iname "*.jpg"  | wc -l
+
+Usando o OR
+
+        find . \( -iname "*mp3" -o -iname "*.wma" \)
