@@ -1,0 +1,33 @@
+--------------------------------------------------------------------------------
+Setting an Environment Variable
+--------------------------------------------------------------------------------
+
+    $ export VAR_NAME=VALUE
+
+
+e.g.: Setting the cvs root directory:
+
+    $ export CVSROOT=/usr/local/bin/cvs
+
+
+--------------------------------------------------------------------------------
+See the value of a variable
+--------------------------------------------------------------------------------
+
+    $ echo $VAR_NAME
+
+e.g.: Checking the value of CVSROOT
+
+    $ echo $CVSROOT
+
+
+--------------------------------------------------------------------------------
+Unsetting a Variable
+--------------------------------------------------------------------------------
+
+    $ unset VAR_NAME
+
+
+e.g.: Unsetting the CVSROOT var:
+
+    $ unset CVSROOT

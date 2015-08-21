@@ -1,0 +1,21 @@
+--------------------------------------------------------------------------------
+From Scratch
+--------------------------------------------------------------------------------
+
+................................................................................
+First Repository : With CVSROOT environment variable:
+................................................................................
+
+First of all, set the CVSROOT variable:
+
+    $ export CVSROOT=/Users/snk/_testes/cvs/foo
+
+Now, create the repository on the path of CVSROOT
+
+    $ cvs init
+
+................................................................................
+First Repository : Without CVSROOT environment variable:
+................................................................................
+
+    $ cvs -d ~/_testes/cvs/bar init 
