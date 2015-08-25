@@ -1,0 +1,3 @@
+Show files that are locally modified
+
+cvs -q diff --brief
