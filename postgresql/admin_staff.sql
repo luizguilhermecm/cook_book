@@ -9,3 +9,6 @@ SELECT datname FROM pg_database;
 
 -- Columns of a specfic table
 SELECT column_name FROM information_schema.columns WHERE table_name = 'tb_name';
+
+-- Change the ownership of database objects ownde by a database role
+REASSSIGN OWNED BY velho TO novo
