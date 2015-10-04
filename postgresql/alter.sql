@@ -19,3 +19,5 @@ ALTER TABLE tb_name ADD CONSTRAINT tb_name_unique_check UNIQUE (attr_one, attr_t
 
 -- Add a Primary Key
 ALTER TABLE distributors ADD PRIMARY KEY (dist_id);
+
+alter table questao_mental_anki alter flag set default true;
