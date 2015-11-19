@@ -1,0 +1,9 @@
+This directory will keep the recipes of ruby apps, some will use Sinatra or other framework.
+
+For those using sinatra will be started using the 'shotgun' like the command below;
+
+$ shotgun config.ru -p 4567 -o 0.0.0.0;
+
+When shotgun is not available, is possible to run only using:
+
+$ ruby myapp.rb

@@ -15,6 +15,6 @@ INSERT INTO tb_name (attr)
 -- Insert if don't exists OR Update if exists
 UPDATE tb_name SET field='something' WHERE id=1;
 INSERT INTO tb_name (id, field)
-    SELECT 1, 'something'
+    SELECT 1, 'something' -- the number os column on select has to match the number os attr on insert into 
         WHERE 
         NOT EXISTS (SELECT 1 FROM tb_name WHERE id=2);

@@ -12,3 +12,8 @@ SELECT column_name FROM information_schema.columns WHERE table_name = 'tb_name';
 
 -- Change the ownership of database objects ownde by a database role
 REASSSIGN OWNED BY velho TO novo
+
+-- Sequences of database
+SELECT * FROM information_schema.sequences;
+
+

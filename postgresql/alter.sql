@@ -21,3 +21,9 @@ ALTER TABLE tb_name ADD CONSTRAINT tb_name_unique_check UNIQUE (attr_one, attr_t
 ALTER TABLE distributors ADD PRIMARY KEY (dist_id);
 
 alter table questao_mental_anki alter flag set default true;
+
+
+-- Reset/Restart a sequence of specified name on specific value
+-- The value cannot be 0, the minimum value is 1
+ALTER SEQUENCE sequence_name RESTART WITH 105;
+
