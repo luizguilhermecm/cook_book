@@ -4,11 +4,11 @@ INSERT INTO tb_name (attr1, attr2)
 
 
 -- Insert if do not exists
-INSERT INTO tb_name (attr)
-    SELECT attr
+INSERT INTO tb_name (attr1, attr2)
+    SELECT vlr_attr1, vlr_attr2
         WHERE
         NOT EXISTS (
-            SELECT attr FROM tb_name_b WHERE attr = condition
+            SELECT 1 FROM tb_name WHERE attr_condition = condition
         );
 
 
