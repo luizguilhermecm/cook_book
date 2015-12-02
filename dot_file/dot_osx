@@ -1,0 +1,10 @@
+# this file has to be on ~/.osx
+
+
+#!/usr/bin/env bash
+
+# Ask for the administrator password upfront
+# sudo -v
+
+# Disable the sound effects on boot
+# sudo nvram SystemAudioVolume=" "

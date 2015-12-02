@@ -1,0 +1,4 @@
+ffmpeg -i identificar-riscos.mp3 -filter:a atempo=1.5 -vn output3.mp3
+acelera/desacelera audio ffmpeg -i identificar-riscos.mp3 -filter:a atempo=1.5 -vn output3.mp3
+
+string randomica de 10 caracters : openssl rand -base64 10
