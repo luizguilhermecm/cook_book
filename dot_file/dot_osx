@@ -8,3 +8,4 @@
 
 # Disable the sound effects on boot
 # sudo nvram SystemAudioVolume=" "
+defaults write com.apple.dock orientation left
