@@ -39,5 +39,4 @@ __Stronger__
 * * *
 * HR
 ***
-HR
 

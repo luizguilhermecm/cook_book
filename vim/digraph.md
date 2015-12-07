@@ -1,4 +1,4 @@
-# Diagraph on vim
+# Digraph on vim
 
 
      ^@	NU	0x00	  0	NULL (NUL)
