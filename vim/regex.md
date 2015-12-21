@@ -20,3 +20,21 @@ Replace a new line using `\r` instead of `\n`.  [stackoverflow](http://stackover
 ```
 :%s/x/\r/g
 ```
+
+#### Capitalizing Text
+
+##### Text to Uppercase or Lowercase
+
+To make a selected text as *uppercase* or _lowercase_ use:
+
+
+```
+# uppercase
+gU
+```
+
+```
+# lowercase
+
+gU
+```
