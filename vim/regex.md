@@ -25,16 +25,9 @@ Replace a new line using `\r` instead of `\n`.  [stackoverflow](http://stackover
 
 ##### Text to Uppercase or Lowercase
 
-To make a selected text as *uppercase* or _lowercase_ use:
+To make a selected text as *uppercase* use `gU`
+
+To make a selected text as *lowercase* use `gu`
 
 
-```
-# uppercase
-gU
-```
 
-```
-# lowercase
-
-gU
-```
