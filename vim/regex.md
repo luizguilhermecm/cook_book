@@ -23,11 +23,30 @@ Replace a new line using `\r` instead of `\n`.  [stackoverflow](http://stackover
 
 #### Capitalizing Text
 
-##### Text to Uppercase or Lowercase
+##### Selected Text to Uppercase or Lowercase
 
-To make a selected text as *uppercase* use `gU`
+`gU` : to *UPPERCASE*
 
-To make a selected text as *lowercase* use `gu`
+`gu` : to *lowercase*
 
+##### Current Line to Uppercase or Lowercase
 
+`gUU` : to *UPPERCASE*
+
+`guu` : to *lowercase*
+
+##### First Letter Only
+
+`:%s/\<./\u&/g` : to _lowercase_
+
+`:%s/\<./\U&/g` : to _UPPERCASE_
+
+How does the above tricks words:
+* `\<` Matches the start of a word
+* `.`  Matches the first character of a word
+* `\u` Tells Vim to uppercase the following character in the substitution string (&)
+* `&`  Means substitute whatever was matched on the LHS
+
+This was got on [stackoverflow](http://stackoverflow.com/questions/17440659/capitalize-first-letter-of-each-word-in-a-selection-using-vim)
+there are alternatives to do the same.
 
