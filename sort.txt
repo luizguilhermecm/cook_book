@@ -11,4 +11,21 @@ iconv -f ascii -t utf-8
 
 file -I text.txt
 
-/Applications/pgAdmin3.app/Contents/SharedSupport/pg_restore --host localhost --port 5432 --username "postgres" --dbname "database" --no-password  --data-only --table fr_frase --schema public --verbose "/Users/snk/Desktop/2015_12_11_fr_frase.backup"
+psql -d myDataBase -a -f myInsertFile
+
+# split file in 500 lines, all new files named as 'prefixaa', 'prefixab', ...
+split -l 500 my_file.txt prefix
+
+
+# prepend text to file
+echo "text" | cat - yourfile > /tmp/out && mv /tmp/out yourfile
+
+
+# prepend text to file with for
+for f in ./files/*; do echo "begin;" | cat - "$f" > /tmp/out && mv /tmp/out "$f" ; done
+
+# append with for
+for f in ./files/*; do echo "commit;" >> "$f" ; done
+
+for f in ./files/*; do psql -d wum -f "$f" ; rm "$f" ; done
+
