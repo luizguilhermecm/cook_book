@@ -1,10 +1,1 @@
-# audio - flac to mp3
-    (for FILE in *.flac ; do ffmpeg -i "$FILE" -f mp3 -ab 192000 "`basename "$FILE" .flac`.mp3" || break; done)
-
-#duplicar audio channel
-
-    ffmpeg -i input.mp4 -vcodec copy -acodec libfaac -ab 220k -ar 48000 -ac 1 output.mp4
-
-flv para mp4
-
-    ffmpeg -i input.flv -c:v libx264 -crf 23 -c:a libfaac -q:a 100 output.mp4
+in dedicated directory on root

@@ -1,5 +1,3 @@
-ffmpeg -i identificar-riscos.mp3 -filter:a atempo=1.5 -vn output3.mp3
-acelera/desacelera audio ffmpeg -i identificar-riscos.mp3 -filter:a atempo=1.5 -vn output3.mp3
 
 string randomica de 10 caracters : openssl rand -base64 10
 diff entre o atual e anterior - git diff HEAD^ HEAD
@@ -28,4 +26,7 @@ for f in ./files/*; do echo "begin;" | cat - "$f" > /tmp/out && mv /tmp/out "$f"
 for f in ./files/*; do echo "commit;" >> "$f" ; done
 
 for f in ./files/*; do psql -d wum -f "$f" ; rm "$f" ; done
+
+# dns server on mac
+cat /etc/resolv.conf | grep nameserver
 

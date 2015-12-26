@@ -13,3 +13,10 @@ ffmpeg -i input.wav -af "volume=1.5" output.wav
 
 # decrease volume to 50%
 ffmpeg -i input.wav -af "volume=0.5" output.wav
+
+# acelera/desacelera audio 
+ffmpeg -i audio.mp3 -filter:a atempo=1.5 -vn output3.mp3
+
+# audio - flac to mp3
+(for FILE in *.flac ; do ffmpeg -i "$FILE" -f mp3 -ab 192000 "`basename "$FILE" .flac`.mp3" || break; done)
+
