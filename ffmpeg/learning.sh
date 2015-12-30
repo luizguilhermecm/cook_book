@@ -53,3 +53,5 @@ ffmpeg -codecs
 
 ffmpeg -i imput_video.flv -c:v libx264 output.mp4
 
+-vn # is no video.
+-acodec copy # says use the same audio stream that's already in there.

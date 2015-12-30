@@ -11,7 +11,6 @@ ffmpeg -i Aula_01_parte_03_-_Contabilidade_Geral_e_Avançada_-_Silvio_Sande.mp4
 
 # filesize (in MB) = (bitrate in Mbit/s / 8) * (video length in seconds)
 
-
-
-ffmpeg -i input_file.avi -codec:v libx264 -profile: high -preset slow -b:v 500k -maxrate 500k -bufsize 1000k -vf scale=-1:480 -threads 0 -codec:a libfdk_aac -b:a 128k output_file.mp4
+# dont works
+#ffmpeg -i input_file.avi -codec:v libx264 -profile: high -preset slow -b:v 500k -maxrate 500k -bufsize 1000k -vf scale=-1:480 -threads 0 -codec:a libfdk_aac -b:a 128k output_file.mp4
 
