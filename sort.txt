@@ -30,3 +30,5 @@ for f in ./files/*; do psql -d wum -f "$f" ; rm "$f" ; done
 # dns server on mac
 cat /etc/resolv.conf | grep nameserver
 
+
+for f in *.zip; do ffmpeg -i "$f" -vn -acodec copy "${f%*.zip}.aac" ; done

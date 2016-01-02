@@ -17,4 +17,5 @@ REASSSIGN OWNED BY velho TO novo
 -- Sequences of database
 SELECT * FROM information_schema.sequences;
 
-
+-- select the triggers on database
+SELECT * FROM information_schema.triggers

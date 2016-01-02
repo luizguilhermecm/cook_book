@@ -17,6 +17,14 @@ All _..m4a_ of a dir to a new dir in mp3
 for f in *\ *; do mv "$f" "${f// /_}"; done mkdir mp3; for FILE_NAME in *.m4a; do ffmpeg -i $FILE_NAME  -acodec libmp3lame -ab 128k mp3/"${FILE_NAME/%m4a/mp3}"; done;
 ```
 
+#### Extract
+
+Extract audio from video
+
+```
+ffmpeg -i input-video.avi -vn -acodec copy output-audio.aac
+```
+
 #### Volume
 
 Increase volume in 50%

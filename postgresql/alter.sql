@@ -27,3 +27,6 @@ alter table questao_mental_anki alter flag set default true;
 -- The value cannot be 0, the minimum value is 1
 ALTER SEQUENCE sequence_name RESTART WITH 105;
 
+-- drop trigger linked to a table
+DROP TRIGGER kit_config_unique ON kit_config;
+ALTER TABLE table_name DROP CONSTRAINT some_name;
