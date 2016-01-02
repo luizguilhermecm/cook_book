@@ -42,6 +42,7 @@ Replace a new line using `\r` instead of `\n`.  [stackoverflow](http://stackover
 `:%s/\<./\U&/g` : to _UPPERCASE_
 
 How does the above tricks words:
+
 * `\<` Matches the start of a word
 * `.`  Matches the first character of a word
 * `\u` Tells Vim to uppercase the following character in the substitution string (&)
@@ -50,3 +51,8 @@ How does the above tricks words:
 This was got on [stackoverflow](http://stackoverflow.com/questions/17440659/capitalize-first-letter-of-each-word-in-a-selection-using-vim)
 there are alternatives to do the same.
 
+#### Utils
+
+`:%s#<[^>]\+>##g` erase all html tags keeping the content.
+
+`:%s/^\(.*\)\n\1$/\1/` delete repeated lines
