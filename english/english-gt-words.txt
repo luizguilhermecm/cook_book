@@ -1,0 +1,79 @@
+basically ; basicamente;
+coitado ; poor;
+
+appropriate ; apropriada;
+    adjetivo;
+    appropriate; apropriado, adequado, conveniente;
+    suitable; adequado, apropriado, conveniente;
+    proper; adequado, apropriado, próprio, conveniente, peculiar, característico;
+    fitting; apropriado, conveniente, próprio;
+    applicable; aplicável, apropriado, relevante, ajustável;
+    good; bom, excelente, útil, bonito, satisfatório, apropriado;
+    apposite; apropriado, adequado, apto;
+    likely; provável, possível, suscetível, plausível, apto, apropriado;
+    becoming; conveniente, apropriado, próprio;
+    decent; decente, aceitável, bom, honesto, apropriado, equilibrado;
+    matching; correspondente, apropriado;
+    opportune; oportuno, conveniente, apropriado, tempestivo;
+
+described ; descrita;
+    verbo;
+    descrever; describe, depict, report, portray, write, represent;
+    relatar; report, relate, tell, describe, account, narrate;
+    narrar; narrate, tell, relate, describe, weave, state;
+    traçar; trace, draw, map, delineate, draft, plan;
+    desenhar; draw, design, picture, chart, delineate, describe;
+
+commitment ; comprometido, engajado;
+    substantivo
+    o compromisso; commitment, compromise, appointment, engagement, obligation, promise;
+    a obrigação; obligation, must, duty, bond, responsibility, commitment
+    a perpetração; perpetration, commitment, committal
+    a reclusão; confinement, reclusion, incarceration, commitment, accouchement, pound
+    o encarceramento; incarceration, committal, commitment, limbo
+
+After  ;depois  ;
+Against  ;contra  ;
+Along  ;ao longo  ;
+Among  ;entre  ;
+Around  ;ao redor de  ;
+At  ;em, por, para  ;
+Before  ;antes  ;
+Behind  ;atrás  ;
+Below  ;abaixo  ;
+Beneath  ;abaixo  ;
+Beside  ;ao lado  ;
+Besides  ;além de  ;
+Between  ;entre  ;
+Beyond  ;além de  ;
+But (meaning except)  ;exceto  ;
+By  ;por  ;
+Concerning  ;relativo a  ;
+Down  ;através de, em baixo de  ;
+During  ;durante  ;
+Except  ;exceto  ;
+For  ;por, em vez de  ;
+Like  ;como;
+Near  ;perto;
+Of  ;de;
+Off  ;perto de, fora de;
+On  ;sobre, em;
+Out  ;para fora;
+Over  ;sobre;
+Past  ;depois de;
+Since  ;desde;
+Through  ;através de;
+Throughout  ;em toda parte;
+Till  ;até;
+To  ;para;
+Toward  ;em direção a;
+Under  ;abaixo;
+Until  ;até;
+Up  ;para cima;
+Upon  ;sobre;
+With  ;com;
+Within  ;em, dentro de;
+Without  ;sem, fora de;
+
+
+
