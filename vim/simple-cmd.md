@@ -14,20 +14,3 @@ Simple Vim Commands
 `ci[` change text inside brackets, keep the brackets.
 
 `cc` change whole line.
-
-``
-
-``
-
-``
-
-``
-
-``
-
-``
-
-``
-
-``
-
