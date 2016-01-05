@@ -18,7 +18,7 @@ Vim Basic
 | key                                                      | function                            |
 | -------------------------------------------------------- | ----------------------------------- |
 | `~`                                                      | toggle case of letter under cursor.
-| ```                                                     | go to mark.
+| ` ``                                                     | go to mark.
 | `!` | external filter **???**.|
 | `@` | play macro.|
 | `#` | search the word under cursor and go to previous hit.|
