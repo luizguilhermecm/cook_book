@@ -23,6 +23,9 @@ Simple Vim Commands
 
 `cc` change whole line.
 
+* Above was used the _opening_ sign for brace, bracket, parenthesis and less
+* than sign, but the _close_ equivalent sign will perform the same function.
+
 #### Vim Yank Verb 'y'
 
 Basically, all commands using the **change** verb will works with **yank**.
