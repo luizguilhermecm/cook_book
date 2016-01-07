@@ -67,7 +67,7 @@ mapas).
 Essa lista não é exaustiva, deve existir inúmeras outras ideias que desconheço.
 
 Um exemplo muito legal de mapa que tem uma história e que até hoje eu lembro
-quando cai em prova é [explicando o uso dos "porquês"](historia-porques.pdf).
+quando cai em prova é [explicando o uso dos "porquês"](https://lgcm.com.br/kit_files/snk_download/historia-porques.pdf).
 Eu jamais teria paciência de fazer isso, mas tem doido para tudo.
 
 Uma coisa importante é não ser perfeccionista, não queira fazer o melhor desenho,
@@ -100,7 +100,7 @@ Alguns mapas que eu fiz:
 
 * Durante a faculdade eu li um [livro](http://www.saraiva.com.br/um-toc-na-cuca-313776.html)
 e fiz um mapa resumindo a ideia do livro, tem bastante mapa desse tipo na internet.
-[Mapa em PDF](livro-um-toc-na-cuca.pdf)
+[Mapa em PDF](https://lgcm.com.br/kit_files/snk_download/livro-um-toc-na-cuca.pdf)
 
 ![livro Um Toc na Cuca](tok-small.png)
 
@@ -108,7 +108,7 @@ e fiz um mapa resumindo a ideia do livro, tem bastante mapa desse tipo na intern
 
 * Já tentei fazer mapas pequenos, com poucas informações, mas dá muito trabalho
 e achei que não valia o tempo que eu estava gastando sintetizando o conteúdo
-[Mapa em PDF](pmbok-pdf.pdf).
+[Mapa em PDF](https://lgcm.com.br/kit_files/snk_download/pmbok.pdf.pdf).
 
 ![pequenos](pmbok-small.png)
 
@@ -122,7 +122,7 @@ por ser cursos longos [Mapa em PDF](d-adm-Lei8112-Servidor-Publico.pdf).
 ***
 
 * Quando estudo usando livros, resumo tópicos, capítulos em um mapa, dependendo
-do tamanho eu divido, [Mapa em PDF](cript-01-ACriptografia.pdf).
+do tamanho eu divido, [Mapa em PDF](https://lgcm.com.br/kit_files/snk_download/cript-01-ACriptografia.pdf).
 
 ![capitulo](capitulo-livro.png)
 
