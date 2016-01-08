@@ -76,4 +76,35 @@ Within  ;em, dentro de;
 Without  ;sem, fora de;
 
 
+highlights ; destacar; 
+    verbo
+    detach; separar, destacar, desligar, desmontar;
+    contrast; contrastar, diferenciar, destacar, realçar;
+    draft; esboçar, rascunhar, traçar, destacar, selecionar, sortear;
+    draught; esboçar, rascunhar, traçar, destacar, selecionar, sortear;
+    cut off; cortar, interromper, romper, terminar, destacar;
+    branch; ramificar, bifurcar, derivar, seccionar, destacar, separar;
 
+
+
+
+
+tallying
+soaked
+* Conversely
+* sew
+* commute
+* expense
+* spent
+* scoff
+* boredom
+* burdened
+* reticent
+* withdrew
+* throughout
+* weary
+* daunting
+* approach
+*  I already heard these ifonlystic whinings, and quite often. 
+* whinings
+* disempowering

@@ -32,3 +32,12 @@ cat /etc/resolv.conf | grep nameserver
 
 
 for f in *.zip; do ffmpeg -i "$f" -vn -acodec copy "${f%*.zip}.aac" ; done
+
+
+#!/bin/bash
+trap "exit" INT
+
+for f in ./files/*; do psql -d wum -f "$f" ; rm "$f" ; done
+
+
+ top -l 1 -s 0 | grep PhysMem
