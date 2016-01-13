@@ -41,3 +41,9 @@ for f in ./files/*; do psql -d wum -f "$f" ; rm "$f" ; done
 
 
  top -l 1 -s 0 | grep PhysMem
+size of directory 
+du -sh
+
+
+total size of all dirs into actual
+du -shc *

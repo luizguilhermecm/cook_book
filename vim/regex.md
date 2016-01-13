@@ -56,3 +56,12 @@ there are alternatives to do the same.
 `:%s#<[^>]\+>##g` erase all html tags keeping the content.
 
 `:%s/^\(.*\)\n\1$/\1/` delete repeated lines
+
+
+#### Mines
+
+* `:%s/\d\{1,}\./*`
+In lines where first character is a number followed by a dot, replaces it by an
+asteristic.
+Used in markdown files.
+
