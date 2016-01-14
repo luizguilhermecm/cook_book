@@ -16,3 +16,13 @@ order by 1
 -- limit of postgres in oracle
 SELECT * FROM table_name WHERE rownum < 20;
 
+-- get next value of sequence
+SELECT sequence_name.nextval FROM dual;
+
+-- get current value of sequence
+SELECT seq.currval FROM dual
+
+SELECT *
+  FROM dba_sequences 
+  WHERE sequence_name like '%RSDBSELGL_ID%' 
+  AND sequence_owner = 'SADA'
