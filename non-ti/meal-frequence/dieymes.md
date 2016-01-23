@@ -24,7 +24,7 @@ fortalecer a ideia.
 
 ***
 
-#### [Increased meal frequency does not promote greater weight loss in subjects who were prescribed an 8-week equi-energetic energy-restricted diet](http://journals.cambridge.org/action/displayAbstract?fromPage=online&aid=7499636&fileId=S0007114509992984)
+#### Artigo do journals.cambridge.org: [Increased meal frequency does not promote greater weight loss in subjects who were prescribed an 8-week equi-energetic energy-restricted diet](http://journals.cambridge.org/action/displayAbstract?fromPage=online&aid=7499636&fileId=S0007114509992984)
 
 _MF = Meal Frequency_.
 
@@ -61,7 +61,7 @@ fonte do que eles falam.
 
 ***
 
-#### [Eating Frequency and Energy Regulation in Free-Living Adults Consuming Self-Selected Diets](http://apps.webofknowledge.com/InboundService.do?SID=4B9uWOrirDT9Ajkau6x&product=WOS&UT=WOS%3A000285893900025&SrcApp=Wiley_Online_Library&DestFail=http%3A%2F%2Fwww.webofknowledge.com&Init=Yes&action=retrieve&SrcAuth=LinksAMR&customersID=LinksAMR&Func=Frame&IsProductCode=Yes&mode=FullRecord#addressWOS:000285893900025-3)
+#### Artigo: [Eating Frequency and Energy Regulation in Free-Living Adults Consuming Self-Selected Diets](http://apps.webofknowledge.com/InboundService.do?SID=4B9uWOrirDT9Ajkau6x&product=WOS&UT=WOS%3A000285893900025&SrcApp=Wiley_Online_Library&DestFail=http%3A%2F%2Fwww.webofknowledge.com&Init=Yes&action=retrieve&SrcAuth=LinksAMR&customersID=LinksAMR&Func=Frame&IsProductCode=Yes&mode=FullRecord#addressWOS:000285893900025-3)
 
 * Journal of Nutrition
   1. Volume: 141
@@ -105,7 +105,7 @@ fonte do que eles falam.
 ***
 
 
-#### [The Influence of Higher Protein Intake and Greater Eating Frequency on Appetite Control in Overweight and Obese Men](http://onlinelibrary.wiley.com/doi/10.1038/oby.2010.45/full)
+#### Artigo: [The Influence of Higher Protein Intake and Greater Eating Frequency on Appetite Control in Overweight and Obese Men](http://onlinelibrary.wiley.com/doi/10.1038/oby.2010.45/full)
 
 * Author Information
   1. Department of Dietetics & Nutrition, University of Kansas Medical Center,
@@ -136,7 +136,7 @@ Purdue University, West Lafayette, Indiana, USA
 
 ***
 
-#### [Effects of Manipulating Eating Frequency During a Behavioral Weight Loss Intervention: A Pilot Randomized Controlled Trial.]()
+#### Artigo: [Effects of Manipulating Eating Frequency During a Behavioral Weight Loss Intervention: A Pilot Randomized Controlled Trial.]()
 
 
 * Author Information
@@ -154,7 +154,7 @@ Pennsylvania, USA
 
 ***
 
-#### [Eating frequency and body fatness in middle-aged men](http://apps.webofknowledge.com/InboundService.do?product=WOS&SID=4B9uWOrirDT9Ajkau6x&UT=WOS%3A000179503600008&SrcApp=Wiley_Online_Library&DestFail=http%3A%2F%2Fwww.webofknowledge.com&Init=Yes&action=retrieve&SrcAuth=LinksAMR&Func=Frame&customersID=LinksAMR&IsProductCode=Yes&mode=FullRecord)
+#### Artigo: [Eating frequency and body fatness in middle-aged men](http://apps.webofknowledge.com/InboundService.do?product=WOS&SID=4B9uWOrirDT9Ajkau6x&UT=WOS%3A000179503600008&SrcApp=Wiley_Online_Library&DestFail=http%3A%2F%2Fwww.webofknowledge.com&Init=Yes&action=retrieve&SrcAuth=LinksAMR&Func=Frame&customersID=LinksAMR&IsProductCode=Yes&mode=FullRecord)
 
 
 * Objective:
