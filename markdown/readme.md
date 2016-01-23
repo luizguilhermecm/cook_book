@@ -40,3 +40,6 @@ __Stronger__
 * HR
 ***
 
+Here is some text containing a footnote.[^somesamplefootnote]
+[^somesamplefootnote]: Here is the text of the footnote itself.
+[somelink]:http://somelink.com
