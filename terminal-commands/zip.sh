@@ -63,3 +63,8 @@ hdiutil eject /Volumes/archive_name/
 
 #-------------------------------------------------------------------------------
 # http://coolestguidesontheplanet.com/how-to-compress-and-uncompress-files-and-folders-in-os-x-lion-10-7-using-terminal/
+
+unzip in new folder with same name
+for f in *.zip; do unzip -d "${f%*.zip}" "$f"; done
+
+

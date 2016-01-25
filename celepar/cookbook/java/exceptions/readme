@@ -1,0 +1,108 @@
+--------------------------------------------------------------------------------
+Exceptions
+--------------------------------------------------------------------------------
+
+................................................................................
+'throw new XXXXException();'
+................................................................................
+O lançamento de uma nova exceção usando o throw irá lançar uma nova exceção que 
+poderá ser tratada no próprio método ou ser lançada para que outro a trate.
+O que irá acontecer com a nova exceção dependerá do local onde ocorreu o 
+throw new, podendo ser:
+................................................................................
+01  public void foo() throws BarException {
+02      throw new BarException();
+03  
+04      try{ 
+05          throw new BarException();
+06      } catch (BarException be){
+07          // swallow it doing nothing or throws it;
+08          throws be;
+09      } catch (Exception e){
+10          // do nothing
+11      } finally {
+12          throw new FooException();
+13      }
+14  }
+................................................................................
+Linha 02: uma nova exceção é lançada no corpo do metodo.
+    Por não estar em um try,catch será necessário jogar a exceção para quem 
+    invocou o método foo() usando 'throws' na assinatura de foo().
+
+01  public void foo() throws BarException {
+02      throw new BarException();
+03  }
+................................................................................
+Linha 05: Uma nova exceção é lançada dentro de um 'try'.
+    Um catch para a exceção deverá ser feito.
+    Dentro do catch, se a exceção for jogada para o metodo que invocou será 
+    necessário considerar a união deste caso com o caso acima, ou seja, 
+    dentro do catch o uso de um 'throw' torna necessário o uso de try/catch ou 
+    adicionar throws na assinatura do metodo.
+
+
+01  public void foo() {
+02      try {
+03          throw new BarException();
+04      } catch (BarException be) {
+05          //something
+06      }
+07  }
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+class *HibernateDAO 
+
+public void foo(Bar bar) throws ApplicationException {		
+    try {						
+        Session session = HibernateUtil.currentSession();
+
+    } catch (Exception e) {			
+        log.debug("Problema ao realizar a funcao: foo", e);
+        throw new ApplicationException("MENSAGEM.ERRO", e);
+    } finally {
+        try {
+            HibernateUtil.closeSession();
+        }catch (Exception e) {
+            log.error("Problema ao tentar fechar conexao com o banco de dados: foo", e);
+        }
+    }
+}
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+class *Facade
+
+
+--------------------------------------------------------------------------------
+Método com Rollback
+--------------------------------------------------------------------------------
+
+	public static FooBar foo(Bar bar) throws ApplicationException {
+		DAOFactory hibernateFactory = DAOFactory.getDAOFactory(DAOFactory.HIBERNATE);
+		try {			
+			HibernateUtil.currentTransaction(); //Abre sessão e transação
+            /*
+             * .....
+             */
+			HibernateUtil.commitTransaction(); //Fecha sessão e transação
+			
+		} catch (ApplicationException appEx) {
+			try {
+				HibernateUtil.rollbackTransaction();
+			} catch (Exception e) {
+				log.error("Problema ao tentar realizar rollback na transacao: foo", e);
+			}
+			throw appEx;
+		} catch (Exception ex) {
+			try {
+				HibernateUtil.rollbackTransaction();
+			} catch (Exception e) {
+				log.error("Problema ao tentar realizar rollback na transacao: foo", e);
+			}
+			throw new ApplicationException("ERRO.FOO", ex, ApplicationException.ICON_ERRO);						
+		}
+		
+		return bar
+	}
+	

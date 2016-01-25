@@ -1,31 +1,9 @@
 
-string randomica de 10 caracters : openssl rand -base64 10
-diff entre o atual e anterior - git diff HEAD^ HEAD
-
-unzip in new folder with same name
-for f in *.zip; do unzip -d "${f%*.zip}" "$f"; done
-
-iconv -f ascii -t utf-8
-
-file -I text.txt
 
 psql -d myDataBase -a -f myInsertFile
 
-# split file in 500 lines, all new files named as 'prefixaa', 'prefixab', ...
-split -l 500 my_file.txt prefix
-
-
-# prepend text to file
-echo "text" | cat - yourfile > /tmp/out && mv /tmp/out yourfile
-
-
-# prepend text to file with for
-for f in ./files/*; do echo "begin;" | cat - "$f" > /tmp/out && mv /tmp/out "$f" ; done
-
-# append with for
-for f in ./files/*; do echo "commit;" >> "$f" ; done
-
 for f in ./files/*; do psql -d wum -f "$f" ; rm "$f" ; done
+
 
 # dns server on mac
 cat /etc/resolv.conf | grep nameserver
@@ -37,13 +15,8 @@ for f in *.zip; do ffmpeg -i "$f" -vn -acodec copy "${f%*.zip}.aac" ; done
 #!/bin/bash
 trap "exit" INT
 
-for f in ./files/*; do psql -d wum -f "$f" ; rm "$f" ; done
+pg_dump --format custom --verbose --file "/tmp/2015_12_22_cookbook_list.backup" --table "public.cookbook" "kit"
 
+/Applications/pgAdmin3.app/Contents/SharedSupport/pg_restore --host localhost --port 5432 --username "snk" --dbname "kit-backup" --no-password  --data-only --table fr_words_kit --schema public --verbose "/Users/snk/Downloads/2015_12_22_fr_words.backup"
 
- top -l 1 -s 0 | grep PhysMem
-size of directory 
-du -sh
-
-
-total size of all dirs into actual
-du -shc *
+/Applications/pgAdmin3.app/Contents/SharedSupport/pg_dump --host localhost --port 5432 --username "snk" --no-password  --format custom --verbose --file "/Users/snk/Desktop/2015_12_12_xxxx.backup" --table "public.files_hash" "wum"
