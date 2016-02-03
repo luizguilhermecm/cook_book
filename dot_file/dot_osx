@@ -8,4 +8,22 @@
 
 # Disable the sound effects on boot
 # sudo nvram SystemAudioVolume=" "
+
+
 defaults write com.apple.dock orientation left
+
+
+# show hidden files and directories on Finder 
+defaults write com.apple.finder AppleShowAllFiles -bool TRUE
+
+# do not show hidden files and directories on Finder (default)
+defaults write com.apple.finder AppleShowAllFiles -bool FALSE
+
+# enable text selection in 'quick look'
+defaults write com.apple.finder QLEnableTextSelection -bool TRUE
+
+# diseble text selection in 'quick look' (default)
+defaults write com.apple.finder QLEnableTextSelection -bool FALSE
+
+# change destination of screenshot 
+defaults write com.apple.screencapture location /path/;killall SystemUIServer

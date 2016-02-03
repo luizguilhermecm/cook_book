@@ -4,6 +4,7 @@ Video
 Duplicar audio channel, used when one side is mute
 ```
 ffmpeg -i input.mp4 -vcodec copy -acodec libfaac -ab 220k -ar 48000 -ac 1 output.mp4
+ffmpeg -i input.mp4 -acodec libfaac -ab 220k -ar 48000 -ac 1 output.mp4
 ```
 
 flv para mp4
