@@ -1,3 +1,20 @@
+# replace several blank lines keeping only one
+
+```
+perl -00 -pe '' yourfile
+
+perl -00pe0 < file
+
+awk 'BEGIN{bl=0}/^$/{bl++;if(bl==1)print;else next}/^..*$/{bl=0;print}' myfile
+
+sed -n '/./,/^$/p'
+
+sed '/^$/N;/^\n$/D' inputfile
+
+grep -v -A1 '^[[:blank:]]*#39; <file> | grep -v '^--#39;
+```
+
+
 # split file in 500 lines, all new files named as 'prefixaa', 'prefixab', ...
 split -l 500 my_file.txt prefix
 

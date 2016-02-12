@@ -1,0 +1,25 @@
+Antes:
+
+Files to save:
+  .bash_profile
+  .gitconfig
+  .ssh[folder]
+  .vim[rc|folder|...]
+
+Listas:
+  gem list
+  brew list
+
+Widgets [salvar]: ~/Library/Widgets
+
+Usar o shell zsh:
+  $ brew install zsh
+  $ chsh -s /usr/local/bin/zsh
+    chsh irá adicionar o zsh do brew na lista de shell em /etc/shells
+
+
+Instalar o Xcode para ter os apps do terminal (sem eles não dá para instalar o brew).
+
+Instalar o brew
+
+

@@ -19,7 +19,8 @@ pg_dump --format custom --verbose --file "/tmp/2015_12_22_cookbook_list.backup" 
 
 /Applications/pgAdmin3.app/Contents/SharedSupport/pg_restore --host localhost --port 5432 --username "snk" --dbname "kit-backup" --no-password  --data-only --table fr_words_kit --schema public --verbose "/Users/snk/Downloads/2015_12_22_fr_words.backup"
 
-/Applications/pgAdmin3.app/Contents/SharedSupport/pg_dump --host localhost --port 5432 --username "snk" --no-password  --format custom --verbose --file "/Users/snk/Desktop/2015_12_12_xxxx.backup" --table "public.files_hash" "wum"
+/Applications/pgAdmin3.app/Contents/SharedSupport/pg_dump --host localhost --port 5432 --username "snk" -no-password  --format custom --verbose --file "/Users/snk/Desktop/2015_12_12_xxxx.backup" --table "public.files_hash" "wum"
+
 
 
 duplicated files recursive with size on output
@@ -32,3 +33,33 @@ ffmpeg -i input.mp4 -ss 00:00:50.0 -codec copy -t 20 output.mp4
 
 handbrake using one thread
 :threads=1
+
+
+# backup database kit on lgcm.com.br
+/Applications/pgAdmin3.app/Contents/SharedSupport/pg_dump --host 168.235.81.92 --port 5432 --username "postgres" --password  --format custom --verbose --file "/Users/snk/tmp/2016_02_11_kit.backup" --dbname kit
+
+# epub to txt
+ebook-convert input.epub out-wrap80-chap.txt --max-line-length 80 --pretty-print --chapter-mark 'rule'
+
+'^$\n\d\{1,}$\n'
+
+$ sed 's/^ *//; s/ *$//; /^$/d' file.txt
+
+`s/^ *//`  => left trim
+`s/ *$//`  => right trim
+`/^$/d`    => remove empty line
+
+# print file ignoring several blank lines, printing only one
+cat -s
+
+# remove blank lines
+grep -v '^$'
+
+# several blank line replaced by one
+sed -n '/./,/^$/p'
+sed '/^$/N;/^\n$/D' inputfile
+grep -v -A1 '^[[:blank:]]*$' <file> | grep -v '^--$'
+
+
+#insert new line between every line and keep only one blank line
+sed '/^$/d;G'

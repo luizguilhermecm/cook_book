@@ -1,0 +1,73 @@
+--------------------------------------------------------------------------------
+Step 1: SSH
+--------------------------------------------------------------------------------
+
+Para conectar na máquina via ssh:
+
+    $ ssh root@168.235.81.92
+
+Caso não seja a primeira vez e seja uma nova máquina, tem que remover o IP da 
+lista de known_hosts da pasta .ssh.
+
+
+-------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Step 2: Locale
+--------------------------------------------------------------------------------
+
+$ locale
+    locale: Cannot set LC_CTYPE to default locale: No such file or directory
+    locale: Cannot set LC_ALL to default locale: No such file or directory
+    LANG=
+    LANGUAGE=
+    LC_CTYPE=UTF-8
+    LC_NUMERIC="POSIX"
+    LC_TIME="POSIX"
+    LC_COLLATE="POSIX"
+    LC_MONETARY="POSIX"
+    LC_MESSAGES="POSIX"
+    LC_PAPER="POSIX"
+    LC_NAME="POSIX"
+    LC_ADDRESS="POSIX"
+    LC_TELEPHONE="POSIX"
+    LC_MEASUREMENT="POSIX"
+    LC_IDENTIFICATION="POSIX"
+    LC_ALL=
+
+$ sudo locale-gen "en_US.UTF-8"
+
+$ sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+
+$ reboot
+
+-------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Step 3: Ruby
+--------------------------------------------------------------------------------
+
+    $ sudo apt-get update
+    $ sudo apt-get install ruby-dev
+
+--------------------------------------------------------------------------------
+    $ service --status-all
+    $ service --status-all | grep postgresql
+
+    gem install sinatra
+    gem install shotgun
+
+    $ apt-get install ruby-dev
+
+install ruby
+    apt-get install ruby
+
+install the shotgun gem
+
+install the postgresql gem
+    apt-get install ruby-dev libpq-dev
+    apt-get install libpq-dev
+    gem install pg
+
+install the I18n gem
+    gem install i18n
+
+install the sinatra gem

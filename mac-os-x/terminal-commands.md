@@ -3,4 +3,8 @@
 
 `curl ipecho.net/plain; echo` get external IP address
 
+# mdfind
+
 `mdfind` finds files matching a given query
+
+`-name` look only name of file
