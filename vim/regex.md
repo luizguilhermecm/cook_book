@@ -65,3 +65,6 @@ In lines where first character is a number followed by a dot, replaces it by an
 asteristic.
 Used in markdown files.
 
+#### Search for one or other work
+
+`/public\|protected\|private`
