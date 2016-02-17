@@ -26,3 +26,9 @@ SELECT *
   FROM dba_sequences 
   WHERE sequence_name like '%RSDBSELGL_ID%' 
   AND sequence_owner = 'SADA'
+
+
+-- COMMIT transactions like update, insert
+INSERT INTO regions VALUES (5, 'Antarctica');
+COMMIT WORK;
+ 
