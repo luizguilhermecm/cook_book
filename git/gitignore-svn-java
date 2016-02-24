@@ -1,0 +1,8 @@
+**/target/**
+**/.svn/**
+.cvsignore
+.classpath
+.project
+**/.settings/
+RemoteSystemsTempFiles/**
+.metadata/**
