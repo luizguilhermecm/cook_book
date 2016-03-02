@@ -1,4 +1,4 @@
-# replace several blank lines keeping only one
+# replace several blank lines
 
 ```
 perl -00 -pe '' yourfile

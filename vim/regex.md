@@ -68,3 +68,9 @@ Used in markdown files.
 #### Search for one or other work
 
 `/public\|protected\|private`
+
+#### Match First
+
+`^\([^ ]*\)` match everything till first space
+
+`[^ ]` means, any but space
