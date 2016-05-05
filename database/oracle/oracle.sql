@@ -31,4 +31,11 @@ SELECT *
 -- COMMIT transactions like update, insert
 INSERT INTO regions VALUES (5, 'Antarctica');
 COMMIT WORK;
- 
+
+-- SELECT ALL FOREING KEYS  
+select
+c.CONSTRAINT_NAME, c.TABLE_NAME, a.COLUMN_NAME
+FROM all_cons_columns a
+join all_constraints c on c.CONSTRAINT_NAME = a.CONSTRAINT_NAME 
+where a.table_name like 'RQSDE_%'
+and c.constraint_type = 'R'
