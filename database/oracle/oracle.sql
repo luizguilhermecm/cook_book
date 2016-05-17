@@ -39,3 +39,6 @@ FROM all_cons_columns a
 join all_constraints c on c.CONSTRAINT_NAME = a.CONSTRAINT_NAME 
 where a.table_name like 'RQSDE_%'
 and c.constraint_type = 'R'
+
+
+execute DBMS_MVIEW.REFRESH( LIST => 'SADA.MV_RQSDE_ACESSO', METHOD => 'C' );
