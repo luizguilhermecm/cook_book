@@ -41,4 +41,10 @@ where a.table_name like 'RQSDE_%'
 and c.constraint_type = 'R'
 
 
+-- command window
 execute DBMS_MVIEW.REFRESH( LIST => 'SADA.MV_RQSDE_ACESSO', METHOD => 'C' );
+
+-- last update time of materialized view
+SELECT owner, mview_name, last_refresh_date
+  FROM all_mviews
+ WHERE mview_name like 'MV_RQ%'
