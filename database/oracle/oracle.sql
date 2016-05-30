@@ -48,3 +48,8 @@ execute DBMS_MVIEW.REFRESH( LIST => 'SADA.MV_RQSDE_ACESSO', METHOD => 'C' );
 SELECT owner, mview_name, last_refresh_date
   FROM all_mviews
  WHERE mview_name like 'MV_RQ%'
+
+-- the next refresh of materialized view or something else.
+SELECT rowner, rname, next_date
+  FROM all_refresh
+ WHERE rname like 'MV_RQ%'
