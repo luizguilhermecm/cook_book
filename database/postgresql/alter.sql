@@ -30,3 +30,5 @@ ALTER SEQUENCE sequence_name RESTART WITH 105;
 -- drop trigger linked to a table
 DROP TRIGGER kit_config_unique ON kit_config;
 ALTER TABLE table_name DROP CONSTRAINT some_name;
+
+alter table time alter value set data type decimal(6,2);

@@ -1,0 +1,119 @@
+#!/usr/bin/env ruby
+require 'logger'
+require 'colorize'
+
+$logger = Logger.new(STDOUT)
+
+class Finder 
+    # @files will keep the absolute path of recipes
+    @files = []
+    @matches = []
+
+    # Print help text
+    def help 
+        $logger.info "def help"
+        puts "usage: cook"
+
+        puts "\nOPTIONS"
+        puts "\t<keyword>\tFind all files/recipes where its filename contains the given word."
+        puts "\t\t\tIf more than one file/recipe match, will return a list and ask to pick one of then."
+    end
+
+    # Get all files within cookbook directory 
+    # @files will be populate here.
+    def getFiles
+        $logger.info "def getFiles"
+        @files = Dir['/Users/snk/_cookbook/**/*.*']
+        $logger.debug "@files.size #{@files.size}"
+    end
+
+    # Look into @files and search for files where its 
+    # name contains the given term
+    def findFile name 
+        $logger.info "def findFile #{name}"
+        matches = []
+        @files.each do |file|
+            if file.include? name
+                $logger.debug "new match: #{file}"
+                matches << file
+            end
+        end
+        @matches = matches
+        $logger.debug "matches.size: #{@matches.size if !@matches.empty?}"
+        if @matches.empty?
+            puts "There is no recipe with given name."
+        elsif @matches.size == 1
+            $logger.debug "Only one match, print it up."
+            openFile @matches.first
+        else
+            $logger.debug "More than one match, user has to pick."
+            self.chooseFile 
+        end
+    end
+
+    # When more than one match occur, user has to pick 
+    def chooseFile 
+        $logger.info "def chooseFile"
+        puts "More than one recipe was found.\n".red
+        @matches.each_with_index do |f, i| 
+            puts "\t[#{i}] #{f}"
+        end
+
+        print "\nEnter the number: "
+        option = $stdin.gets.chomp
+
+        self.openFile @matches.at(option.to_i)
+    end
+
+    def openFile file
+        $logger.info "\def openFile #{file}"
+        File.open("#{file}", "r") do |f| 
+            begin 
+                puts file.red
+                puts "--BOF--".green
+                data = f.read
+                puts "--EOF--".green
+                self.printFile data
+            rescue
+                puts "[ERROR] Could not open file #{file}".red
+            end
+        end
+    end
+
+    # print the file data with some color to make it easy
+    def printFile data
+        $logger.info "def printFile data"
+        begin
+            puts data.yellow
+        rescue
+            puts "[ERROR] Could not print file #{file}".red
+        end
+    end
+
+    def main arg
+        $logger.info "def main arg"
+
+        if arg.empty?
+            self.help
+        elsif arg.size == 1
+            self.getFiles
+            self.findFile arg.first
+        else
+            self.parseArg arg
+        end
+    end
+
+    def parseArg arg 
+    $logger.info "def parseArg #{arg}"
+        
+        arg.each_with_index do |op, i| 
+            if op <=> "-l"
+                getRecipeLines arg, i
+            end
+        end
+    end
+
+end
+
+finder = Finder.new
+finder.main ARGV

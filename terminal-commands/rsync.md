@@ -20,3 +20,19 @@ rsync --dry-run -avzh --delete SRC DST
 
 * When `--delete` is not used, the file on DESTINATION will stay there until a
   new file with same name is syncronized, then the old one is replaced.
+
+### Using dir name with slash
+
+What is the difference of using one or another of below:
+
+`rsync -a dir1 dir2`  **vs** `rsync -a dir1/ dir2`
+
+The difference beteween then is the slash on the `dir1/`
+
+The result of `rsync -a dir1 dir2` would be a copy of *dir1* inside *dir2*.
+
+
+And the result of `rsync -a dir1/ dir2` would be a copy of dir1 content inside
+dir2.
+
+

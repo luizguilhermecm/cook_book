@@ -121,3 +121,4 @@ soaked
 * nifty
 * lessen means to:
 die down
+* askew
