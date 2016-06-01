@@ -53,3 +53,20 @@ SELECT owner, mview_name, last_refresh_date
 SELECT rowner, rname, next_date
   FROM all_refresh
  WHERE rname like 'MV_RQ%'
+
+
+-- get source code of procedures and functions
+-- WHERE TYPE IN:
+--    FUNCTION
+--    JAVA SOURCE
+--    PACKAGE
+--    PACKAGE BODY
+--    PROCEDURE
+--    TRIGGER
+--    TYPE
+--    TYPE BODY
+SELECT *
+  FROM all_source
+ WHERE type = 'PROCEDURE'
+  AND owner = 'FOO'
+ORDER  BY line;
