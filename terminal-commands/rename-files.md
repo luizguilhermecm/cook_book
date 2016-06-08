@@ -1,4 +1,4 @@
-rename
+using rename on mac
 -------------
 
 `-z, --sanitize` : troca espaço e caracteres de controle por '_'
@@ -10,4 +10,12 @@ number removing then.
 
 ```
 rename -z --lower-case * ; rename 's/^[^[A-Za-z]*]*(.*)/$1/g' *
+```
+
+ubuntu at vm
+------------
+
+replace blank space with underscore
+```
+for file in *; do mv "$file" `echo $file | tr ' ' '_'` ; done
 ```
