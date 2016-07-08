@@ -6,6 +6,14 @@
 ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'
 ```
 
+with du
+
+`-I .git` to ignore a directory
+
+```
+du -d 5  | grep "^\d" | sed -e 's/^\d//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'
+```
+
 output when done on cookbook
 
 ```
@@ -113,3 +121,10 @@ du -m | sort -nr | head -100
 ***
 
 
+```
+sudo du -h -d 1  | grep "^\d" | sed -e 's/^\d//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/' > du-dirs-1.txt
+sudo du -h -d 2  | grep "^\d" | sed -e 's/^\d//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/' > du-dirs-2.txt
+sudo du -h -d 3  | grep "^\d" | sed -e 's/^\d//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/' > du-dirs-3.txt
+sudo du -h | grep "^\d" | sed -e 's/^\d//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/' > du-dirs-all.txt
+tree -afi >> tree-all.txt
+```
