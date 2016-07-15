@@ -1,3 +1,16 @@
+# snk_grep
+
+`-s` supress error messages like: **foo is a directory**
+
+`-n`, `--line-number` print the line-number matched e.g. **learning/vimrc.md:34**
+
+``
+grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
+``
+
+
+***
+
 # grep -- file pattern searcher
 
 The grep utility searches any given input files, selecting lines that match one

@@ -2,12 +2,16 @@ Audio
 -----
 
 
-#### Converting
+#### Converting any to MP3
 
-Audio *.m4a* to *.mp3*.
+Audio *.xxx* to *.mp3*.
 
 ```
+# eg: m4a to mp3
 ffmpeg -i imput.m4a -acodec libmp3lame -ab 128k output.mp3
+
+# eg: opus to mp3
+ffmpeg -i imput.opus -acodec libmp3lame -ab 128k output.mp3
 ```
 
 
@@ -47,3 +51,20 @@ Audio - flac to mp3
 (for FILE in *.flac ; do ffmpeg -i "$FILE" -f mp3 -ab 192000 "`basename "$FILE" .flac`.mp3" || break; done)
 ```
 
+### trim audio or video (same thing)
+
+The follow command will receive two parameters and return an audio trimmed.
+
+The parameters receives numbers of seconds:
+
+`-ss seconds` where will be made a cut at left side of the timeline
+
+`-t seconds` duration in seconds of the trimmed audio.
+
+Using the follow example, assuming the imput audio with duration of 3 minutes.
+The return trimmed audio will trash the first 13 seconds and will have 94
+seconds of duration.
+
+```
+ffmpeg -i brexit-song.mp3 -ss 13 -t 94 -acodec copy trim4.mp3
+```

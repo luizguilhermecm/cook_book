@@ -9,3 +9,12 @@ Sort
 
 print the line number on document
 `map <F1> :execute "normal! i" . ( line(".") + 1 )<cr>`
+
+
+
+all mapped key to file
+```
+:redir! > vim_keys.txt
+:silent verbose map
+:redir END
+```
