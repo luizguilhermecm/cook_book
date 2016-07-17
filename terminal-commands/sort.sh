@@ -11,3 +11,13 @@ ln -s Downloads x
 
 # man page to txt
 man grep | col -b > grep.txt
+
+# search the work 'regex' in man pages
+apropos regex
+
+# commands that I do not know nothing but I had faced
+opensnoop
+dtrace
+ag
+➜ _____________saved for d in `find . -type d -maxdepth 3`; do find $d -type f | wc -l && echo "$d : $_" ; done
+less 2016-07-13_aai-git.zip # to peed inside of zip file content 

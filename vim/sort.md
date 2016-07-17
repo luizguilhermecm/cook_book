@@ -18,3 +18,24 @@ all mapped key to file
 :silent verbose map
 :redir END
 ```
+
+***
+in normal mode
+`q:` `q/` `q?` open the command-line window.
+
+***
+
+the mapping with **iabbrev**
+
+```
+" Insert date
+iabbrev ddate <C-R>=strftime("%Y-%m-%d")<CR>
+
+" Insert a console statements
+iabbrev clg console.log
+iabbrev cld console.debug
+iabbrev clda console.debug(arguments)
+```
+
+
+

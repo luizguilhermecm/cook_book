@@ -3,7 +3,7 @@ tmux
 
 #### Installing
 
-Install using _homebrew_:
+To install **tmux** with _homebrew_ :
 
 ```
 brew install tmux
@@ -17,7 +17,7 @@ prefix key, `C-b`, `(Ctrl-b)`, `<C-b>` by default, followed by a command key.
 
 So, if you wanna send a command to tmux, the prefix key will be used to do that.
 
-Now on, the words _prefix key_, `C-b` and `Ctrl-b` will be used assuming that
+From now, the words: _prefix key_, `C-b` and `Ctrl-b` will be used assuming that
 you know what that means.
 
 One more thing, the `C-b` is two keys, when a third key will be necessary it

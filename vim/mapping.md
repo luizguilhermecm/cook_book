@@ -1,13 +1,3 @@
-<html>
-<head>
-    <title>My Notes</title>
-    <link href="bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <h1>My notes</h1>
-    <?php markdown(file_get_contents('your_content.md')); ?>
-</body>
-</html>
 # Mapping
 
 ## Vim Modes
