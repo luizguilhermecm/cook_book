@@ -21,3 +21,6 @@ dtrace
 ag
 ➜ _____________saved for d in `find . -type d -maxdepth 3`; do find $d -type f | wc -l && echo "$d : $_" ; done
 less 2016-07-13_aai-git.zip # to peed inside of zip file content 
+
+# print now() date
+date "+%Y-%m-%d"
