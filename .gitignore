@@ -1,4 +1,3 @@
 .DS_Store
 *.out
 ruby/upload-file-with-sinatra/uploads/*
-snk/*
