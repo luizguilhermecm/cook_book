@@ -1,14 +1,24 @@
 # Convert any character of portuguese to UTF8 code point
 
-uses:
+[UTF-8 table used as reference](http://www.utf8-chartable.de)
 
-`:g/^/call CP8()`
-`:2,19g/^/call CP8()`
-`:19,$g/^/call CP8()`
-`:call CP8()`
+## utils
+
+`:g/^/call CP8()` : for each line of file
+
+`:2,19g/^/call CP8()` : range of lines
+
+`:19,$g/^/call CP8()` : range of lines
+
+`:call CP8()` : just call it
+
 `:CP8` mapped `command! CP8 call CP8()`
 
+function to change most of characters
+
 ```
+" after function: command! CP8 call CP8()
+" replace most of special characters to its Unicode Code Point
 function! CP8()
     silent! s/\%u00A7/\\u00A7/e
     silent! s/\%u00A8/\\u00A8/e
