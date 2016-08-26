@@ -79,3 +79,5 @@ ls -le
 
 # to delete the permission 0 
 chmod -a# 0 sort.txt
+
+for i in {0..7} ; do tput setaf $i ; echo "asdf" ; done
