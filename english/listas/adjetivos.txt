@@ -1,0 +1,169 @@
+Abusado ; Cheeky
+Adorável ; Adorable, Lovely
+Agradecido ; Grateful
+Alegre ; Joyful
+Alto ; Tall
+Ambicioso ; Ambitious
+Amigável ; Friendly
+Animado ; Cheerful
+Ansioso ; Anxious
+Apático ; Listless
+Arrogante ; Arrogant
+Assustador ; Creepy
+Astuto ; Cunning
+Autoconfiante ; Self-confident
+Autoritário ; Bossy
+Baixo ; Short
+Barato ; Cheap, Inexpensive
+Bem-informado ; Well-informed
+Bobo ; Goofy, Silly
+Bondoso ; Kind
+Bonita ; Beautiful, Pretty
+Bonito ; Handsome
+Briguento ; Feisty, Tough
+Burro ; Dumb
+Cafona ; Corny
+Calmo ; Calm, Easygoing
+Cansado ; Tired
+Carente ; Needy
+Carinhoso ; Caring
+Caro ; Expensive
+Cético ; Skeptical
+Chato ; Boring
+Cínico ; Cynical
+Ciumento ; Jealous
+Complicado ; Complicated
+Comportado ; Well-behaved
+Compreensivo ; Understanding
+Confiável ; Reliable, Trustworthy, Dependable
+Conservador ; Conservative
+Contente ; Glad
+Corajoso ; Brave, Gutsy, Plucky
+Criativo ; Creative
+Culto ; Well-read
+Curioso ; Curious
+Decidido ; Decided
+Dedicado ; Dedicated
+Dedo-duro ; Snitch
+Desajeitado ; Clumsy
+Destemido ; Fearless
+Dependente ; Dependent
+Desonesto ; Dishonest
+Determinado ; Strong-willed
+Discreto ; Discreet
+Distraído ; Dreamy
+Doente ; Sick
+Educado ; Polite, Well-mannered
+Eficiente ; Efficient
+Egoísta ; Selfish
+Engraçado ; Funny
+Enorme ; Huge
+Equilibrado ; Well-balanced
+Esbelto ; Slim
+Esperto ; Smart, Brainy
+Espirituoso ; Witty
+Estressado(a) ; Stressed out
+Estudioso ; Scholarly
+Experiente ; Experienced
+Extrovertido ; Extroverted
+Famoso ; Famous, Well-known
+Feliz ; Happy
+Feio ; Ugly
+Fiel ; Faithful
+Fofo ; Cuddly
+Formal ; Dressy
+Franco ; Frank
+Furioso ; Angry
+Generoso ; Generous
+Gordinho ; Chubby
+Gordo ; Fat
+Gostoso(a) ; Hunk
+Grande ; Big
+Grudento ; Clingy
+Habilidoso ; Handy, Skillful
+Honesto ; Honest
+Horrível ; Horrible
+Independente ; Independent
+Indiferente ; Lukewarm
+Infantil ; Childish
+Influente ; Well-connected
+Ingênuo ; Naive
+Inseguro ; Insecure
+Inteligente ; Intelligent, Brainy, Clever
+Interessante ; Interesting
+Interesseiro ; Self-serving
+Invejoso ; Envious
+Irritante ; Irritating
+Irônico ; Ironic
+Justo ; Fair
+Leal ; Loyal
+Liberal ; Open-minded
+Lindo ; Gorgeous
+Machista ; Sexist
+Maduro ; Mature
+Magro ; Thin
+Magricelo ; Skinny
+Maldoso ; Mean, Devilish
+Mal-educado ; Impolite
+Mal-humorado ; Crabby, Cranky
+Mandão ; Bossy
+Manhoso ; Fussy
+Mimado ; Spoiled
+Modesto ; Modest
+Muito estranho ; Freaky
+Muito grande ; Large
+Muito pequeno ; Tiny
+Musculoso ; Well-built
+Neurótico ; Neurotic
+Obeso ; Obese
+Organizado ; Organized
+Orgulhoso ; Big-headed
+Otimista ; Optimistic
+Ousado ; Daring
+Paciente ; Patient
+Patético ; Pathetic
+Pavio curto ; Short fuse
+Peludo ; Furry
+Pensador ; Thoughtful
+Perverso ; Devilish
+Pesado ; Heavy
+Pequeno ; Small
+Pessimista ; Pessimistic
+Pobre ; Poor
+Pontual ; Punctual, Accurate
+Popular ; Well-known
+Preconceituoso ; Prejudiced
+Preguiçoso ; Lazy
+Previsível ; Predictable
+Puxa-saco ; Ass-kisser, Brownnoser, Apple-polisher
+Relaxado ; Sloppy
+Religioso ; Religious
+Reservado ; Reserved, Quiet
+Respeitado ; Well thought of
+Responsável ; Responsible
+Retraído ; Withdrawn
+Romântico ; Romantic
+Rico ; Wealthy, Well-heeled, Well-off, Well-paid, Rich
+Sábio ; Wise
+Safado ; Shameless
+Sarado ; Fit, Well-toned
+Sarcástico ; Sarcastic
+Saudável ; Healthy
+Sensato ; Sensible
+Sensível ; Sensitive
+Simpático ; Nice
+Sincero ; Sincere
+Sociável ; Outgoin, Sociable
+Solidário ; Sympathetic
+Sorridente ; Smiling
+Sortudo ; Lucky
+Talentoso ; Talented
+Teimoso ; Stubborn
+Temperamental ; Moody
+Tímido ; Shy
+Tolerante ; Tolerant
+Tonto ; Goofy
+Trabalhador ; Hard-worker
+Triste ; Sad
+Útil ; Handy, Helpful, Useful
+Violento ; Gory, Agressive

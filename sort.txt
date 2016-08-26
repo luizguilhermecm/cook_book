@@ -2,7 +2,7 @@
 
 psql -d myDataBase -a -f myInsertFile
 
-for f in ./files/*; do psql -d wum -f "$f" ; rm "$f" ; done
+for f in ./files/*; do cat "$f" ; done
 
 
 # dns server on mac
@@ -63,3 +63,19 @@ grep -v -A1 '^[[:blank:]]*$' <file> | grep -v '^--$'
 
 #insert new line between every line and keep only one blank line
 sed '/^$/d;G'
+
+
+chmod +a "root deny delete" file
+chmod +a "snk deny delete" file
+chmod +a "snk deny delete" file
+chmod +a "admin deny delete" file
+chmod -a# NUMBER file
+chmod -a# 0 file
+
+# plus sign at end of permissions means it has an chmod +a ...
+ls -le
+-rw-r--r--+  1 snk  staff  2081 Aug 25 19:52 sort.txt
+ 0: user:Guest deny read
+
+# to delete the permission 0 
+chmod -a# 0 sort.txt

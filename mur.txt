@@ -1,0 +1,19 @@
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+
+for f in ./files/*; do cat "$f" ; done
+
+# find with or operator
+find . \( -iname "*mp3" -o -iname "*.wma" \)
+
+# size of each item with total
+du -shc *
+
+ln -s /path/to/go shortcut
+
+unzip archive_name.zip
+
+zip -r -X archive_name.zip folder_to_compress
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+

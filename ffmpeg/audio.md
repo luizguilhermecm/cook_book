@@ -68,3 +68,10 @@ seconds of duration.
 ```
 ffmpeg -i brexit-song.mp3 -ss 13 -t 94 -acodec copy trim4.mp3
 ```
+
+
+# Converting an audio to wav.
+```
+ffmpeg -i input -acodec pcm_s32le output.wav
+```
+

@@ -1,6 +1,13 @@
 # umask : permissions
 
-* **FYI** : _The output value of **umask** and the imput of **chmod** has the
+shortcuts
+
+go_fix_files : command to fix file permissions
+go_fix_dir : command to fix directory permissions
+go_fix_files_find : command to fix files permissions using find (batch fix)
+go_fix_dir_find : command to fix directory permissions using find (batch fix)
+
+**FYI** : _The output value of **umask** and the imput of **chmod** has the
 same face, **BUT** their meaning has **NOTHING** in commom. **DO NOT** look
 at **umask** output (022) and try to use the logic of **chmod**.
 
@@ -54,17 +61,19 @@ executed by anyone.
 
 ### Fixing Permissions
 
-To fix the files permission run `chmod 644 <file-path>`.
+To fix the files permission run `chmod 644 <file-path>`. go_fix_files
 
-To fix the directories permissions run `chmod 755 <directory-path>`.
+To fix the directories permissions run `chmod 755 <directory-path>` go_fix_dir
 
 In some cases, the command `find` can be used to fix several items easily.
 
 
 ```shell
 # to fix files permissions
+# go_fix_files_find
 find . -type f -exec chmod 644 {} \;
 
 # to fix directories permissions
+# go_fix_dir_find
 find . -type d -exec chmod 755 {} \;
 ```

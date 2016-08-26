@@ -64,3 +64,10 @@ seconds of duration.
 ```
 ffmpeg -i brexit-song.m4v -ss 13 -t 94 -acodec copy trim4.m4v
 ```
+
+# video from audio with images
+
+making a new movie using an audio and an image as background.
+```
+ffmpeg -i img.png -i 10ways.m4a ep1.mp4
+```

@@ -75,3 +75,6 @@ Used in markdown files.
 `^\([^ ]*\)` match everything till first space
 
 `[^ ]` means, any but space
+
+`^.\{-}:` means, all until find an **:**
+
