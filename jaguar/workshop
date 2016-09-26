@@ -1,1 +1,10 @@
 dia 1
+
+/projeto/src/main/config/com/powerlogic/jcompany/config/app/package-info.java
+
+@PlcConfigApplication(
+	definition=@PlcConfigApplicationDefinition(name="Projeto Treinamento",acronym="projeto",version=1,release=0),
+	classesDiscreteDomain={},
+	classesLookup={}
+)
+
