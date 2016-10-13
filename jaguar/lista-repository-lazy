@@ -1,0 +1,9 @@
+No repository, qndo ao dar get na lista é lançado um LazyException
+
+solução: Realizar um dao.findById no objeto e com isso as listas 
+  serão carregadas ou uma sessão será aberta (não sei qual), 
+  o importante é que não ocorrerá LazyException.
+  
+ex:
+
+fruicaoFerias = (FruicaoFeriasEntity) fruicaoFeriasDAO.findById(null, FruicaoFeriasEntity.class, fruicaoFerias.getId());
