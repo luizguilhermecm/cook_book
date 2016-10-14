@@ -1,0 +1,3 @@
+<h:commandButton value="ConfirmarSalvar" action="#{plcAction.confirmarSalvar}" immediate="true" id="btnConfirmarSalvar" style="display:none;" >
+			<f:ajax render="@form" />
+		</h:commandButton>
