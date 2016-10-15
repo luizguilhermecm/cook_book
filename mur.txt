@@ -15,5 +15,8 @@ unzip archive_name.zip
 
 zip -r -X archive_name.zip folder_to_compress
 
+# cut trim audio
+ffmpeg -i brexit-song.mp3 -ss 13 -t 94 -acodec copy trim4.mp3
+
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 

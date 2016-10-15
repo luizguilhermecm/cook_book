@@ -27,3 +27,7 @@ defaults write com.apple.finder QLEnableTextSelection -bool FALSE
 
 # change destination of screenshot 
 defaults write com.apple.screencapture location /path/;killall SystemUIServer
+
+# it makes finder quit with command Q
+defaults write com.apple.finder QuitMenuItem -bool YES && killall Finder
+
