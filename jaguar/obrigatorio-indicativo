@@ -1,0 +1,13 @@
+adicionar a classe css "p_AFRequired"
+
+styleClass="p_AFRequired"
+
+
+e.g.:
+						<plcf:data id="dtInicial"
+							value="#{item.dtInicial}"
+							ajudaChave="ajuda.dtInicial"
+							styleClass="p_AFRequired" >
+							<f:ajax event="valueChange" render="numDias" />
+						</plcf:data>
+	
