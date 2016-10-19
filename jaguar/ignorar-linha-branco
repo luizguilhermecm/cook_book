@@ -1,0 +1,15 @@
+para ignorar um novo registro em branco:
+
+1 : atributo chave deve ser escolhido e adicionar a anotação 
+        @PlcReference(testDuplicity=false)
+          ou
+        @PlcReference(testDuplicity=true)
+  - se este atributo não for preenchido, o registro é ignorado
+
+2 : utilizar o @NotNull(groups=PlcValGroupEntityList.class)
+    - não o @NotNull.
+
+
+3 : Para os demais atributos serem considerados Obrigatórios somente quando o atributo chave for preenchido
+    adicionar a anotação 
+      @RequiredIf(valueOf="ATRIBUTO_CHAVE",is=RequiredIfType.not_empty)
