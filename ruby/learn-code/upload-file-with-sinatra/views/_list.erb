@@ -1,0 +1,10 @@
+<table class="table" >
+    <% @list.each_with_index do |item, index| %>
+        <tr>
+            <td>
+                <%= item %>
+                <a href="/sinatra_log/<%= item %>">download file</a>
+            </td>
+        </tr>
+    <% end if @list %>
+</table>

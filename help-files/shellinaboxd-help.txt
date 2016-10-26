@@ -1,0 +1,63 @@
+Usage: shellinaboxd [OPTIONS]...
+Starts an HTTP server that serves terminal emulators to AJAX enabled browsers.
+
+List of command line options:
+  -b, --background[=PIDFILE]  run in background
+  -c, --cert=CERTDIR          set certificate dir (default: $PWD)
+      --cert-fd=FD            set certificate file from fd
+      --css=FILE              attach contents to CSS style sheet
+      --cgi[=PORTMIN-PORTMAX] run as CGI
+  -d, --debug                 enable debug mode
+  -f, --static-file=URL:FILE  serve static file from URL path
+  -g, --group=GID             switch to this group (default: nogroup)
+  -h, --help                  print this message
+      --linkify=[none|normal|aggressive] default is "normal"
+      --localhost-only        only listen on 127.0.0.1
+      --no-beep               suppress all audio output
+  -n, --numeric               do not resolve hostnames
+  -m, --messages-origin=ORIGIN allow iframe message passing from origin
+      --pidfile=PIDFILE       publish pid of daemon process
+  -p, --port=PORT             select a port (default: 4200)
+  -s, --service=SERVICE       define one or more services
+  -t, --disable-ssl           disable transparent SSL support
+      --disable-ssl-menu      disallow changing transport mode
+      --disable-utmp-logging  disable logging to utmp and wtmp
+  -q, --quiet                 turn off all messages
+      --unixdomain-only=PATH:USER:GROUP:CHMOD listen on unix socket
+  -u, --user=UID              switch to this user (default: nobody)
+      --user-css=STYLES       defines user-selectable CSS options
+  -v, --verbose               enable logging messages
+      --version               prints version information
+      --disable-peer-check    disable peer check on a session
+
+Debug, quiet, and verbose are mutually exclusive.
+
+One or more --service arguments define services that should be made available
+through the web interface:
+  SERVICE := <url-path> ':' APP
+  APP     := 'LOGIN' | 'SSH' [ : <host> ] | USER ':' CWD ':' CMD
+  USER    := 'AUTH' | <username> ':' <groupname>
+  CWD     := 'HOME' | <dir>
+  CMD     := 'SHELL' | <cmdline>
+
+<cmdline> supports variable expansion:
+  ${columns} - number of columns
+  ${gid}     - gid id
+  ${group}   - group name
+  ${home}    - home directory
+  ${lines}   - number of rows
+  ${peer}    - name of remote peer
+  ${realip}  - value of HTTP header field 'X-Real-IP'
+  ${uid}     - user id
+  ${url}     - the URL that serves the terminal session
+  ${user}    - user name
+
+One or more --user-css arguments define optional user-selectable CSS options.
+These options show up in the right-click context menu:
+  STYLES  := GROUP { ';' GROUP }*
+  GROUP   := OPTION { ',' OPTION }*
+  OPTION  := <label> ':' [ '-' | '+' ] <css-file>
+
+OPTIONs that make up a GROUP are mutually exclusive. But individual GROUPs are
+independent of each other.
+

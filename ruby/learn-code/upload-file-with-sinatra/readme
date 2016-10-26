@@ -1,0 +1,7 @@
+Upload a file with sinatra
+
+The uploaded file will be saved in a directory named 'uploads', this directory
+need to be there before the app runs, or will return an error.
+The directory must be on the root dir of this app.
+
+based on: http://www.wooptoot.com/file-upload-with-sinatra

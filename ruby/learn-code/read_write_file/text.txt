@@ -1,0 +1,12 @@
+header
+Antes de falarmos dos comandos, vamos a uma breve apresentação. O Vim
+é o sucessor mais difundido do vi, que é filho do ex com o ed, que por
+sua vez são filhos do qed, e por aí vai. O "vi" é a sigla de Visual
+
+Interface. Note que naquela época (início dos anos 80), não era comum
+como hoje, você ter um editor de textos visual, ou seja, você ver na
+tela o texto que está sendo editado. Tente imaginar como é editar um
+texto sem vê-lo. Quer tentar? Experimente o editor ed, presente em
+qualquer distribuição Linux.
+
+footer
