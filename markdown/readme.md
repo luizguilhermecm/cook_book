@@ -1,3 +1,6 @@
+# html to markdown
+pandoc -s -r html http://www.gnu.org/software/make/ -o example12.text
+
 # Learning Markdown
 Test with one #
 ** This document is just a _auto_ tutorial **

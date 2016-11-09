@@ -41,3 +41,16 @@ environment at all. Rather, it should be used to set the terminal type and run
 a series of external commands (fortune, msgs, etc).
 
 
+
+The configuration files are read in the following order:
+
+/etc/zshenv
+~/.zshenv
+/etc/zprofile
+~/.zprofile
+/etc/zshrc
+~/.zshrc
+/etc/zlogin
+~/.zlogin
+~/.zlogout
+/etc/zlogout

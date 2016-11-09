@@ -82,3 +82,6 @@ ls -le
 chmod -a# 0 sort.txt
 
 for i in {0..7} ; do tput setaf $i ; echo "asdf" ; done
+
+pandoc -s -r html http://www.gnu.org/software/make/ -o example12.text
+

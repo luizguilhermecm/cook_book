@@ -9,4 +9,8 @@ groups : List of all groups of current user
 
 groups [user] : List of all groups of specified [user]
 
+$ echo $0 : shows the shell in use by the user
+-bash
 
+$ echo $SHELL : shows the shell in use by the user
+/bin/bash
