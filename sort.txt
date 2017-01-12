@@ -33,6 +33,7 @@ ffmpeg -i input.mp4 -ss 00:00:50.0 -codec copy -t 20 output.mp4
 
 handbrake using one thread
 :threads=1
+Nova pasta (file://NT-180567/Nova%20pasta)
 
 
 # backup database kit on lgcm.com.br
