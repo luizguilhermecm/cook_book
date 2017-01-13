@@ -71,3 +71,10 @@ making a new movie using an audio and an image as background.
 ```
 ffmpeg -i img.png -i 10ways.m4a ep1.mp4
 ```
+
+# change frame ratio of video (when 60 fps my mac cant do the job)
+
+```
+ffmpeg -i 01.mp4 -r 25 -s 1280x720 -c:v libx264 -b:v 3M
+-strict -2 -movflags faststart 01_02.mp4
+```
