@@ -23,7 +23,7 @@ class Finder
     # @files will be populate here.
     def getFiles
         $logger.info "def getFiles"
-        @files = Dir['/Users/snk/_cookbook/**/*.*']
+        @files = Dir['/Users/snk/cookbook/**/*.*']
         $logger.debug "@files.size #{@files.size}"
     end
 

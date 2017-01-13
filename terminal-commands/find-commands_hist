@@ -1,0 +1,256 @@
+find -type=f /Volumes/snk-hdd/geek/trt15/2016-10-25_Projetos/AutoAtendimentoInterno/AutoAtendimentoInterno_parent/AutoAtendimentoInterno/src/main/webapp/WEB-INF/fcls
+find -type f /Volumes/snk-hdd/geek/trt15/2016-10-25_Projetos/AutoAtendimentoInterno/AutoAtendimentoInterno_parent/AutoAtendimentoInterno/src/main/webapp/WEB-INF/fcls
+grepir find * | grep type
+cat find-commands
+find /Volumes/snk-hdd/geek/trt15/2016-10-25_Projetos/AutoAtendimentoInterno/AutoAtendimentoInterno_parent/AutoAtendimentoInterno/src/main/webapp/WEB-INF/fcls -type f
+find /Volumes/snk-hdd/geek/trt15/2016-10-25_Projetos/AutoAtendimentoInterno/AutoAtendimentoInterno_parent/AutoAtendimentoInterno/src/main/webapp/WEB-INF/fcls -type f | wc -l
+find /Volumes/snk-hdd/geek/trt15/2016-10-25_Projetos/AutoAtendimentoInterno/AutoAtendimentoInterno_parent/AutoAtendimentoInterno/src/main/webapp/WEB-INF/fcls -type f -exec cp {} . \;
+find . -type f -exec cp {} . \;
+find . -type f -exec cp {} . \;ls
+find . -iname "*MB"
+find . -iname "*.MB"
+find . -iname "*.mb"
+find . -iname "*.MB*"
+find . -iname "*MB*"
+find . -name "*MB*"
+find . -name "*MB*" -exec mv {} managed-beans-MB \;
+find . -type f
+find . -type f -exec cp {} ~/GoogleDrive/snk/projects/wab/library/repository-model 
+find . -type f -exec cp {} ~/GoogleDrive/snk/projects/wab/library/repository-model \;
+find . -type f -exec cp {} ~/GoogleDrive/snk/projects/wab/library/dao \;
+find -type f -name "*.java" 
+find . -type f -name "*.java" 
+find . -type f -name "*.java" | wc -l
+find . -iname "backup"
+find . -iname "*back*"
+find . -iname "*what*"
+find . -type f -exec chmod 644 {} \;
+find . -type f | wc -l
+find . -type d -exec chmod 755 {} \;
+cat find-commands
+foo=$(find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -u)
+printf '%s\n' "$foo" | while IFS= read -r line\ndo\n          find . -iname "*.${line}"  | wc -l\ndone\n
+printf '%s\n' "$foo" | while IFS= read -r line\ndo\n          echo $line ; find . -iname "*.${line}"  | wc -l\ndone\n
+printf '%s\n' "$foo" | while IFS= read -r line\ndo\n          print $line ; find . -iname "*.${line}"  | wc -l\ndone | pb copy\n
+printf '%s\n' "$foo" | while IFS= read -r line\ndo\n          print $line ; find . -iname "*.${line}"  | wc -l\ndone | pbcopy\n
+hist | grep find 
+hist | grep find | pbcopy
+mvim find-commands
+foo=$(find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -u)\nprintf '%s\n' "$foo" | while IFS= read -r line\ndo\n          find . -iname "*.${line}"  | wc -l\ndone\n\n
+foo=$(find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -u)\nprintf '%s\n' "$foo" | while IFS= read -r line\ndo\n          find . -iname "*.${line}"  | wc -l done\n
+foo=$(find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -u); printf '%s\n' "$foo" | while IFS= read -r line do find . -iname "*.${line}"  | wc -l done\n
+foo=$(find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -u); printf '%s\n' "$foo" | while IFS= read -r line do find . -iname "*.${line}"  | wc -l done
+foo=$(find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -u); printf '%s' "$foo" | while IFS= read -r line do find . -iname "*.${line}"  | wc -l done
+foo=$(find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -u)
+printf '%s\n' "$foo" | while IFS= read -r line do find . -iname "*.${line}"  | wc -l done\n
+printf '%s\n' "$foo" | while IFS= read -r line do find . -iname "*.${line}"  \| wc -l done\n\n\n: 1480376641:0;printf '%s\n' "$foo" | while IFS= read -r line do find . -iname "*.${line}" done\n\n\n: 1480376656:0;cat ffmpeg-commands
+printf '%s\n' "$foo" | while IFS= read -r line do find . -iname "*.${line}"; done\n\n\n: 1480376694:0;printf '%s\n' "$foo" | while IFS= read -r line; do find . -iname "*.${line}"; done\n\n\n: 1480376727:0;printf '%s\n' "$foo" | while IFS= read -r line do find . -iname "*.${line}"; done
+printf '%s\n' "$foo" | while IFS= read -r line do find . -iname "*.${line}" \; done
+printf '%s\n' "$foo" | while IFS= read -r line do find . -iname "*.${line}" \;; done
+printf '%s\n' "$foo" | while IFS= read -r line do find . -iname "*.${line}" \; done
+printf '%s\n' "$foo" | while IFS= read -r line do find . -iname "*.${line}" \; done
+printf '%s\n' "$foo" | while IFS= read -r line \ndo \nfind . -iname "*.${line}"\ndone
+printf '%s\n' "$foo" | while IFS= read -r line do \ find . -iname "*.${line}"\ndone
+printf '%s\n' "$foo" | while IFS= read -r line do ; find . -iname "*.${line}"\ndone
+printf '%s\n' "$foo" | while IFS= read -r line; do find . -iname "*.${line}"  | wc -l; done
+printf '%s\n' "$foo" | while IFS= read -r line; do find . -iname "*.${line}"  | echo ${line} $(wc -l) ;  done
+printf '%s\n' "$foo" | while IFS= read -r line; do find . -iname "*.${line}"  | wc -l ;  done
+printf '%s\n' "$foo" | while IFS= read -r line; do printf '%s\n' "$line"; find . -iname "*.${line}"  | wc -l ;  done
+printf '%s\n' "$foo" | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ;  done
+foo=$(find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf)
+printf '%s\n' "$foo" | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ;  done
+printf '%s\n' "$foo" | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; printf '%s' "$line";  done
+printf '%s\n' "$foo" | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; printf '%s - %s' "$line $(wc -l) ";  done
+printf '%s\n' "$foo" | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}" | printf '%s - %s' "$line $(wc -l)";  done
+printf '%s\n' "$foo" | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}" | printf '%s%s' "$line $(wc -l)";  done
+printf '%s\n' "$foo" | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}" | printf '%s%s' "$line, $(wc -l)";  done
+printf '%s\n' "$foo" | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}" | printf '%s%s' "$line" "$(wc -l)";  done
+printf '%s\n' "$foo" | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ;  done
+printf '%s\n' "$foo" | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; printf '%s\n' "$foo"  done
+printf '%s\n' "$foo" | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; printf '%s\n' "$line"  done
+printf '%s\n' "$foo" | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; printf '%s' "$line"  done
+printf '%s\n' "$foo" | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; printf '%s' "$line"; done
+printf '%s\n' "$foo" | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done
+printf '%s\n' "$foo" | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done
+find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -u\n| while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done
+find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -u| while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done
+find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done
+foo=$(find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -u)\nprintf '%s\n' "$foo" | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done\n
+foo=$(find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -u)\nprintf '%s\n' "$foo" | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done\n
+cat find-commands
+cat find-commands
+find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done
+find . -iname "*.mp4" 
+find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done
+cd d_00-11-brasil_-_2016-11-11 ; find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done ; cd ..\ncd d_01-12-miami_-_2016-11-12 ; find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done ; cd ..\n
+cd d_00-11-brasil_-_2016-11-11 ; find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done ; cd .. ;\ncd d_01-12-miami_-_2016-11-12 ; find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done ; cd ..\n
+cd d_00-11-brasil_-_2016-11-11 ; find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done ; cd .. ;\n
+cd d_00-11-brasil_-_2016-11-11 ; find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done ; cd .. ;\ncd d_01-12-miami_-_2016-11-12 ; find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done ; cd ..\ncd d_02-13-miami_-_2016-11-13 ; find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done ; cd ..\ncd d_03-14-miami_-_2016-11-14 ; find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done ; cd ..\n
+echo d_00-11-brasil_-_2016-11-11 ; cd d_00-11-brasil_-_2016-11-11 ; find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done ; cd .. ;\necho d_01-12-miami_-_2016-11-12 ; cd d_01-12-miami_-_2016-11-12 ; find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done ; cd ..\necho d_02-13-miami_-_2016-11-13 ; cd d_02-13-miami_-_2016-11-13 ; find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done ; cd ..\necho d_03-14-miami_-_2016-11-14 ; cd d_03-14-miami_-_2016-11-14 ; find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done ; cd ..\necho d_03-14-new-york_-_2016-11-14 ; cd d_03-14-new-york_-_2016-11-14 ; find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done ; cd ..\necho d_04-15-new-york_-_2016-11-15 ; cd d_04-15-new-york_-_2016-11-15 ; find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done ; cd ..\necho d_05-16-new-york_-_2016-11-16 ; cd d_05-16-new-york_-_2016-11-16 ; find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done ; cd ..\necho d_06-17-new-york_-_2016-11-17 ; cd d_06-17-new-york_-_2016-11-17 ; find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done ; cd ..\necho d_07-18-new-york_-_2016-11-18 ; cd d_07-18-new-york_-_2016-11-18 ; find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done ; cd ..\necho d_07-18-orlando_-_2016-11-18 ; cd d_07-18-orlando_-_2016-11-18 ; find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done ; cd ..\necho d_08-19-orlando_-_2016-11-19 ; cd d_08-19-orlando_-_2016-11-19 ; find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done ; cd ..\necho d_09-20-orlando_-_2016-11-20 ; cd d_09-20-orlando_-_2016-11-20 ; find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done ; cd ..\necho d_10-21-orlando_-_2016-11-21 ; cd d_10-21-orlando_-_2016-11-21 ; find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done ; cd ..\necho d_11-22-orlando_-_2016-11-22 ; cd d_11-22-orlando_-_2016-11-22 ; find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done ; cd ..\necho d_12-23-orlando_-_2016-11-23 ; cd d_12-23-orlando_-_2016-11-23 ; find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done ; cd ..\necho d_13-24-miami_-_2016-11-24 ; cd d_13-24-miami_-_2016-11-24 ; find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done ; cd ..\necho d_13-24-orlando_-_2016-11-24 ; cd d_13-24-orlando_-_2016-11-24 ; find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done ; cd ..\necho d_14-25-miami_-_2016-11-25 ; cd d_14-25-miami_-_2016-11-25 ; find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done ; cd ..\necho d_15-26-miami_-_2016-11-26 ; cd d_15-26-miami_-_2016-11-26 ; find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done ; cd ..\necho d_16-27-brasil_-_2016-11-27 ; cd d_16-27-brasil_-_2016-11-27 ; find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done ; cd ..\n\n
+echo d_00-11-brasil_-_2016-11-11   ; cd d_00-11-brasil_-_2016-11-11   ; mkdir fotos ; mkdir videos ; find . -iname "*.mov" -exec mv {} videos \; ; cd ..\n
+echo d_01-12-miami_-_2016-11-12    ; cd d_01-12-miami_-_2016-11-12    ; mkdir fotos ; mkdir videos ; find . -iname "*.mov" -exec mv {} videos \; ; cd ..\n
+cat find-commands
+find . \( -iname "*mp3" -o -iname "*.wma" \)
+find . \( -iname "*mp3" -o -mov "*.mp4" \)
+find . \( -iname "*.mp4" -o -iname "*.mov" \)
+mkdir fotos ; mkdir videos ; find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \; ; cd ..
+echo d_00-11-brasil_-_2016-11-11   ; cd d_00-11-brasil_-_2016-11-11   ; mkdir fotos ; mkdir videos ; find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \;  ; cd ..\necho d_01-12-miami_-_2016-11-12    ; cd d_01-12-miami_-_2016-11-12    ; mkdir fotos ; mkdir videos ; find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \;  ; cd ..\necho d_02-13-miami_-_2016-11-13    ; cd d_02-13-miami_-_2016-11-13    ; mkdir fotos ; mkdir videos ; find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \; ; cd ..\necho d_03-14-miami_-_2016-11-14    ; cd d_03-14-miami_-_2016-11-14    ; mkdir fotos ; mkdir videos ; find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \; ; cd ..\necho d_03-14-new-york_-_2016-11-14 ; cd d_03-14-new-york_-_2016-11-14 ; mkdir fotos ; mkdir videos ; find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \; ; cd ..\necho d_04-15-new-york_-_2016-11-15 ; cd d_04-15-new-york_-_2016-11-15 ; mkdir fotos ; mkdir videos ; find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \; ; cd ..\necho d_05-16-new-york_-_2016-11-16 ; cd d_05-16-new-york_-_2016-11-16 ; mkdir fotos ; mkdir videos ; find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \; ; cd ..\necho d_06-17-new-york_-_2016-11-17 ; cd d_06-17-new-york_-_2016-11-17 ; mkdir fotos ; mkdir videos ; find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \; ; cd ..\necho d_07-18-new-york_-_2016-11-18 ; cd d_07-18-new-york_-_2016-11-18 ; mkdir fotos ; mkdir videos ; find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \; ; cd ..\necho d_07-18-orlando_-_2016-11-18  ; cd d_07-18-orlando_-_2016-11-18  ; mkdir fotos ; mkdir videos ; find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \; ; cd ..\necho d_08-19-orlando_-_2016-11-19  ; cd d_08-19-orlando_-_2016-11-19  ; mkdir fotos ; mkdir videos ; find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \; ; cd ..\necho d_09-20-orlando_-_2016-11-20  ; cd d_09-20-orlando_-_2016-11-20  ; mkdir fotos ; mkdir videos ; find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \; ; cd ..\necho d_10-21-orlando_-_2016-11-21  ; cd d_10-21-orlando_-_2016-11-21  ; mkdir fotos ; mkdir videos ; find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \; ; cd ..\necho d_11-22-orlando_-_2016-11-22  ; cd d_11-22-orlando_-_2016-11-22  ; mkdir fotos ; mkdir videos ; find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \; ; cd ..\necho d_12-23-orlando_-_2016-11-23  ; cd d_12-23-orlando_-_2016-11-23  ; mkdir fotos ; mkdir videos ; find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \; ; cd ..\necho d_13-24-miami_-_2016-11-24    ; cd d_13-24-miami_-_2016-11-24    ; mkdir fotos ; mkdir videos ; find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \; ; cd ..\necho d_13-24-orlando_-_2016-11-24  ; cd d_13-24-orlando_-_2016-11-24  ; mkdir fotos ; mkdir videos ; find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \; ; cd ..\necho d_14-25-miami_-_2016-11-25    ; cd d_14-25-miami_-_2016-11-25    ; mkdir fotos ; mkdir videos ; find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \; ; cd ..\necho d_15-26-miami_-_2016-11-26    ; cd d_15-26-miami_-_2016-11-26    ; mkdir fotos ; mkdir videos ; find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \; ; cd ..\necho d_16-27-brasil_-_2016-11-27   ; cd d_16-27-brasil_-_2016-11-27   ; mkdir fotos ; mkdir videos ; find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \; ; cd ..\n
+find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done
+find -type f
+find . -type f
+find . -type f
+find . -type f >> all-files.txt
+find . -type f | wc -l
+find . -type f 
+find . -type f | wc 
+find . -type f | wc -l
+find . -name "*.lais.JPG"
+find . -name "*lais.JPG"
+find . -name "*.lais.JPG"
+find . -name "*lais.JPG"
+find -type f | wc -l
+find . -type f | wc -l
+cd 104D3200 ; mkdir fotos ; mkdir videos ; find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \;  ; cd ..\n
+cd fotos_nikon2 ; mkdir fotos ; mkdir videos ; find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \;  ; cd ..\ncd gopro ; mkdir fotos ; mkdir videos ; find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \;  ; cd ..\ncd iphone-lais ; mkdir fotos ; mkdir videos ; find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \;  ; cd ..\ncd iphone-nando ; mkdir fotos ; mkdir videos ; find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \;  ; cd ..\ncd nikkon-01 ; mkdir fotos ; mkdir videos ; find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \;  ; cd ..
+find . -type d
+find ./nikon-0* -f
+find ./nikon-0* -type f
+find ./nikon-0 -type f
+find ./nikon-01 -type f
+find ./nikon-01 -type f >> nk.sh\nfind ./nikon-02 -type f >> nk.sh\nfind ./nikon-03 -type f  >> nk.sh
+find -type -f
+find . -type -f
+find . -type f
+find . -type f -exec rm {}
+find . -type f -exec rm {} \;
+find . -type f
+find . -type f | pbcopy
+find . -type f | pbcopy
+cat terminal-commands/find-commands
+find . -type f -exec chmod 644 {} \;\nfind . -type d -exec chmod 755 {} \;
+hist | grep find
+mkdir fotos ; mkdir videos ; find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \;
+for d in *; do echo "$d" ; find ./"$d"/ -type f; done
+for d in *; do echo "$d" ; find ./"$d"/ -type f | wc -l; done
+for d in *; do echo "$d" ; find ./"$d"/ -type f | wc -l; done >> summary.txt
+for d in *; do echo "$d" ; find ./"$d"/ -type f | wc -l; done >> summary.txt
+find . -type -f 
+find . -type f 
+find . -type f -exec stat {} \;
+find -type d .
+find -type d 
+find . -type d 
+find . -type d -exec l1 {} 
+find . -type d -exec l1 {} \;
+find . -type d -exec ls {} \;
+find . -type d -exec ls -1 {} \;
+find . -type d -exec ls -1 {} | wc -l\;
+find . -type d -exec ls -1 {} | wc -l \;
+find . -type d -exec ls -1 {} \| wc -l \;
+find . -type d -exec ls -1 {} wc -l \;
+$ cat `find . | grep -v \.jpg` | wc -l\n
+cat `find . | grep -v \.jpg` | wc -l\n
+cat `find . | grep -v \.JPG` | wc -l\n
+cat `find . -type -d ` | wc -l\n
+cat `find . -type d ` | wc -l\n
+find . -type d | wc -l\n
+find . -type d -exec ls -1 {} | wc -l\n
+find . -type d -exec ls -1 {} | wc -l \;\n
+find . -type d -exec ls -1 {} \| wc -l \;\n
+find . -type d
+find . -type d >> all-dires
+find . -type .
+find . -type d
+find . -type d | pbcopy
+cat terminal-commands/find-commands
+find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done
+find . -iname "*nk1*"
+find . -iname "*nk*"
+find . -iname "*nk*" >> nk.sh
+find . -iname "*nk*" -exec stat {} \;
+find . -iname "*nk\d*" -exec stat {} \;
+find . -iname "*_nk*" -exec stat {} \;
+find . -iname "*_nk*" -exec ls -lt {} \; >> nks-dates
+find . -iname "*_nk*" >> nk.sh
+find . -iname "*_nk*" > nk.sh
+cat find-commands
+find . -type f
+find . -type f -exec stat {} \;
+find . -type f -exec stat {} \; >> ../_stat-all.txt
+hist | grep find
+find . -type f
+find . -type f | wc -l
+find . -type f | pbcopy
+find . type -f
+find . type f
+find . -type f
+find . -type f -exec mv {} ~/Pictures/sort-check/ \;
+find . -type f
+find . -type f
+cat find-commands
+find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done
+find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done >> summary.txt
+find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \;
+find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done >> summary.txt
+find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done
+find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \;
+find . -iname "*.JPG" -maxdepth 1 -exec convert -resize 120x120 {} thumbs/{} \;
+find . -iname "*.JPG" -maxdepth 1 
+find . -iname "*.JPG" -maxdepth 1 -exec convert -resize 120x120 {} thumbs/{} \;
+man find
+find . -H
+man find
+find . -type f
+find . -type f -H
+find -H . -type f
+find -H .
+find -Btime .
+find . 
+find . -Btime
+find . -Btime 1
+find . -Btime 1a
+find . -Btime 1d
+find . -Btime 1w
+find . -Btime 1w
+find . -Bmin
+find . -Bmin 90
+find . -Bmin 900
+find . -Bmin 9000
+find . -Bmin 9
+find . -atime 5d
+find . -atime 5a
+find . -atime 5m
+find . -ctime 5m
+find . -ctime 5d
+find . 
+find . -empty
+find . -mmin 5
+find . -mmin 50
+find . -mmin 1
+find . -mmin 2
+find . -newerct '1 minute ago' -print
+find . -newerct '2 minute ago' -print
+find . -newerct '20 minute ago' -print
+find . -newerct '200 minute ago' -print
+find . -newerct '2000 minute ago' -print
+man find
+./cmd_as_param.sh "find --help"
+find . 
+find . -type f
+find . -iname "041_nik1_DSC0051_nik1.JPG"
+find . -iname "041_nik1_DSC0051_nik1.JPG" | pbcopy
+find -d 
+find --New\ Folder\ With\ Items 
+find "--New Folder With Items/" 
+find .
+find . -type f
+hist | grep find | grep mp4
+find . -type f \( -iname "*.mp4" -o -iname "*.mov" \)
+find .  \( -iname "*.mp4" -o -iname "*.mov" \)
+find .  \( -iname "*.mp4" -o -iname "*.mov" \) -exec b
+find .  \( -iname "*.mp4" -o -iname "*.mov" \) -exec basename {} \;
+find .  \( -iname "*.mp4" -o -iname "*.mov" \) -exec basename {} \; | pbcopy
+find . -type f | wc -l 
+cat find-commands
+hist | find
+hist | grep find

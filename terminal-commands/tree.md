@@ -43,3 +43,8 @@ tree -fiQ --prune
 `-I pattern` do not list files matching pattern.
 
 `Q` print file name quoted
+
+
+***
+list files with time of creation
+tree -Df -i --timefmt '%Y-%m-%d %H:%M:%S' -F

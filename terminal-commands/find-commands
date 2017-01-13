@@ -1,11 +1,36 @@
-Lista todas as extensões do diretório
+Lista todas as extensões do diretório (1)
+```
+find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -u
+```
 
-        find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -u
+Contagem dos arquivos encontrados (2)
+```
+find . -iname "*.jpg"  | wc -l
+```
 
-Contagem dos arquivos encontrados
+Contagem dos arquivos encontrados para cada extensão (1 + 2)
+```
+# sem variável
+find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -uf | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done
+```
 
-        find . -iname "*.jpg"  | wc -l
+```
+# sem variável
+foo=$(find . -type f | perl -ne 'print $1 if m/\.([^.\/]+)$/' | sort -u)
+printf '%s\n' "$foo" | while IFS= read -r line; do printf '%s' "$line"; find . -iname "*.${line}"  | wc -l ; done
+```
 
 Usando o OR
+```
+find . \( -iname "*mp3" -o -iname "*.wma" \)
+```
 
-        find . \( -iname "*mp3" -o -iname "*.wma" \)
+Fix permissions of files and directories
+```
+find . -type f -exec chmod 644 {} \;
+find . -type d -exec chmod 755 {} \;
+```
+
+mkdir fotos ; find . \( -iname "*.jpg" -o -iname "*.png" \) -exec mv {} fotos \; 
+mkdir videos ; find . \( -iname "*.mp4" -o -iname "*.mov" \) -exec mv {} videos \; 
+
