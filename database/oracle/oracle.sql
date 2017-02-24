@@ -90,3 +90,6 @@ and tabs.table_name like 'FRQ_TIPO%';
 
 -- cast date
 data_inicial = to_date('30/12/2015','dd/mm/yyyy')
+
+-- tornar nullable
+alter table sada.ejud_andamento_requerimento modify (MOTIVO null);
