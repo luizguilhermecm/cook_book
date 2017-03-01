@@ -1,0 +1,109 @@
+<!--
+Adicionar o javascript que faz o hide e show de cada um dos vinculados de acordo com o value do radio
+utilizando o ID do código da página gerada 
+
+	<script type="text/javascript">
+
+	jQuery(document).ready(function() {
+			jQuery("input[type=radio][name=corpo\\:formulario\\:opcao_saida]").change(function() {
+				if (this.value == 0) {
+					jQuery(".selecaoMagistrado").show();
+					jQuery(".selecaoFuncao").hide();
+					jQuery("#lookup_corpo\\:formulario\\:funcao").val('');
+				} 
+				if (this.value == 1) {
+					jQuery(".selecaoFuncao").show();
+					jQuery(".selecaoMagistrado").hide();
+					jQuery("#lookup_corpo\\:formulario\\:magistrado").val('');
+				}
+			});
+			
+		});
+	</script>
+
+-->
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:plcf="http://www.powerlogic.com.br/plcf"
+	xmlns:tr="http://myfaces.apache.org/trinidad"
+	xmlns:trh="http://myfaces.apache.org/trinidad/html">
+<ui:composition template="/fcls/template/PlcGeralTemplate.xhtml">
+	<ui:define name="plc-corpo-formulario">
+		<div id="plc-form-basico">
+			<div id="#{plcAliasPrefixoAction}Arg" class="plc-form-basico-topo">
+				<fieldset class="plc-fieldset">
+					<legend class="plc-fieldset-legend">
+						Preencha os filtros desejados
+					</legend>
+					<table width="100%">
+						<tr>
+							<td width="15%">
+								<plcf:titulo value="Opções de saída" /> 
+									<plcf:radio
+										id="opcao_saida" 
+										value="#{relatorioatividadeextra.opcaoSaida}"
+										dominio="OpcoesSaidaRelatorioAtividadeExtraEnum" />
+							</td>
+							<td>
+								<div class="selecaoMagistrado">
+									<plcf:titulo value="Selecione um magistrado" /> 
+									<plcf:vinculado
+										id="magistrado" value="#{relatorioatividadeextra.magistrado}"
+										propSelPop="servidor" idExibe="N" idSomenteLeitura="S"
+										autoRecuperacaoClasse="br.jus.xxxxx.escolajudicial.entity.ServidorFichaEntity"
+										actionSel="servidorfichamag" modal="S" obrigatorio="N"
+										ajudaChave="ajuda.orientador"
+										onkeydown="selecionaPorTecla(event,this);" lookupTamanho="75" />
+									<span class="plc-img-obrigatorio"> 
+										<img
+											src="#{request.contextPath}/res-plc/midia/ico_obrig.png"
+											style="float: left; border: 0" title="Campo obrigatório" />
+									</span>
+								</div>
+								<div class="selecaoFuncao" style=" display: none; ">
+									<plcf:titulo value="Selecione uma função" />
+									<plcf:vinculado id="funcao" value="#{relatorioatividadeextra.funcao}"
+										propSelPop="funcao" idExibe="N" idSomenteLeitura="N"
+										autoRecuperacaoClasse="br.jus.xxxxx.escolajudicial.entity.FuncaoEntity"
+										actionSel="funcaosel" modal="S" ajudaChave="ajuda.funcao"
+										onkeydown="selecionaPorTecla(event,this);" lookupTamanho="80" />
+									<span class="plc-img-obrigatorio"> 
+										<img
+											src="/escolaJudicial/res-plc/midia/ico_obrig.png"
+											style="float: left; border: 0" title="Campo obrigatório" />
+									</span>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</fieldset>
+			</div>
+		</div>
+
+	<script type="text/javascript">
+
+	jQuery(document).ready(function() {
+			jQuery("input[type=radio][name=corpo\\:formulario\\:opcao_saida]").change(function() {
+				if (this.value == 0) {
+					jQuery(".selecaoMagistrado").show();
+					jQuery(".selecaoFuncao").hide();
+					jQuery("#lookup_corpo\\:formulario\\:funcao").val('');
+				} 
+				if (this.value == 1) {
+					jQuery(".selecaoFuncao").show();
+					jQuery(".selecaoMagistrado").hide();
+					jQuery("#lookup_corpo\\:formulario\\:magistrado").val('');
+				}
+			});
+			
+		});
+	</script>
+	</ui:define>
+</ui:composition>
+</html>
