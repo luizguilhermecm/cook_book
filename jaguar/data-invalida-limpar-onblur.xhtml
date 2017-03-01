@@ -1,0 +1,91 @@
+<!--
+Adicionar o javascript que a adiciona a verificação da data no "blur" antes do fechamento da tag </ui:define>
+exemplo completo depois do comentário
+	<script type="text/javascript">
+
+	jQuery(document).ready(function() {
+
+			var REG_EX_DATA_VALIDA = /^((((0?[1-9]|[12]\d|3[01])[\.\-\/](0?[13578]|1[02])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|[12]\d|30)[\.\-\/](0?[13456789]|1[012])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|1\d|2[0-8])[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|(29[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00)))|(((0[1-9]|[12]\d|3[01])(0[13578]|1[02])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|[12]\d|30)(0[13456789]|1[012])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|1\d|2[0-8])02((1[6-9]|[2-9]\d)?\d{2}))|(2902((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00))))$/;
+			
+			jQuery(".af_inputDate_content").live("blur", function() {
+				var campoData = jQuery(this);	
+				var dataValida = !!campoData.val().match(REG_EX_DATA_VALIDA); // Converte o trecho encontrado para booleano.
+				if (!dataValida) {
+					campoData.val("");
+				}
+			});
+		});
+	</script>
+
+
+-->
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:plcf="http://www.powerlogic.com.br/plcf"
+	xmlns:tr="http://myfaces.apache.org/trinidad"
+	xmlns:trh="http://myfaces.apache.org/trinidad/html">
+<ui:composition template="/fcls/template/PlcGeralTemplate.xhtml">
+	<ui:define name="plc-corpo-formulario">
+		<div id="plc-form-basico">
+			<div id="#{plcAliasPrefixoAction}Arg" class="plc-form-basico-topo">
+				<fieldset class="plc-fieldset">
+					<legend class="plc-fieldset-legend">
+						Preencha os filtros desejados
+					</legend>
+					<table width="100%">
+						<tr>
+							<td colspan="2">
+								<plcf:titulo value="Período" />
+								<h:panelGrid columns="6">
+									<plcf:exibe value="De&nbsp;" />
+									<plcf:data id="filtro_dataInicial"
+										value="#{relatorioatividadeextra.dataInicial}" tamanho="10"
+										tamanhoMaximo="10" ajudaChave="ajuda.filtro_dataInicial"
+										msgErro="erro.filtro_dataInicial"
+										tituloChave="label.filtro_dataInicial" />
+									<plcf:exibe value="Até&nbsp;" />
+									<plcf:data id="filtro_dataFinal"
+										value="#{relatorioatividadeextra.dataFinal}" tamanho="10"
+										tamanhoMaximo="10" ajudaChave="ajuda.filtro_dataFinal"
+										msgErro="erro.filtro_dataFinal"
+										tituloChave="label.filtro_dataFinal" />
+								</h:panelGrid>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<plcf:titulo value="Data Final Preenchida" />
+								<plcf:comboEstatico id="filtro_data_final"
+									value="#{relatorioatividadeextra.dataFinalPreenchida}"
+									dominio="FiltroDataFinalPreenchidaEnum" exibeBranco="N" />
+							</td>
+						</tr>
+					</table>
+				</fieldset>
+			</div>
+		</div>
+
+	<script type="text/javascript">
+
+	jQuery(document).ready(function() {
+
+			var REG_EX_DATA_VALIDA = /^((((0?[1-9]|[12]\d|3[01])[\.\-\/](0?[13578]|1[02])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|[12]\d|30)[\.\-\/](0?[13456789]|1[012])[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|((0?[1-9]|1\d|2[0-8])[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?\d{2}))|(29[\.\-\/]0?2[\.\-\/]((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00)))|(((0[1-9]|[12]\d|3[01])(0[13578]|1[02])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|[12]\d|30)(0[13456789]|1[012])((1[6-9]|[2-9]\d)?\d{2}))|((0[1-9]|1\d|2[0-8])02((1[6-9]|[2-9]\d)?\d{2}))|(2902((1[6-9]|[2-9]\d)?(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00)|00))))$/;
+			
+			jQuery(".af_inputDate_content").live("blur", function() {
+				var campoData = jQuery(this);	
+				var dataValida = !!campoData.val().match(REG_EX_DATA_VALIDA); // Converte o trecho encontrado para booleano.
+				if (!dataValida) {
+					campoData.val("");
+				}
+			});
+		});
+	</script>
+	</ui:define>
+</ui:composition>
+</html>
