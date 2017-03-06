@@ -1,3 +1,5 @@
+http://stackoverflow.com/questions/19858176/how-to-escape-spaces-in-path-during-scp-copy-in-linux
+
 Copiando um arquivo remoto para máquina local:
 
     scp user@domain:/pasta-remota/arquivo-remoto.txt /pasta-local/arquivo-local.txt
