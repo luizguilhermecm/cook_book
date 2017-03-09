@@ -19,7 +19,7 @@ defaults write com.apple.finder AppleShowAllFiles -bool TRUE
 # do not show hidden files and directories on Finder (default)
 defaults write com.apple.finder AppleShowAllFiles -bool FALSE
 
-# enable text selection in 'quick look'
+# enable text selection in 'quick look' 
 defaults write com.apple.finder QLEnableTextSelection -bool TRUE
 
 # diseble text selection in 'quick look' (default)
@@ -31,3 +31,8 @@ defaults write com.apple.screencapture location /path/;killall SystemUIServer
 # it makes finder quit with command Q
 defaults write com.apple.finder QuitMenuItem -bool YES && killall Finder
 
+
+# Expand Save Panel by Default 
+# to know what this mean google this NSNavPanelExpandedStateForSaveMode)
+defaults write -g NSNavPanelExpandedStateForSaveMode -bool true && \
+defaults write -g NSNavPanelExpandedStateForSaveMode2 -bool true

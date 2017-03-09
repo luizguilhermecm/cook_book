@@ -15,3 +15,13 @@ Além do "=" ou "-eq" que propõe, que duas expressões sejam iguais, temos:
 "-r" que propõe, que se o arquivo pode ser lido;
 "-w" que propõe, que se o arquivo pode ser alterado;
 "-x" que propõe, que se o arquivo pode ser executado.
+
+
+    if [ $# -eq 0 ]; then
+        echo $help_str
+        return;
+    elif [[ $# -eq 0 ||  $1 = "-h" || $1 == "--h" || $1 == "-help" ]]; then
+        echo "-h"
+    fi;
+
+

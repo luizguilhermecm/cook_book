@@ -1,6 +1,39 @@
 Sort
 ====
 
+yank all file/buffer `gy`
+
+```
+nnoremap gy :0,$ y<cr>
+```
+
+***
+
+select entire buffer/file `vy`
+
+```
+nnoremap vy ggVG
+```
+
+***
+
+Create newlines without entering insert mode
+
+```
+nnoremap go o<Esc>k
+nnoremap gO O<Esc>j
+```
+
+***
+
+remap U to <C-r> for easier redo
+from http://vimbits.com/bits/356
+
+  nnoremap U <C-r>
+
+***
+
+
 
 ```
 # se iniciar com tabulação + id=, substitui por 'id=', remove a tabulação

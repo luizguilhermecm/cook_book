@@ -1,0 +1,3142 @@
+     1	# regex wrote by me
+     2	
+     3	## Até, Until
+     4	
+     5	`:%s/^[^&]\+//` : **^[^&]\+** match do inicio da linha até encontrar um carater **&**
+     1	*pattern.txt*   For Vim version 8.0.  Last change: 2016 Sep 11
+     2	
+     3			  VIM REFERENCE MANUAL    by Bram Moolenaar
+     4	
+     5	Patterns and search commands				*pattern-searches*
+     6	
+     7	The very basics can be found in section |03.9| of the user manual.  A few more
+     8	explanations are in chapter 27 |usr_27.txt|.
+     9	
+    10	1. Search commands		|search-commands|
+    11	2. The definition of a pattern	|search-pattern|
+    12	3. Magic			|/magic|
+    13	4. Overview of pattern items	|pattern-overview|
+    14	5. Multi items			|pattern-multi-items|
+    15	6. Ordinary atoms		|pattern-atoms|
+    16	7. Ignoring case in a pattern	|/ignorecase|
+    17	8. Composing characters		|patterns-composing|
+    18	9. Compare with Perl patterns	|perl-patterns|
+    19	10. Highlighting matches	|match-highlight|
+    20	
+    21	==============================================================================
+    22	1. Search commands				*search-commands*
+    23	
+    24								*/*
+    25	/{pattern}[/]<CR>	Search forward for the [count]'th occurrence of
+    26				{pattern} |exclusive|.
+    27	
+    28	/{pattern}/{offset}<CR>	Search forward for the [count]'th occurrence of
+    29				{pattern} and go |{offset}| lines up or down.
+    30				|linewise|.
+    31	
+    32								*/<CR>*
+    33	/<CR>			Search forward for the [count]'th occurrence of the
+    34				latest used pattern |last-pattern| with latest used
+    35				|{offset}|.
+    36	
+    37	//{offset}<CR>		Search forward for the [count]'th occurrence of the
+    38				latest used pattern |last-pattern| with new
+    39				|{offset}|.  If {offset} is empty no offset is used.
+    40	
+    41								*?*
+    42	?{pattern}[?]<CR>	Search backward for the [count]'th previous
+    43				occurrence of {pattern} |exclusive|.
+    44	
+    45	?{pattern}?{offset}<CR>	Search backward for the [count]'th previous
+    46				occurrence of {pattern} and go |{offset}| lines up or
+    47				down |linewise|.
+    48	
+    49								*?<CR>*
+    50	?<CR>			Search backward for the [count]'th occurrence of the
+    51				latest used pattern |last-pattern| with latest used
+    52				|{offset}|.
+    53	
+    54	??{offset}<CR>		Search backward for the [count]'th occurrence of the
+    55				latest used pattern |last-pattern| with new
+    56				|{offset}|.  If {offset} is empty no offset is used.
+    57	
+    58								*n*
+    59	n			Repeat the latest "/" or "?" [count] times.
+    60				If the cursor doesn't move the search is repeated with
+    61				count + 1.
+    62				|last-pattern| {Vi: no count}
+    63	
+    64								*N*
+    65	N			Repeat the latest "/" or "?" [count] times in
+    66				opposite direction. |last-pattern| {Vi: no count}
+    67	
+    68								*star* *E348* *E349*
+    69	*			Search forward for the [count]'th occurrence of the
+    70				word nearest to the cursor.  The word used for the
+    71				search is the first of:
+    72					1. the keyword under the cursor |'iskeyword'|
+    73					2. the first keyword after the cursor, in the
+    74					   current line
+    75					3. the non-blank word under the cursor
+    76					4. the first non-blank word after the cursor,
+    77					   in the current line
+    78				Only whole keywords are searched for, like with the
+    79				command "/\<keyword\>".  |exclusive|  {not in Vi}
+    80				'ignorecase' is used, 'smartcase' is not.
+    81	
+    82								*#*
+    83	#			Same as "*", but search backward.  The pound sign
+    84				(character 163) also works.  If the "#" key works as
+    85				backspace, try using "stty erase <BS>" before starting
+    86				Vim (<BS> is CTRL-H or a real backspace).  {not in Vi}
+    87	
+    88								*gstar*
+    89	g*			Like "*", but don't put "\<" and "\>" around the word.
+    90				This makes the search also find matches that are not a
+    91				whole word.  {not in Vi}
+    92	
+    93								*g#*
+    94	g#			Like "#", but don't put "\<" and "\>" around the word.
+    95				This makes the search also find matches that are not a
+    96				whole word.  {not in Vi}
+    97	
+    98								*gd*
+    99	gd			Goto local Declaration.  When the cursor is on a local
+   100				variable, this command will jump to its declaration.
+   101				First Vim searches for the start of the current
+   102				function, just like "[[".  If it is not found the
+   103				search stops in line 1.  If it is found, Vim goes back
+   104				until a blank line is found.  From this position Vim
+   105				searches for the keyword under the cursor, like with
+   106				"*", but lines that look like a comment are ignored
+   107				(see 'comments' option).
+   108				Note that this is not guaranteed to work, Vim does not
+   109				really check the syntax, it only searches for a match
+   110				with the keyword.  If included files also need to be
+   111				searched use the commands listed in |include-search|.
+   112				After this command |n| searches forward for the next
+   113				match (not backward).
+   114				{not in Vi}
+   115	
+   116								*gD*
+   117	gD			Goto global Declaration.  When the cursor is on a
+   118				global variable that is defined in the file, this
+   119				command will jump to its declaration.  This works just
+   120				like "gd", except that the search for the keyword
+   121				always starts in line 1.  {not in Vi}
+   122	
+   123								*1gd*
+   124	1gd			Like "gd", but ignore matches inside a {} block that
+   125				ends before the cursor position. {not in Vi}
+   126	
+   127								*1gD*
+   128	1gD			Like "gD", but ignore matches inside a {} block that
+   129				ends before the cursor position. {not in Vi}
+   130	
+   131								*CTRL-C*
+   132	CTRL-C			Interrupt current (search) command.  Use CTRL-Break on
+   133				MS-DOS |dos-CTRL-Break|.
+   134				In Normal mode, any pending command is aborted.
+   135	
+   136								*:noh* *:nohlsearch*
+   137	:noh[lsearch]		Stop the highlighting for the 'hlsearch' option.  It
+   138				is automatically turned back on when using a search
+   139				command, or setting the 'hlsearch' option.
+   140				This command doesn't work in an autocommand, because
+   141				the highlighting state is saved and restored when
+   142				executing autocommands |autocmd-searchpat|.
+   143				Same thing for when invoking a user function.
+   144	
+   145	While typing the search pattern the current match will be shown if the
+   146	'incsearch' option is on.  Remember that you still have to finish the search
+   147	command with <CR> to actually position the cursor at the displayed match.  Or
+   148	use <Esc> to abandon the search.
+   149	
+   150	All matches for the last used search pattern will be highlighted if you set
+   151	the 'hlsearch' option.  This can be suspended with the |:nohlsearch| command.
+   152	
+   153	When no match is found you get the error: *E486* Pattern not found
+   154	Note that for the |:global| command this behaves like a normal message, for Vi
+   155	compatibility.  For the |:s| command the "e" flag can be used to avoid the
+   156	error message |:s_flags|.
+   157	
+   158						*search-offset* *{offset}*
+   159	These commands search for the specified pattern.  With "/" and "?" an
+   160	additional offset may be given.  There are two types of offsets: line offsets
+   161	and character offsets.  {the character offsets are not in Vi}
+   162	
+   163	The offset gives the cursor position relative to the found match:
+   164	    [num]	[num] lines downwards, in column 1
+   165	    +[num]	[num] lines downwards, in column 1
+   166	    -[num]	[num] lines upwards, in column 1
+   167	    e[+num]	[num] characters to the right of the end of the match
+   168	    e[-num]	[num] characters to the left of the end of the match
+   169	    s[+num]	[num] characters to the right of the start of the match
+   170	    s[-num]	[num] characters to the left of the start of the match
+   171	    b[+num]	[num] identical to s[+num] above (mnemonic: begin)
+   172	    b[-num]	[num] identical to s[-num] above (mnemonic: begin)
+   173	    ;{pattern}  perform another search, see |//;|
+   174	
+   175	If a '-' or '+' is given but [num] is omitted, a count of one will be used.
+   176	When including an offset with 'e', the search becomes inclusive (the
+   177	character the cursor lands on is included in operations).
+   178	
+   179	Examples:
+   180	
+   181	pattern			cursor position	~
+   182	/test/+1		one line below "test", in column 1
+   183	/test/e			on the last t of "test"
+   184	/test/s+2		on the 's' of "test"
+   185	/test/b-3		three characters before "test"
+   186	
+   187	If one of these commands is used after an operator, the characters between
+   188	the cursor position before and after the search is affected.  However, if a
+   189	line offset is given, the whole lines between the two cursor positions are
+   190	affected.
+   191	
+   192	An example of how to search for matches with a pattern and change the match
+   193	with another word: >
+   194		/foo<CR>	find "foo"
+   195		c//e<CR>	change until end of match
+   196		bar<Esc>	type replacement
+   197		//<CR>		go to start of next match
+   198		c//e<CR>	change until end of match
+   199		beep<Esc>	type another replacement
+   200				etc.
+   201	<
+   202								*//;* *E386*
+   203	A very special offset is ';' followed by another search command.  For example: >
+   204	
+   205	   /test 1/;/test
+   206	   /test.*/+1;?ing?
+   207	
+   208	The first one first finds the next occurrence of "test 1", and then the first
+   209	occurrence of "test" after that.
+   210	
+   211	This is like executing two search commands after each other, except that:
+   212	- It can be used as a single motion command after an operator.
+   213	- The direction for a following "n" or "N" command comes from the first
+   214	  search command.
+   215	- When an error occurs the cursor is not moved at all.
+   216	
+   217								*last-pattern*
+   218	The last used pattern and offset are remembered.  They can be used to repeat
+   219	the search, possibly in another direction or with another count.  Note that
+   220	two patterns are remembered: One for 'normal' search commands and one for the
+   221	substitute command ":s".  Each time an empty pattern is given, the previously
+   222	used pattern is used.  However, if there is no previous search command, a
+   223	previous substitute pattern is used, if possible.
+   224	
+   225	The 'magic' option sticks with the last used pattern.  If you change 'magic',
+   226	this will not change how the last used pattern will be interpreted.
+   227	The 'ignorecase' option does not do this.  When 'ignorecase' is changed, it
+   228	will result in the pattern to match other text.
+   229	
+   230	All matches for the last used search pattern will be highlighted if you set
+   231	the 'hlsearch' option.
+   232	
+   233	To clear the last used search pattern: >
+   234		:let @/ = ""
+   235	This will not set the pattern to an empty string, because that would match
+   236	everywhere.  The pattern is really cleared, like when starting Vim.
+   237	
+   238	The search usually skips matches that don't move the cursor.  Whether the next
+   239	match is found at the next character or after the skipped match depends on the
+   240	'c' flag in 'cpoptions'.  See |cpo-c|.
+   241		   with 'c' flag:   "/..." advances 1 to 3 characters
+   242		without 'c' flag:   "/..." advances 1 character
+   243	The unpredictability with the 'c' flag is caused by starting the search in the
+   244	first column, skipping matches until one is found past the cursor position.
+   245	
+   246	When searching backwards, searching starts at the start of the line, using the
+   247	'c' flag in 'cpoptions' as described above.  Then the last match before the
+   248	cursor position is used.
+   249	
+   250	In Vi the ":tag" command sets the last search pattern when the tag is searched
+   251	for.  In Vim this is not done, the previous search pattern is still remembered,
+   252	unless the 't' flag is present in 'cpoptions'.  The search pattern is always
+   253	put in the search history.
+   254	
+   255	If the 'wrapscan' option is on (which is the default), searches wrap around
+   256	the end of the buffer.  If 'wrapscan' is not set, the backward search stops
+   257	at the beginning and the forward search stops at the end of the buffer.  If
+   258	'wrapscan' is set and the pattern was not found the error message "pattern
+   259	not found" is given, and the cursor will not be moved.  If 'wrapscan' is not
+   260	set the message becomes "search hit BOTTOM without match" when searching
+   261	forward, or "search hit TOP without match" when searching backward.  If
+   262	wrapscan is set and the search wraps around the end of the file the message
+   263	"search hit TOP, continuing at BOTTOM" or "search hit BOTTOM, continuing at
+   264	TOP" is given when searching backwards or forwards respectively.  This can be
+   265	switched off by setting the 's' flag in the 'shortmess' option.  The highlight
+   266	method 'w' is used for this message (default: standout).
+   267	
+   268								*search-range*
+   269	You can limit the search command "/" to a certain range of lines by including
+   270	\%>l items.  For example, to match the word "limit" below line 199 and above
+   271	line 300: >
+   272		/\%>199l\%<300llimit
+   273	Also see |/\%>l|.
+   274	
+   275	Another way is to use the ":substitute" command with the 'c' flag.  Example: >
+   276	   :.,300s/Pattern//gc
+   277	This command will search from the cursor position until line 300 for
+   278	"Pattern".  At the match, you will be asked to type a character.  Type 'q' to
+   279	stop at this match, type 'n' to find the next match.
+   280	
+   281	The "*", "#", "g*" and "g#" commands look for a word near the cursor in this
+   282	order, the first one that is found is used:
+   283	- The keyword currently under the cursor.
+   284	- The first keyword to the right of the cursor, in the same line.
+   285	- The WORD currently under the cursor.
+   286	- The first WORD to the right of the cursor, in the same line.
+   287	The keyword may only contain letters and characters in 'iskeyword'.
+   288	The WORD may contain any non-blanks (<Tab>s and/or <Space>s).
+   289	Note that if you type with ten fingers, the characters are easy to remember:
+   290	the "#" is under your left hand middle finger (search to the left and up) and
+   291	the "*" is under your right hand middle finger (search to the right and down).
+   292	(this depends on your keyboard layout though).
+   293	
+   294	==============================================================================
+   295	2. The definition of a pattern		*search-pattern* *pattern* *[pattern]*
+   296						*regular-expression* *regexp* *Pattern*
+   297						*E76* *E383* *E476*
+   298	
+   299	For starters, read chapter 27 of the user manual |usr_27.txt|.
+   300	
+   301							*/bar* */\bar* */pattern*
+   302	1. A pattern is one or more branches, separated by "\|".  It matches anything
+   303	   that matches one of the branches.  Example: "foo\|beep" matches "foo" and
+   304	   matches "beep".  If more than one branch matches, the first one is used.
+   305	
+   306	   pattern ::=	    branch
+   307			or  branch \| branch
+   308			or  branch \| branch \| branch
+   309			etc.
+   310	
+   311							*/branch* */\&*
+   312	2. A branch is one or more concats, separated by "\&".  It matches the last
+   313	   concat, but only if all the preceding concats also match at the same
+   314	   position.  Examples:
+   315		"foobeep\&..." matches "foo" in "foobeep".
+   316		".*Peter\&.*Bob" matches in a line containing both "Peter" and "Bob"
+   317	
+   318	   branch ::=	    concat
+   319			or  concat \& concat
+   320			or  concat \& concat \& concat
+   321			etc.
+   322	
+   323							*/concat*
+   324	3. A concat is one or more pieces, concatenated.  It matches a match for the
+   325	   first piece, followed by a match for the second piece, etc.  Example:
+   326	   "f[0-9]b", first matches "f", then a digit and then "b".
+   327	
+   328	   concat  ::=	    piece
+   329			or  piece piece
+   330			or  piece piece piece
+   331			etc.
+   332	
+   333							*/piece*
+   334	4. A piece is an atom, possibly followed by a multi, an indication of how many
+   335	   times the atom can be matched.  Example: "a*" matches any sequence of "a"
+   336	   characters: "", "a", "aa", etc.  See |/multi|.
+   337	
+   338	   piece   ::=	    atom
+   339			or  atom  multi
+   340	
+   341							*/atom*
+   342	5. An atom can be one of a long list of items.  Many atoms match one character
+   343	   in the text.  It is often an ordinary character or a character class.
+   344	   Braces can be used to make a pattern into an atom.  The "\z(\)" construct
+   345	   is only for syntax highlighting.
+   346	
+   347	   atom    ::=	    ordinary-atom		|/ordinary-atom|
+   348			or  \( pattern \)		|/\(|
+   349			or  \%( pattern \)		|/\%(|
+   350			or  \z( pattern \)		|/\z(|
+   351	
+   352					*/\%#=* *two-engines* *NFA*
+   353	Vim includes two regexp engines:
+   354	1. An old, backtracking engine that supports everything.
+   355	2. A new, NFA engine that works much faster on some patterns, possibly slower
+   356	   on some patterns.
+   357	
+   358	Vim will automatically select the right engine for you.  However, if you run
+   359	into a problem or want to specifically select one engine or the other, you can
+   360	prepend one of the following to the pattern:
+   361	
+   362		\%#=0	Force automatic selection.  Only has an effect when
+   363		        'regexpengine' has been set to a non-zero value.
+   364		\%#=1	Force using the old engine.
+   365		\%#=2	Force using the NFA engine.
+   366	
+   367	You can also use the 'regexpengine' option to change the default.
+   368	
+   369				 *E864* *E868* *E874* *E875* *E876* *E877* *E878*
+   370	If selecting the NFA engine and it runs into something that is not implemented
+   371	the pattern will not match.  This is only useful when debugging Vim.
+   372	
+   373	==============================================================================
+   374	3. Magic							*/magic*
+   375	
+   376	Some characters in the pattern are taken literally.  They match with the same
+   377	character in the text.  When preceded with a backslash however, these
+   378	characters get a special meaning.
+   379	
+   380	Other characters have a special meaning without a backslash.  They need to be
+   381	preceded with a backslash to match literally.
+   382	
+   383	If a character is taken literally or not depends on the 'magic' option and the
+   384	items mentioned next.
+   385								*/\m* */\M*
+   386	Use of "\m" makes the pattern after it be interpreted as if 'magic' is set,
+   387	ignoring the actual value of the 'magic' option.
+   388	Use of "\M" makes the pattern after it be interpreted as if 'nomagic' is used.
+   389								*/\v* */\V*
+   390	Use of "\v" means that in the pattern after it all ASCII characters except
+   391	'0'-'9', 'a'-'z', 'A'-'Z' and '_' have a special meaning.  "very magic"
+   392	
+   393	Use of "\V" means that in the pattern after it only the backslash and the
+   394	terminating character (/ or ?) has a special meaning.  "very nomagic"
+   395	
+   396	Examples:
+   397	after:	  \v	   \m	    \M	     \V		matches ~
+   398			'magic' 'nomagic'
+   399		  $	   $	    $	     \$		matches end-of-line
+   400		  .	   .	    \.	     \.		matches any character
+   401		  *	   *	    \*	     \*		any number of the previous atom
+   402		  ~	   ~	    \~	     \~		latest substitute string
+   403		  ()	   \(\)     \(\)     \(\)	grouping into an atom
+   404		  |	   \|	    \|	     \|		separating alternatives
+   405		  \a	   \a	    \a	     \a		alphabetic character
+   406		  \\	   \\	    \\	     \\		literal backslash
+   407		  \.	   \.	    .	     .		literal dot
+   408		  \{	   {	    {	     {		literal '{'
+   409		  a	   a	    a	     a		literal 'a'
+   410	
+   411	{only Vim supports \m, \M, \v and \V}
+   412	
+   413	It is recommended to always keep the 'magic' option at the default setting,
+   414	which is 'magic'.  This avoids portability problems.  To make a pattern immune
+   415	to the 'magic' option being set or not, put "\m" or "\M" at the start of the
+   416	pattern.
+   417	
+   418	==============================================================================
+   419	4. Overview of pattern items				*pattern-overview*
+   420							*E865* *E866* *E867* *E869*
+   421	
+   422	Overview of multi items.				*/multi* *E61* *E62*
+   423	More explanation and examples below, follow the links.		*E64* *E871*
+   424	
+   425		  multi ~
+   426	     'magic' 'nomagic'	matches of the preceding atom ~
+   427	|/star|	*	\*	0 or more	as many as possible
+   428	|/\+|	\+	\+	1 or more	as many as possible (*)
+   429	|/\=|	\=	\=	0 or 1		as many as possible (*)
+   430	|/\?|	\?	\?	0 or 1		as many as possible (*)
+   431	
+   432	|/\{|	\{n,m}	\{n,m}	n to m		as many as possible (*)
+   433		\{n}	\{n}	n		exactly (*)
+   434		\{n,}	\{n,}	at least n	as many as possible (*)
+   435		\{,m}	\{,m}	0 to m		as many as possible (*)
+   436		\{}	\{}	0 or more	as many as possible (same as *) (*)
+   437	
+   438	|/\{-|	\{-n,m}	\{-n,m}	n to m		as few as possible (*)
+   439		\{-n}	\{-n}	n		exactly (*)
+   440		\{-n,}	\{-n,}	at least n	as few as possible (*)
+   441		\{-,m}	\{-,m}	0 to m		as few as possible (*)
+   442		\{-}	\{-}	0 or more	as few as possible (*)
+   443	
+   444								*E59*
+   445	|/\@>|	\@>	\@>	1, like matching a whole pattern (*)
+   446	|/\@=|	\@=	\@=	nothing, requires a match |/zero-width| (*)
+   447	|/\@!|	\@!	\@!	nothing, requires NO match |/zero-width| (*)
+   448	|/\@<=|	\@<=	\@<=	nothing, requires a match behind |/zero-width| (*)
+   449	|/\@<!|	\@<!	\@<!	nothing, requires NO match behind |/zero-width| (*)
+   450	
+   451	(*) {not in Vi}
+   452	
+   453	Overview of ordinary atoms.				*/ordinary-atom*
+   454	More explanation and examples below, follow the links.
+   455	
+   456	      ordinary atom ~
+   457	      magic   nomagic	matches ~
+   458	|/^|	^	^	start-of-line (at start of pattern) |/zero-width|
+   459	|/\^|	\^	\^	literal '^'
+   460	|/\_^|	\_^	\_^	start-of-line (used anywhere) |/zero-width|
+   461	|/$|	$	$	end-of-line (at end of pattern) |/zero-width|
+   462	|/\$|	\$	\$	literal '$'
+   463	|/\_$|	\_$	\_$	end-of-line (used anywhere) |/zero-width|
+   464	|/.|	.	\.	any single character (not an end-of-line)
+   465	|/\_.|	\_.	\_.	any single character or end-of-line
+   466	|/\<|	\<	\<	beginning of a word |/zero-width|
+   467	|/\>|	\>	\>	end of a word |/zero-width|
+   468	|/\zs|	\zs	\zs	anything, sets start of match
+   469	|/\ze|	\ze	\ze	anything, sets end of match
+   470	|/\%^|	\%^	\%^	beginning of file |/zero-width|		*E71*
+   471	|/\%$|	\%$	\%$	end of file |/zero-width|
+   472	|/\%V|	\%V	\%V	inside Visual area |/zero-width|
+   473	|/\%#|	\%#	\%#	cursor position |/zero-width|
+   474	|/\%'m|	\%'m	\%'m	mark m position |/zero-width|
+   475	|/\%l|	\%23l	\%23l	in line 23 |/zero-width|
+   476	|/\%c|	\%23c	\%23c	in column 23 |/zero-width|
+   477	|/\%v|	\%23v	\%23v	in virtual column 23 |/zero-width|
+   478	
+   479	Character classes {not in Vi}:				*/character-classes*
+   480	      magic   nomagic	matches ~
+   481	|/\i|	\i	\i	identifier character (see 'isident' option)
+   482	|/\I|	\I	\I	like "\i", but excluding digits
+   483	|/\k|	\k	\k	keyword character (see 'iskeyword' option)
+   484	|/\K|	\K	\K	like "\k", but excluding digits
+   485	|/\f|	\f	\f	file name character (see 'isfname' option)
+   486	|/\F|	\F	\F	like "\f", but excluding digits
+   487	|/\p|	\p	\p	printable character (see 'isprint' option)
+   488	|/\P|	\P	\P	like "\p", but excluding digits
+   489	|/\s|	\s	\s	whitespace character: <Space> and <Tab>
+   490	|/\S|	\S	\S	non-whitespace character; opposite of \s
+   491	|/\d|	\d	\d	digit:				[0-9]
+   492	|/\D|	\D	\D	non-digit:			[^0-9]
+   493	|/\x|	\x	\x	hex digit:			[0-9A-Fa-f]
+   494	|/\X|	\X	\X	non-hex digit:			[^0-9A-Fa-f]
+   495	|/\o|	\o	\o	octal digit:			[0-7]
+   496	|/\O|	\O	\O	non-octal digit:		[^0-7]
+   497	|/\w|	\w	\w	word character:			[0-9A-Za-z_]
+   498	|/\W|	\W	\W	non-word character:		[^0-9A-Za-z_]
+   499	|/\h|	\h	\h	head of word character:		[A-Za-z_]
+   500	|/\H|	\H	\H	non-head of word character:	[^A-Za-z_]
+   501	|/\a|	\a	\a	alphabetic character:		[A-Za-z]
+   502	|/\A|	\A	\A	non-alphabetic character:	[^A-Za-z]
+   503	|/\l|	\l	\l	lowercase character:		[a-z]
+   504	|/\L|	\L	\L	non-lowercase character:	[^a-z]
+   505	|/\u|	\u	\u	uppercase character:		[A-Z]
+   506	|/\U|	\U	\U	non-uppercase character		[^A-Z]
+   507	|/\_|	\_x	\_x	where x is any of the characters above: character
+   508				class with end-of-line included
+   509	(end of character classes)
+   510	
+   511	      magic   nomagic	matches ~
+   512	|/\e|	\e	\e	<Esc>
+   513	|/\t|	\t	\t	<Tab>
+   514	|/\r|	\r	\r	<CR>
+   515	|/\b|	\b	\b	<BS>
+   516	|/\n|	\n	\n	end-of-line
+   517	|/~|	~	\~	last given substitute string
+   518	|/\1|	\1	\1	same string as matched by first \(\) {not in Vi}
+   519	|/\2|	\2	\2	Like "\1", but uses second \(\)
+   520		   ...
+   521	|/\9|	\9	\9	Like "\1", but uses ninth \(\)
+   522									*E68*
+   523	|/\z1|	\z1	\z1	only for syntax highlighting, see |:syn-ext-match|
+   524		   ...
+   525	|/\z1|	\z9	\z9	only for syntax highlighting, see |:syn-ext-match|
+   526	
+   527		x	x	a character with no special meaning matches itself
+   528	
+   529	|/[]|	[]	\[]	any character specified inside the []
+   530	|/\%[]|	\%[]	\%[]	a sequence of optionally matched atoms
+   531	
+   532	|/\c|	\c	\c	ignore case, do not use the 'ignorecase' option
+   533	|/\C|	\C	\C	match case, do not use the 'ignorecase' option
+   534	|/\Z|	\Z	\Z	ignore differences in Unicode "combining characters".
+   535				Useful when searching voweled Hebrew or Arabic text.
+   536	
+   537	      magic   nomagic	matches ~
+   538	|/\m|	\m	\m	'magic' on for the following chars in the pattern
+   539	|/\M|	\M	\M	'magic' off for the following chars in the pattern
+   540	|/\v|	\v	\v	the following chars in the pattern are "very magic"
+   541	|/\V|	\V	\V	the following chars in the pattern are "very nomagic"
+   542	|/\%#=|   \%#=1   \%#=1   select regexp engine |/zero-width|
+   543	
+   544	|/\%d|	\%d	\%d	match specified decimal character (eg \%d123)
+   545	|/\%x|	\%x	\%x	match specified hex character (eg \%x2a)
+   546	|/\%o|	\%o	\%o	match specified octal character (eg \%o040)
+   547	|/\%u|	\%u	\%u	match specified multibyte character (eg \%u20ac)
+   548	|/\%U|	\%U	\%U	match specified large multibyte character (eg
+   549				\%U12345678)
+   550	|/\%C|	\%C	\%C	match any composing characters
+   551	
+   552	Example			matches ~
+   553	\<\I\i*		or
+   554	\<\h\w*
+   555	\<[a-zA-Z_][a-zA-Z0-9_]*
+   556				An identifier (e.g., in a C program).
+   557	
+   558	\(\.$\|\. \)		A period followed by <EOL> or a space.
+   559	
+   560	[.!?][])"']*\($\|[ ]\)	A search pattern that finds the end of a sentence,
+   561				with almost the same definition as the ")" command.
+   562	
+   563	cat\Z			Both "cat" and "càt" ("a" followed by 0x0300)
+   564				Does not match "càt" (character 0x00e0), even
+   565				though it may look the same.
+   566	
+   567	==============================================================================
+   568	5. Multi items						*pattern-multi-items*
+   569	
+   570	An atom can be followed by an indication of how many times the atom can be
+   571	matched and in what way.  This is called a multi.  See |/multi| for an
+   572	overview.
+   573	
+   574								*/star* */\star*
+   575	*	(use \* when 'magic' is not set)
+   576		Matches 0 or more of the preceding atom, as many as possible.
+   577		Example  'nomagic'	matches ~
+   578		a*	   a\*		"", "a", "aa", "aaa", etc.
+   579		.*	   \.\*		anything, also an empty string, no end-of-line
+   580		\_.*	   \_.\*	everything up to the end of the buffer
+   581		\_.*END	   \_.\*END	everything up to and including the last "END"
+   582					in the buffer
+   583	
+   584		Exception: When "*" is used at the start of the pattern or just after
+   585		"^" it matches the star character.
+   586	
+   587		Be aware that repeating "\_." can match a lot of text and take a long
+   588		time.  For example, "\_.*END" matches all text from the current
+   589		position to the last occurrence of "END" in the file.  Since the "*"
+   590		will match as many as possible, this first skips over all lines until
+   591		the end of the file and then tries matching "END", backing up one
+   592		character at a time.
+   593	
+   594								*/\+*
+   595	\+	Matches 1 or more of the preceding atom, as many as possible. {not in
+   596		Vi}
+   597		Example		matches ~
+   598		^.\+$		any non-empty line
+   599		\s\+		white space of at least one character
+   600	
+   601								*/\=*
+   602	\=	Matches 0 or 1 of the preceding atom, as many as possible. {not in Vi}
+   603		Example		matches ~
+   604		foo\=		"fo" and "foo"
+   605	
+   606								*/\?*
+   607	\?	Just like \=.  Cannot be used when searching backwards with the "?"
+   608		command. {not in Vi}
+   609	
+   610						*/\{* *E60* *E554* *E870*
+   611	\{n,m}	Matches n to m of the preceding atom, as many as possible
+   612	\{n}	Matches n of the preceding atom
+   613	\{n,}	Matches at least n of the preceding atom, as many as possible
+   614	\{,m}	Matches 0 to m of the preceding atom, as many as possible
+   615	\{}	Matches 0 or more of the preceding atom, as many as possible (like *)
+   616								*/\{-*
+   617	\{-n,m}	matches n to m of the preceding atom, as few as possible
+   618	\{-n}	matches n of the preceding atom
+   619	\{-n,}	matches at least n of the preceding atom, as few as possible
+   620	\{-,m}	matches 0 to m of the preceding atom, as few as possible
+   621	\{-}	matches 0 or more of the preceding atom, as few as possible
+   622		{Vi does not have any of these}
+   623	
+   624		n and m are positive decimal numbers or zero
+   625									*non-greedy*
+   626		If a "-" appears immediately after the "{", then a shortest match
+   627		first algorithm is used (see example below).  In particular, "\{-}" is
+   628		the same as "*" but uses the shortest match first algorithm.  BUT: A
+   629		match that starts earlier is preferred over a shorter match: "a\{-}b"
+   630		matches "aaab" in "xaaab".
+   631	
+   632		Example			matches ~
+   633		ab\{2,3}c		"abbc" or "abbbc"
+   634		a\{5}			"aaaaa"
+   635		ab\{2,}c		"abbc", "abbbc", "abbbbc", etc.
+   636		ab\{,3}c		"ac", "abc", "abbc" or "abbbc"
+   637		a[bc]\{3}d		"abbbd", "abbcd", "acbcd", "acccd", etc.
+   638		a\(bc\)\{1,2}d		"abcd" or "abcbcd"
+   639		a[bc]\{-}[cd]		"abc" in "abcd"
+   640		a[bc]*[cd]		"abcd" in "abcd"
+   641	
+   642		The } may optionally be preceded with a backslash: \{n,m\}.
+   643	
+   644								*/\@=*
+   645	\@=	Matches the preceding atom with zero width. {not in Vi}
+   646		Like "(?=pattern)" in Perl.
+   647		Example			matches ~
+   648		foo\(bar\)\@=		"foo" in "foobar"
+   649		foo\(bar\)\@=foo	nothing
+   650								*/zero-width*
+   651		When using "\@=" (or "^", "$", "\<", "\>") no characters are included
+   652		in the match.  These items are only used to check if a match can be
+   653		made.  This can be tricky, because a match with following items will
+   654		be done in the same position.  The last example above will not match
+   655		"foobarfoo", because it tries match "foo" in the same position where
+   656		"bar" matched.
+   657	
+   658		Note that using "\&" works the same as using "\@=": "foo\&.." is the
+   659		same as "\(foo\)\@=..".  But using "\&" is easier, you don't need the
+   660		braces.
+   661	
+   662								*/\@!*
+   663	\@!	Matches with zero width if the preceding atom does NOT match at the
+   664		current position. |/zero-width| {not in Vi}
+   665		Like "(?!pattern)" in Perl.
+   666		Example			matches ~
+   667		foo\(bar\)\@!		any "foo" not followed by "bar"
+   668		a.\{-}p\@!		"a", "ap", "app", "appp", etc. not immediately
+   669					followed by a "p"
+   670		if \(\(then\)\@!.\)*$	"if " not followed by "then"
+   671	
+   672		Using "\@!" is tricky, because there are many places where a pattern
+   673		does not match.  "a.*p\@!" will match from an "a" to the end of the
+   674		line, because ".*" can match all characters in the line and the "p"
+   675		doesn't match at the end of the line.  "a.\{-}p\@!" will match any
+   676		"a", "ap", "app", etc. that isn't followed by a "p", because the "."
+   677		can match a "p" and "p\@!" doesn't match after that.
+   678	
+   679		You can't use "\@!" to look for a non-match before the matching
+   680		position: "\(foo\)\@!bar" will match "bar" in "foobar", because at the
+   681		position where "bar" matches, "foo" does not match.  To avoid matching
+   682		"foobar" you could use "\(foo\)\@!...bar", but that doesn't match a
+   683		bar at the start of a line.  Use "\(foo\)\@<!bar".
+   684	
+   685		Useful example: to find "foo" in a line that does not contain "bar": >
+   686			/^\%(.*bar\)\@!.*\zsfoo
+   687	<	This pattern first checks that there is not a single position in the
+   688		line where "bar" matches.  If ".*bar" matches somewhere the \@! will
+   689		reject the pattern.  When there is no match any "foo" will be found.
+   690		The "\zs" is to have the match start just before "foo".
+   691	
+   692								*/\@<=*
+   693	\@<=	Matches with zero width if the preceding atom matches just before what
+   694		follows. |/zero-width| {not in Vi}
+   695		Like "(?<=pattern)" in Perl, but Vim allows non-fixed-width patterns.
+   696		Example			matches ~
+   697		\(an\_s\+\)\@<=file	"file" after "an" and white space or an
+   698					end-of-line
+   699		For speed it's often much better to avoid this multi.  Try using "\zs"
+   700		instead |/\zs|.  To match the same as the above example:
+   701			an\_s\+\zsfile
+   702		At least set a limit for the look-behind, see below.
+   703	
+   704		"\@<=" and "\@<!" check for matches just before what follows.
+   705		Theoretically these matches could start anywhere before this position.
+   706		But to limit the time needed, only the line where what follows matches
+   707		is searched, and one line before that (if there is one).  This should
+   708		be sufficient to match most things and not be too slow.
+   709	
+   710		In the old regexp engine the part of the pattern after "\@<=" and
+   711		"\@<!" are checked for a match first, thus things like "\1" don't work
+   712		to reference \(\) inside the preceding atom.  It does work the other
+   713		way around:
+   714		Bad example			matches ~
+   715		\%#=1\1\@<=,\([a-z]\+\)		",abc" in "abc,abc"
+   716	
+   717		However, the new regexp engine works differently, it is better to not
+   718		rely on this behavior, do not use \@<= if it can be avoided:
+   719		Example				matches ~
+   720		\([a-z]\+\)\zs,\1		",abc" in "abc,abc"
+   721	
+   722	\@123<=
+   723		Like "\@<=" but only look back 123 bytes. This avoids trying lots
+   724		of matches that are known to fail and make executing the pattern very
+   725		slow.  Example, check if there is a "<" just before "span":
+   726			/<\@1<=span
+   727		This will try matching "<" only one byte before "span", which is the
+   728		only place that works anyway.
+   729		After crossing a line boundary, the limit is relative to the end of
+   730		the line.  Thus the characters at the start of the line with the match
+   731		are not counted (this is just to keep it simple).
+   732		The number zero is the same as no limit.
+   733	
+   734								*/\@<!*
+   735	\@<!	Matches with zero width if the preceding atom does NOT match just
+   736		before what follows.  Thus this matches if there is no position in the
+   737		current or previous line where the atom matches such that it ends just
+   738		before what follows.  |/zero-width| {not in Vi}
+   739		Like "(?<!pattern)" in Perl, but Vim allows non-fixed-width patterns.
+   740		The match with the preceding atom is made to end just before the match
+   741		with what follows, thus an atom that ends in ".*" will work.
+   742		Warning: This can be slow (because many positions need to be checked
+   743		for a match).  Use a limit if you can, see below.
+   744		Example			matches ~
+   745		\(foo\)\@<!bar		any "bar" that's not in "foobar"
+   746		\(\/\/.*\)\@<!in	"in" which is not after "//"
+   747	
+   748	\@123<!
+   749		Like "\@<!" but only look back 123 bytes. This avoids trying lots of
+   750		matches that are known to fail and make executing the pattern very
+   751		slow.
+   752	
+   753								*/\@>*
+   754	\@>	Matches the preceding atom like matching a whole pattern. {not in Vi}
+   755		Like "(?>pattern)" in Perl.
+   756		Example		matches ~
+   757		\(a*\)\@>a	nothing (the "a*" takes all the "a"'s, there can't be
+   758				another one following)
+   759	
+   760		This matches the preceding atom as if it was a pattern by itself.  If
+   761		it doesn't match, there is no retry with shorter sub-matches or
+   762		anything.  Observe this difference: "a*b" and "a*ab" both match
+   763		"aaab", but in the second case the "a*" matches only the first two
+   764		"a"s.  "\(a*\)\@>ab" will not match "aaab", because the "a*" matches
+   765		the "aaa" (as many "a"s as possible), thus the "ab" can't match.
+   766	
+   767	==============================================================================
+   768	6.  Ordinary atoms					*pattern-atoms*
+   769	
+   770	An ordinary atom can be:
+   771	
+   772								*/^*
+   773	^	At beginning of pattern or after "\|", "\(", "\%(" or "\n": matches
+   774		start-of-line; at other positions, matches literal '^'. |/zero-width|
+   775		Example		matches ~
+   776		^beep(		the start of the C function "beep" (probably).
+   777	
+   778								*/\^*
+   779	\^	Matches literal '^'.  Can be used at any position in the pattern.
+   780	
+   781								*/\_^*
+   782	\_^	Matches start-of-line. |/zero-width|  Can be used at any position in
+   783		the pattern.
+   784		Example		matches ~
+   785		\_s*\_^foo	white space and blank lines and then "foo" at
+   786				start-of-line
+   787	
+   788								*/$*
+   789	$	At end of pattern or in front of "\|", "\)" or "\n" ('magic' on):
+   790		matches end-of-line <EOL>; at other positions, matches literal '$'.
+   791		|/zero-width|
+   792	
+   793								*/\$*
+   794	\$	Matches literal '$'.  Can be used at any position in the pattern.
+   795	
+   796								*/\_$*
+   797	\_$	Matches end-of-line. |/zero-width|  Can be used at any position in the
+   798		pattern.  Note that "a\_$b" never matches, since "b" cannot match an
+   799		end-of-line.  Use "a\nb" instead |/\n|.
+   800		Example		matches ~
+   801		foo\_$\_s*	"foo" at end-of-line and following white space and
+   802				blank lines
+   803	
+   804	.	(with 'nomagic': \.)				*/.* */\.*
+   805		Matches any single character, but not an end-of-line.
+   806	
+   807								*/\_.*
+   808	\_.	Matches any single character or end-of-line.
+   809		Careful: "\_.*" matches all text to the end of the buffer!
+   810	
+   811								*/\<*
+   812	\<	Matches the beginning of a word: The next char is the first char of a
+   813		word.  The 'iskeyword' option specifies what is a word character.
+   814		|/zero-width|
+   815	
+   816								*/\>*
+   817	\>	Matches the end of a word: The previous char is the last char of a
+   818		word.  The 'iskeyword' option specifies what is a word character.
+   819		|/zero-width|
+   820	
+   821								*/\zs*
+   822	\zs	Matches at any position, and sets the start of the match there: The
+   823		next char is the first char of the whole match. |/zero-width|
+   824		Example: >
+   825			/^\s*\zsif
+   826	<	matches an "if" at the start of a line, ignoring white space.
+   827		Can be used multiple times, the last one encountered in a matching
+   828		branch is used.  Example: >
+   829			/\(.\{-}\zsFab\)\{3}
+   830	<	Finds the third occurrence of "Fab".
+   831		This cannot be followed by a multi. *E888*
+   832		{not in Vi} {not available when compiled without the |+syntax| feature}
+   833								*/\ze*
+   834	\ze	Matches at any position, and sets the end of the match there: The
+   835		previous char is the last char of the whole match. |/zero-width|
+   836		Can be used multiple times, the last one encountered in a matching
+   837		branch is used.
+   838		Example: "end\ze\(if\|for\)" matches the "end" in "endif" and
+   839		"endfor".
+   840		This cannot be followed by a multi. |E888|
+   841		{not in Vi} {not available when compiled without the |+syntax| feature}
+   842	
+   843							*/\%^* *start-of-file*
+   844	\%^	Matches start of the file.  When matching with a string, matches the
+   845		start of the string. {not in Vi}
+   846		For example, to find the first "VIM" in a file: >
+   847			/\%^\_.\{-}\zsVIM
+   848	<
+   849							*/\%$* *end-of-file*
+   850	\%$	Matches end of the file.  When matching with a string, matches the
+   851		end of the string. {not in Vi}
+   852		Note that this does NOT find the last "VIM" in a file: >
+   853			/VIM\_.\{-}\%$
+   854	<	It will find the next VIM, because the part after it will always
+   855		match.  This one will find the last "VIM" in the file: >
+   856			/VIM\ze\(\(VIM\)\@!\_.\)*\%$
+   857	<	This uses |/\@!| to ascertain that "VIM" does NOT match in any
+   858		position after the first "VIM".
+   859		Searching from the end of the file backwards is easier!
+   860	
+   861							*/\%V*
+   862	\%V	Match inside the Visual area.  When Visual mode has already been
+   863		stopped match in the area that |gv| would reselect.
+   864		This is a |/zero-width| match.  To make sure the whole pattern is
+   865		inside the Visual area put it at the start and end of the pattern,
+   866		e.g.: >
+   867			/\%Vfoo.*bar\%V
+   868	<	Only works for the current buffer.
+   869	
+   870							*/\%#* *cursor-position*
+   871	\%#	Matches with the cursor position.  Only works when matching in a
+   872		buffer displayed in a window. {not in Vi}
+   873		WARNING: When the cursor is moved after the pattern was used, the
+   874		result becomes invalid.  Vim doesn't automatically update the matches.
+   875		This is especially relevant for syntax highlighting and 'hlsearch'.
+   876		In other words: When the cursor moves the display isn't updated for
+   877		this change.  An update is done for lines which are changed (the whole
+   878		line is updated) or when using the |CTRL-L| command (the whole screen
+   879		is updated).  Example, to highlight the word under the cursor: >
+   880			/\k*\%#\k*
+   881	<	When 'hlsearch' is set and you move the cursor around and make changes
+   882		this will clearly show when the match is updated or not.
+   883	
+   884							*/\%'m* */\%<'m* */\%>'m*
+   885	\%'m	Matches with the position of mark m.
+   886	\%<'m	Matches before the position of mark m.
+   887	\%>'m	Matches after the position of mark m.
+   888		Example, to highlight the text from mark 's to 'e: >
+   889			/.\%>'s.*\%<'e..
+   890	<	Note that two dots are required to include mark 'e in the match.  That
+   891		is because "\%<'e" matches at the character before the 'e mark, and
+   892		since it's a |/zero-width| match it doesn't include that character.
+   893		{not in Vi}
+   894		WARNING: When the mark is moved after the pattern was used, the result
+   895		becomes invalid.  Vim doesn't automatically update the matches.
+   896		Similar to moving the cursor for "\%#" |/\%#|.
+   897	
+   898							*/\%l* */\%>l* */\%<l*
+   899	\%23l	Matches in a specific line.
+   900	\%<23l	Matches above a specific line (lower line number).
+   901	\%>23l	Matches below a specific line (higher line number).
+   902		These three can be used to match specific lines in a buffer.  The "23"
+   903		can be any line number.  The first line is 1. {not in Vi}
+   904		WARNING: When inserting or deleting lines Vim does not automatically
+   905		update the matches.  This means Syntax highlighting quickly becomes
+   906		wrong.
+   907		Example, to highlight the line where the cursor currently is: >
+   908			:exe '/\%' . line(".") . 'l.*'
+   909	<	When 'hlsearch' is set and you move the cursor around and make changes
+   910		this will clearly show when the match is updated or not.
+   911	
+   912							*/\%c* */\%>c* */\%<c*
+   913	\%23c	Matches in a specific column.
+   914	\%<23c	Matches before a specific column.
+   915	\%>23c	Matches after a specific column.
+   916		These three can be used to match specific columns in a buffer or
+   917		string.  The "23" can be any column number.  The first column is 1.
+   918		Actually, the column is the byte number (thus it's not exactly right
+   919		for multi-byte characters).  {not in Vi}
+   920		WARNING: When inserting or deleting text Vim does not automatically
+   921		update the matches.  This means Syntax highlighting quickly becomes
+   922		wrong.
+   923		Example, to highlight the column where the cursor currently is: >
+   924			:exe '/\%' . col(".") . 'c'
+   925	<	When 'hlsearch' is set and you move the cursor around and make changes
+   926		this will clearly show when the match is updated or not.
+   927		Example for matching a single byte in column 44: >
+   928			/\%>43c.\%<46c
+   929	<	Note that "\%<46c" matches in column 45 when the "." matches a byte in
+   930		column 44.
+   931							*/\%v* */\%>v* */\%<v*
+   932	\%23v	Matches in a specific virtual column.
+   933	\%<23v	Matches before a specific virtual column.
+   934	\%>23v	Matches after a specific virtual column.
+   935		These three can be used to match specific virtual columns in a buffer
+   936		or string.  When not matching with a buffer in a window, the option
+   937		values of the current window are used (e.g., 'tabstop').
+   938		The "23" can be any column number.  The first column is 1.
+   939		Note that some virtual column positions will never match, because they
+   940		are halfway through a tab or other character that occupies more than
+   941		one screen character.  {not in Vi}
+   942		WARNING: When inserting or deleting text Vim does not automatically
+   943		update highlighted matches.  This means Syntax highlighting quickly
+   944		becomes wrong.
+   945		Example, to highlight all the characters after virtual column 72: >
+   946			/\%>72v.*
+   947	<	When 'hlsearch' is set and you move the cursor around and make changes
+   948		this will clearly show when the match is updated or not.
+   949		To match the text up to column 17: >
+   950			/^.*\%17v
+   951	<	Column 17 is not included, because this is a |/zero-width| match. To
+   952		include the column use: >
+   953			/^.*\%17v.
+   954	<	This command does the same thing, but also matches when there is no
+   955		character in column 17: >
+   956			/^.*\%<18v.
+   957	<	Note that without the "^" to anchor the match in the first column,
+   958		this will also highlight column 17: >
+   959			/.*\%17v
+   960	<	Column 17 is highlighted by 'hlsearch' because there is another match
+   961		where ".*" matches zero characters.
+   962	<
+   963	
+   964	Character classes: {not in Vi}
+   965	\i	identifier character (see 'isident' option)	*/\i*
+   966	\I	like "\i", but excluding digits			*/\I*
+   967	\k	keyword character (see 'iskeyword' option)	*/\k*
+   968	\K	like "\k", but excluding digits			*/\K*
+   969	\f	file name character (see 'isfname' option)	*/\f*
+   970	\F	like "\f", but excluding digits			*/\F*
+   971	\p	printable character (see 'isprint' option)	*/\p*
+   972	\P	like "\p", but excluding digits			*/\P*
+   973	
+   974	NOTE: the above also work for multi-byte characters.  The ones below only
+   975	match ASCII characters, as indicated by the range.
+   976	
+   977							*whitespace* *white-space*
+   978	\s	whitespace character: <Space> and <Tab>		*/\s*
+   979	\S	non-whitespace character; opposite of \s	*/\S*
+   980	\d	digit:				[0-9]		*/\d*
+   981	\D	non-digit:			[^0-9]		*/\D*
+   982	\x	hex digit:			[0-9A-Fa-f]	*/\x*
+   983	\X	non-hex digit:			[^0-9A-Fa-f]	*/\X*
+   984	\o	octal digit:			[0-7]		*/\o*
+   985	\O	non-octal digit:		[^0-7]		*/\O*
+   986	\w	word character:			[0-9A-Za-z_]	*/\w*
+   987	\W	non-word character:		[^0-9A-Za-z_]	*/\W*
+   988	\h	head of word character:		[A-Za-z_]	*/\h*
+   989	\H	non-head of word character:	[^A-Za-z_]	*/\H*
+   990	\a	alphabetic character:		[A-Za-z]	*/\a*
+   991	\A	non-alphabetic character:	[^A-Za-z]	*/\A*
+   992	\l	lowercase character:		[a-z]		*/\l*
+   993	\L	non-lowercase character:	[^a-z]		*/\L*
+   994	\u	uppercase character:		[A-Z]		*/\u*
+   995	\U	non-uppercase character:	[^A-Z]		*/\U*
+   996	
+   997		NOTE: Using the atom is faster than the [] form.
+   998	
+   999		NOTE: 'ignorecase', "\c" and "\C" are not used by character classes.
+  1000	
+  1001				*/\_* *E63* */\_i* */\_I* */\_k* */\_K* */\_f* */\_F*
+  1002				*/\_p* */\_P* */\_s* */\_S* */\_d* */\_D* */\_x* */\_X*
+  1003				*/\_o* */\_O* */\_w* */\_W* */\_h* */\_H* */\_a* */\_A*
+  1004				*/\_l* */\_L* */\_u* */\_U*
+  1005	\_x	Where "x" is any of the characters above: The character class with
+  1006		end-of-line added
+  1007	(end of character classes)
+  1008	
+  1009	\e	matches <Esc>					*/\e*
+  1010	\t	matches <Tab>					*/\t*
+  1011	\r	matches <CR>					*/\r*
+  1012	\b	matches <BS>					*/\b*
+  1013	\n	matches an end-of-line				*/\n*
+  1014		When matching in a string instead of buffer text a literal newline
+  1015		character is matched.
+  1016	
+  1017	~	matches the last given substitute string	*/~* */\~*
+  1018	
+  1019	\(\)	A pattern enclosed by escaped parentheses.	*/\(* */\(\)* */\)*
+  1020		E.g., "\(^a\)" matches 'a' at the start of a line.
+  1021		*E51* *E54* *E55* *E872* *E873*
+  1022	
+  1023	\1      Matches the same string that was matched by	*/\1* *E65*
+  1024		the first sub-expression in \( and \). {not in Vi}
+  1025		Example: "\([a-z]\).\1" matches "ata", "ehe", "tot", etc.
+  1026	\2      Like "\1", but uses second sub-expression,	*/\2*
+  1027	   ...							*/\3*
+  1028	\9      Like "\1", but uses ninth sub-expression.	*/\9*
+  1029		Note: The numbering of groups is done based on which "\(" comes first
+  1030		in the pattern (going left to right), NOT based on what is matched
+  1031		first.
+  1032	
+  1033	\%(\)	A pattern enclosed by escaped parentheses.	*/\%(\)* */\%(* *E53*
+  1034		Just like \(\), but without counting it as a sub-expression.  This
+  1035		allows using more groups and it's a little bit faster.
+  1036		{not in Vi}
+  1037	
+  1038	x	A single character, with no special meaning, matches itself
+  1039	
+  1040								*/\* */\\*
+  1041	\x	A backslash followed by a single character, with no special meaning,
+  1042		is reserved for future expansions
+  1043	
+  1044	[]	(with 'nomagic': \[])		*/[]* */\[]* */\_[]* */collection*
+  1045	\_[]
+  1046		A collection.  This is a sequence of characters enclosed in brackets.
+  1047		It matches any single character in the collection.
+  1048		Example		matches ~
+  1049		[xyz]		any 'x', 'y' or 'z'
+  1050		[a-zA-Z]$	any alphabetic character at the end of a line
+  1051		\c[a-z]$	same
+  1052		[А-яЁё]		Russian alphabet (with utf-8 and cp1251)
+  1053	
+  1054									*/[\n]*
+  1055		With "\_" prepended the collection also includes the end-of-line.
+  1056		The same can be done by including "\n" in the collection.  The
+  1057		end-of-line is also matched when the collection starts with "^"!  Thus
+  1058		"\_[^ab]" matches the end-of-line and any character but "a" and "b".
+  1059		This makes it Vi compatible: Without the "\_" or "\n" the collection
+  1060		does not match an end-of-line.
+  1061									*E769*
+  1062		When the ']' is not there Vim will not give an error message but
+  1063		assume no collection is used.  Useful to search for '['.  However, you
+  1064		do get E769 for internal searching.  And be aware that in a
+  1065		`:substitute` command the whole command becomes the pattern.  E.g.
+  1066		":s/[/x/" searches for "[/x" and replaces it with nothing.  It does
+  1067		not search for "[" and replaces it with "x"!
+  1068	
+  1069		If the sequence begins with "^", it matches any single character NOT
+  1070		in the collection: "[^xyz]" matches anything but 'x', 'y' and 'z'.
+  1071		- If two characters in the sequence are separated by '-', this is
+  1072		  shorthand for the full list of ASCII characters between them.  E.g.,
+  1073		  "[0-9]" matches any decimal digit.  Non-ASCII characters can be
+  1074		  used, but the character values must not be more than 256 apart.
+  1075		- A character class expression is evaluated to the set of characters
+  1076		  belonging to that character class.  The following character classes
+  1077		  are supported:
+  1078				  Name		Contents ~
+  1079	*[:alnum:]*		  [:alnum:]     ASCII letters and digits
+  1080	*[:alpha:]*		  [:alpha:]     ASCII letters
+  1081	*[:blank:]*		  [:blank:]     space and tab characters
+  1082	*[:cntrl:]*		  [:cntrl:]     control characters
+  1083	*[:digit:]*		  [:digit:]     decimal digits
+  1084	*[:graph:]*		  [:graph:]     printable characters excluding space
+  1085	*[:lower:]*		  [:lower:]     lowercase letters (all letters when
+  1086						'ignorecase' is used)
+  1087	*[:print:]*		  [:print:]     printable characters including space
+  1088	*[:punct:]*		  [:punct:]     ASCII punctuation characters
+  1089	*[:space:]*		  [:space:]     whitespace characters
+  1090	*[:upper:]*		  [:upper:]     uppercase letters (all letters when
+  1091						'ignorecase' is used)
+  1092	*[:xdigit:]*		  [:xdigit:]    hexadecimal digits
+  1093	*[:return:]*		  [:return:]	the <CR> character
+  1094	*[:tab:]*		  [:tab:]	the <Tab> character
+  1095	*[:escape:]*		  [:escape:]	the <Esc> character
+  1096	*[:backspace:]*		  [:backspace:]	the <BS> character
+  1097		  The brackets in character class expressions are additional to the
+  1098		  brackets delimiting a collection.  For example, the following is a
+  1099		  plausible pattern for a UNIX filename: "[-./[:alnum:]_~]\+" That is,
+  1100		  a list of at least one character, each of which is either '-', '.',
+  1101		  '/', alphabetic, numeric, '_' or '~'.
+  1102		  These items only work for 8-bit characters, except [:lower:] and
+  1103		  [:upper:] also work for multi-byte characters when using the new
+  1104		  regexp engine.  See |two-engines|.  In the future these items may
+  1105		  work for multi-byte characters.  For now, to get all "alpha"
+  1106		  characters you can use: [[:lower:][:upper:]].
+  1107								*/[[=* *[==]*
+  1108		- An equivalence class.  This means that characters are matched that
+  1109		  have almost the same meaning, e.g., when ignoring accents.  This
+  1110		  only works for Unicode, latin1 and latin9.  The form is:
+  1111			[=a=]
+  1112								*/[[.* *[..]*
+  1113		- A collation element.  This currently simply accepts a single
+  1114		  character in the form:
+  1115			[.a.]
+  1116								  */\]*
+  1117		- To include a literal ']', '^', '-' or '\' in the collection, put a
+  1118		  backslash before it: "[xyz\]]", "[\^xyz]", "[xy\-z]" and "[xyz\\]".
+  1119		  (Note: POSIX does not support the use of a backslash this way).  For
+  1120		  ']' you can also make it the first character (following a possible
+  1121		  "^"):  "[]xyz]" or "[^]xyz]" {not in Vi}.
+  1122		  For '-' you can also make it the first or last character: "[-xyz]",
+  1123		  "[^-xyz]" or "[xyz-]".  For '\' you can also let it be followed by
+  1124		  any character that's not in "^]-\bdertnoUux".  "[\xyz]" matches '\',
+  1125		  'x', 'y' and 'z'.  It's better to use "\\" though, future expansions
+  1126		  may use other characters after '\'.
+  1127		- Omitting the trailing ] is not considered an error. "[]" works like
+  1128		  "[]]", it matches the ']' character.
+  1129		- The following translations are accepted when the 'l' flag is not
+  1130		  included in 'cpoptions' {not in Vi}:
+  1131			\e	<Esc>
+  1132			\t	<Tab>
+  1133			\r	<CR>	(NOT end-of-line!)
+  1134			\b	<BS>
+  1135			\n	line break, see above |/[\n]|
+  1136			\d123	decimal number of character
+  1137			\o40	octal number of character up to 0377
+  1138			\x20	hexadecimal number of character up to 0xff
+  1139			\u20AC	hex. number of multibyte character up to 0xffff
+  1140			\U1234	hex. number of multibyte character up to 0xffffffff
+  1141		  NOTE: The other backslash codes mentioned above do not work inside
+  1142		  []!
+  1143		- Matching with a collection can be slow, because each character in
+  1144		  the text has to be compared with each character in the collection.
+  1145		  Use one of the other atoms above when possible.  Example: "\d" is
+  1146		  much faster than "[0-9]" and matches the same characters.
+  1147	
+  1148							*/\%[]* *E69* *E70* *E369*
+  1149	\%[]	A sequence of optionally matched atoms.  This always matches.
+  1150		It matches as much of the list of atoms it contains as possible.  Thus
+  1151		it stops at the first atom that doesn't match.  For example: >
+  1152			/r\%[ead]
+  1153	<	matches "r", "re", "rea" or "read".  The longest that matches is used.
+  1154		To match the Ex command "function", where "fu" is required and
+  1155		"nction" is optional, this would work: >
+  1156			/\<fu\%[nction]\>
+  1157	<	The end-of-word atom "\>" is used to avoid matching "fu" in "full".
+  1158		It gets more complicated when the atoms are not ordinary characters.
+  1159		You don't often have to use it, but it is possible.  Example: >
+  1160			/\<r\%[[eo]ad]\>
+  1161	<	Matches the words "r", "re", "ro", "rea", "roa", "read" and "road".
+  1162		There can be no \(\), \%(\) or \z(\) items inside the [] and \%[] does
+  1163		not nest.
+  1164		To include a "[" use "[[]" and for "]" use []]", e.g.,: >
+  1165			/index\%[[[]0[]]]
+  1166	<	matches "index" "index[", "index[0" and "index[0]".
+  1167		{not available when compiled without the |+syntax| feature}
+  1168	
+  1169					*/\%d* */\%x* */\%o* */\%u* */\%U* *E678*
+  1170	
+  1171	\%d123	Matches the character specified with a decimal number.  Must be
+  1172		followed by a non-digit.
+  1173	\%o40	Matches the character specified with an octal number up to 0377.
+  1174		Numbers below 040 must be followed by a non-octal digit or a non-digit.
+  1175	\%x2a	Matches the character specified with up to two hexadecimal characters.
+  1176	\%u20AC	Matches the character specified with up to four hexadecimal
+  1177		characters.
+  1178	\%U1234abcd	Matches the character specified with up to eight hexadecimal
+  1179		characters.
+  1180	
+  1181	==============================================================================
+  1182	7. Ignoring case in a pattern					*/ignorecase*
+  1183	
+  1184	If the 'ignorecase' option is on, the case of normal letters is ignored.
+  1185	'smartcase' can be set to ignore case when the pattern contains lowercase
+  1186	letters only.
+  1187								*/\c* */\C*
+  1188	When "\c" appears anywhere in the pattern, the whole pattern is handled like
+  1189	'ignorecase' is on.  The actual value of 'ignorecase' and 'smartcase' is
+  1190	ignored.  "\C" does the opposite: Force matching case for the whole pattern.
+  1191	{only Vim supports \c and \C}
+  1192	Note that 'ignorecase', "\c" and "\C" are not used for the character classes.
+  1193	
+  1194	Examples:
+  1195	      pattern	'ignorecase'  'smartcase'	matches ~
+  1196		foo	  off		-		foo
+  1197		foo	  on		-		foo Foo FOO
+  1198		Foo	  on		off		foo Foo FOO
+  1199		Foo	  on		on		    Foo
+  1200		\cfoo	  -		-		foo Foo FOO
+  1201		foo\C	  -		-		foo
+  1202	
+  1203	Technical detail:				*NL-used-for-Nul*
+  1204	<Nul> characters in the file are stored as <NL> in memory.  In the display
+  1205	they are shown as "^@".  The translation is done when reading and writing
+  1206	files.  To match a <Nul> with a search pattern you can just enter CTRL-@ or
+  1207	"CTRL-V 000".  This is probably just what you expect.  Internally the
+  1208	character is replaced with a <NL> in the search pattern.  What is unusual is
+  1209	that typing CTRL-V CTRL-J also inserts a <NL>, thus also searches for a <Nul>
+  1210	in the file.  {Vi cannot handle <Nul> characters in the file at all}
+  1211	
+  1212							*CR-used-for-NL*
+  1213	When 'fileformat' is "mac", <NL> characters in the file are stored as <CR>
+  1214	characters internally.  In the text they are shown as "^J".  Otherwise this
+  1215	works similar to the usage of <NL> for a <Nul>.
+  1216	
+  1217	When working with expression evaluation, a <NL> character in the pattern
+  1218	matches a <NL> in the string.  The use of "\n" (backslash n) to match a <NL>
+  1219	doesn't work there, it only works to match text in the buffer.
+  1220	
+  1221							*pattern-multi-byte*
+  1222	Patterns will also work with multi-byte characters, mostly as you would
+  1223	expect.  But invalid bytes may cause trouble, a pattern with an invalid byte
+  1224	will probably never match.
+  1225	
+  1226	==============================================================================
+  1227	8. Composing characters					*patterns-composing*
+  1228	
+  1229								*/\Z*
+  1230	When "\Z" appears anywhere in the pattern, all composing characters are
+  1231	ignored.  Thus only the base characters need to match, the composing
+  1232	characters may be different and the number of composing characters may differ.
+  1233	Only relevant when 'encoding' is "utf-8".
+  1234	Exception: If the pattern starts with one or more composing characters, these
+  1235	must match.
+  1236								*/\%C*
+  1237	Use "\%C" to skip any composing characters.  For example, the pattern "a" does
+  1238	not match in "càt" (where the a has the composing character 0x0300), but
+  1239	"a\%C" does.  Note that this does not match "cát" (where the á is character
+  1240	0xe1, it does not have a compositing character).  It does match "cat" (where
+  1241	the a is just an a).
+  1242	
+  1243	When a composing character appears at the start of the pattern of after an
+  1244	item that doesn't include the composing character, a match is found at any
+  1245	character that includes this composing character.
+  1246	
+  1247	When using a dot and a composing character, this works the same as the
+  1248	composing character by itself, except that it doesn't matter what comes before
+  1249	this.
+  1250	
+  1251	The order of composing characters does not matter.  Also, the text may have
+  1252	more composing characters than the pattern, it still matches.  But all
+  1253	composing characters in the pattern must be found in the text.
+  1254	
+  1255	Suppose B is a base character and x and y are composing characters:
+  1256		pattern		text		match ~
+  1257		Bxy		Bxy		yes (perfect match)
+  1258		Bxy		Byx		yes (order ignored)
+  1259		Bxy		By		no (x missing)
+  1260		Bxy		Bx		no (y missing)
+  1261		Bx		Bx		yes (perfect match)
+  1262		Bx		By		no (x missing)
+  1263		Bx		Bxy		yes (extra y ignored)
+  1264		Bx		Byx		yes (extra y ignored)
+  1265	
+  1266	==============================================================================
+  1267	9. Compare with Perl patterns				*perl-patterns*
+  1268	
+  1269	Vim's regexes are most similar to Perl's, in terms of what you can do.  The
+  1270	difference between them is mostly just notation;  here's a summary of where
+  1271	they differ:
+  1272	
+  1273	Capability			in Vimspeak	in Perlspeak ~
+  1274	----------------------------------------------------------------
+  1275	force case insensitivity	\c		(?i)
+  1276	force case sensitivity		\C		(?-i)
+  1277	backref-less grouping		\%(atom\)	(?:atom)
+  1278	conservative quantifiers	\{-n,m}		*?, +?, ??, {}?
+  1279	0-width match			atom\@=		(?=atom)
+  1280	0-width non-match		atom\@!		(?!atom)
+  1281	0-width preceding match		atom\@<=	(?<=atom)
+  1282	0-width preceding non-match	atom\@<!	(?<!atom)
+  1283	match without retry		atom\@>		(?>atom)
+  1284	
+  1285	Vim and Perl handle newline characters inside a string a bit differently:
+  1286	
+  1287	In Perl, ^ and $ only match at the very beginning and end of the text,
+  1288	by default, but you can set the 'm' flag, which lets them match at
+  1289	embedded newlines as well.  You can also set the 's' flag, which causes
+  1290	a . to match newlines as well.  (Both these flags can be changed inside
+  1291	a pattern using the same syntax used for the i flag above, BTW.)
+  1292	
+  1293	On the other hand, Vim's ^ and $ always match at embedded newlines, and
+  1294	you get two separate atoms, \%^ and \%$, which only match at the very
+  1295	start and end of the text, respectively.  Vim solves the second problem
+  1296	by giving you the \_ "modifier":  put it in front of a . or a character
+  1297	class, and they will match newlines as well.
+  1298	
+  1299	Finally, these constructs are unique to Perl:
+  1300	- execution of arbitrary code in the regex:  (?{perl code})
+  1301	- conditional expressions:  (?(condition)true-expr|false-expr)
+  1302	
+  1303	...and these are unique to Vim:
+  1304	- changing the magic-ness of a pattern:  \v \V \m \M
+  1305	   (very useful for avoiding backslashitis)
+  1306	- sequence of optionally matching atoms:  \%[atoms]
+  1307	- \& (which is to \| what "and" is to "or";  it forces several branches
+  1308	   to match at one spot)
+  1309	- matching lines/columns by number:  \%5l \%5c \%5v
+  1310	- setting the start and end of the match:  \zs \ze
+  1311	
+  1312	==============================================================================
+  1313	10. Highlighting matches				*match-highlight*
+  1314	
+  1315								*:mat* *:match*
+  1316	:mat[ch] {group} /{pattern}/
+  1317			Define a pattern to highlight in the current window.  It will
+  1318			be highlighted with {group}.  Example: >
+  1319				:highlight MyGroup ctermbg=green guibg=green
+  1320				:match MyGroup /TODO/
+  1321	<		Instead of // any character can be used to mark the start and
+  1322			end of the {pattern}.  Watch out for using special characters,
+  1323			such as '"' and '|'.
+  1324	
+  1325			{group} must exist at the moment this command is executed.
+  1326	
+  1327			The {group} highlighting still applies when a character is
+  1328			to be highlighted for 'hlsearch', as the highlighting for
+  1329			matches is given higher priority than that of 'hlsearch'.
+  1330			Syntax highlighting (see 'syntax') is also overruled by
+  1331			matches.
+  1332	
+  1333			Note that highlighting the last used search pattern with
+  1334			'hlsearch' is used in all windows, while the pattern defined
+  1335			with ":match" only exists in the current window.  It is kept
+  1336			when switching to another buffer.
+  1337	
+  1338			'ignorecase' does not apply, use |/\c| in the pattern to
+  1339			ignore case.  Otherwise case is not ignored.
+  1340	
+  1341			'redrawtime' defines the maximum time searched for pattern
+  1342			matches.
+  1343	
+  1344			When matching end-of-line and Vim redraws only part of the
+  1345			display you may get unexpected results.  That is because Vim
+  1346			looks for a match in the line where redrawing starts.
+  1347	
+  1348			Also see |matcharg()| and |getmatches()|. The former returns
+  1349			the highlight group and pattern of a previous |:match|
+  1350			command.  The latter returns a list with highlight groups and
+  1351			patterns defined by both |matchadd()| and |:match|.
+  1352	
+  1353			Highlighting matches using |:match| are limited to three
+  1354			matches (aside from |:match|, |:2match| and |:3match| are
+  1355			available). |matchadd()| does not have this limitation and in
+  1356			addition makes it possible to prioritize matches.
+  1357	
+  1358			Another example, which highlights all characters in virtual
+  1359			column 72 and more: >
+  1360				:highlight rightMargin term=bold ctermfg=blue guifg=blue
+  1361				:match rightMargin /.\%>72v/
+  1362	<		To highlight all character that are in virtual column 7: >
+  1363				:highlight col8 ctermbg=grey guibg=grey
+  1364				:match col8 /\%<8v.\%>7v/
+  1365	<		Note the use of two items to also match a character that
+  1366			occupies more than one virtual column, such as a TAB.
+  1367	
+  1368	:mat[ch]
+  1369	:mat[ch] none
+  1370			Clear a previously defined match pattern.
+  1371	
+  1372	:2mat[ch] {group} /{pattern}/					*:2match*
+  1373	:2mat[ch]
+  1374	:2mat[ch] none
+  1375	:3mat[ch] {group} /{pattern}/					*:3match*
+  1376	:3mat[ch]
+  1377	:3mat[ch] none
+  1378			Just like |:match| above, but set a separate match.  Thus
+  1379			there can be three matches active at the same time.  The match
+  1380			with the lowest number has priority if several match at the
+  1381			same position.
+  1382			The ":3match" command is used by the |matchparen| plugin.  You
+  1383			are suggested to use ":match" for manual matching and
+  1384			":2match" for another plugin.
+  1385	
+  1386	 vim:tw=78:ts=8:ft=help:norl:
+     1	ack
+     2	aircrack-ng
+     3	autoconf
+     4	automake
+     5	buku
+     6	c-ares
+     7	cairo
+     8	cmake
+     9	codequery
+    10	cpulimit
+    11	cputhrottle
+    12	cscope
+    13	cvs
+    14	d-bus
+    15	dbus
+    16	doxygen
+    17	dupseek
+    18	ebook-tools
+    19	entr
+    20	epic5
+    21	exiftool
+    22	fdupes
+    23	ffmpeg
+    24	ffmpegthumbnailer
+    25	fftw
+    26	flac
+    27	fontconfig
+    28	freetype
+    29	fribidi
+    30	fswatch
+    31	gawk
+    32	gdbm
+    33	gdrive
+    34	geoip
+    35	gettext
+    36	getxbook
+    37	glib
+    38	gmp
+    39	gnu-sed
+    40	gnutls
+    41	gobject-introspection
+    42	googler
+    43	harfbuzz
+    44	htop-osx
+    45	icu4c
+    46	imagemagick
+    47	jhead
+    48	jpeg
+    49	json-c
+    50	kwm
+    51	lame
+    52	libass
+    53	libevent
+    54	libffi
+    55	libgcrypt
+    56	libgpg-error
+    57	libogg
+    58	libpng
+    59	libpqxx
+    60	libsndfile
+    61	libtasn1
+    62	libtiff
+    63	libtool
+    64	libvo-aacenc
+    65	libvorbis
+    66	libxml2
+    67	libyaml
+    68	libzip
+    69	little-cms2
+    70	lua
+    71	macvim
+    72	maven
+    73	mdv
+    74	mpfr
+    75	mplayer
+    76	mpv
+    77	neovim
+    78	nettle
+    79	node
+    80	openjpeg
+    81	openssl
+    82	openssl@1.1
+    83	pandoc
+    84	pcre
+    85	pdfgrep
+    86	perl
+    87	pixman
+    88	pkg-config
+    89	poppler
+    90	postgresql
+    91	pyqt5
+    92	python
+    93	python3
+    94	qscintilla2
+    95	qt5
+    96	queequeg
+    97	rbenv
+    98	readline
+    99	rename
+   100	rlwrap
+   101	ruby
+   102	ruby-build
+   103	shellcheck
+   104	sip
+   105	sqlite
+   106	tag
+   107	terminal-notifier
+   108	the_silver_searcher
+   109	timelimit
+   110	tmux
+   111	tracebox
+   112	translate-shell
+   113	translate-toolkit
+   114	tree
+   115	unrar
+   116	utf8proc
+   117	vim
+   118	waon
+   119	watch
+   120	watchman
+   121	watson
+   122	wget
+   123	wordnet
+   124	x264
+   125	xvid
+   126	xz
+   127	yasm
+   128	youtube-dl
+   129	zsh
+   130	zsh-completions
+   131	zsh-syntax-highlighting
+     1	Buffers
+     2	=======
+     3	
+     4	#### Introduction
+     5	
+     6	Summary:
+     7	* A buffer is the in-memory text of a file.
+     8	* A window is a viewport on a buffer.
+     9	* A tab page is a collection of windows.
+    10	
+    11	#### Buffer Indicators
+    12	
+    13	Indicators (chars in the same column are mutually exclusive):
+    14	
+    15	```
+    16	u         an unlisted buffer (only displayed when [!] is used)
+    17	 %	      the buffer in the current window
+    18	 #	      the alternate buffer for ":e #" and CTRL-^
+    19	  a	      an active buffer: it is loaded and visible
+    20	  h	      a hidden buffer: It is loaded, but currently not displayed in a window |hidden-buffer|
+    21	   -	    a buffer with 'modifiable' off
+    22	   =	    a readonly buffer
+    23	    +	    a modified buffer
+    24	    x     a buffer with read errors
+    25	```
+    26	
+    27	#### Handling Buffers
+    28	
+    29	| cmd             | function                  |
+    30	| -----           | ---------                 |
+    31	| `:ls`           | Show/list all buffers     |
+    32	| `:buffers`      | Show/list all buffers     |
+    33	| `:files`        | Show/list all buffers     |
+    34	| `:ls`           | Show/list all buffers     |
+    35	| `:ball`         | Edit all buffers          |
+    36	| `:unhide`       | Edit all loaded buffers   |
+    37	| `:[N]bnext`     | To Nth next buffer        |
+    38	| `:[N]bNext`     | To Nth previous buffer    |
+    39	| `:[N]bprevious` | To Nth previous buffer    |
+    40	| `:[N]b`         | To buffer with id equal N |
+    41	| `:b[N]`         | To buffer with id equal N |
+    42	
+    43	* As in `:b [N]`, the `[N]` when shown can be on any side, like `:bnext [N]`
+     1	# Convert any character of portuguese to UTF8 code point
+     2	[UTF-8 table used as reference](http://www.utf8-chartable.de)
+     3	
+     4	## snk
+     5	
+     6	`ga` to start the engine :D
+     7	
+     8	Recursion begin from bottom
+     9	
+    10	```
+    11	nmap <leader>snkA7 :s/§/\\u00A7/e <CR><Esc>
+    12	nmap <leader>snkA8 :s/¨/\\u00A8/e <CR><Esc><leader>snkA7
+    13	nmap <leader>snkAA :s/ª/\\u00AA/e <CR><Esc><leader>snkA8
+    14	nmap <leader>snkAB :s/«/\\u00AB/e <CR><Esc><leader>snkAA
+    15	nmap <leader>snkAC :s/¬/\\u00AC/e <CR><Esc><leader>snkAB
+    16	nmap <leader>snkAE :s/®/\\u00AE/e <CR><Esc><leader>snkAC
+    17	nmap <leader>snkAF :s/¯/\\u00AF/e <CR><Esc><leader>snkAE
+    18	nmap <leader>snkB0 :s/°/\\u00B0/e <CR><Esc><leader>snkAF
+    19	nmap <leader>snkB1 :s/±/\\u00B1/e <CR><Esc><leader>snkB0
+    20	nmap <leader>snkB2 :s/²/\\u00B2/e <CR><Esc><leader>snkB1
+    21	nmap <leader>snkB3 :s/³/\\u00B3/e <CR><Esc><leader>snkB2
+    22	nmap <leader>snkB5 :s/µ/\\u00B5/e <CR><Esc><leader>snkB3
+    23	nmap <leader>snkB6 :s/¶/\\u00B6/e <CR><Esc><leader>snkB5
+    24	nmap <leader>snkB9 :s/¹/\\u00B9/e <CR><Esc><leader>snkB6
+    25	nmap <leader>snkBA :s/º/\\u00BA/e <CR><Esc><leader>snkB9
+    26	nmap <leader>snkBB :s/»/\\u00BB/e <CR><Esc><leader>snkBA
+    27	nmap <leader>snkBC :s/¼/\\u00BC/e <CR><Esc><leader>snkBB
+    28	nmap <leader>snkBD :s/½/\\u00BD/e <CR><Esc><leader>snkBC
+    29	nmap <leader>snkBE :s/¾/\\u00BE/e <CR><Esc><leader>snkBD
+    30	nmap <leader>snkC0 :s/À/\\u00C0/e <CR><Esc><leader>snkBE
+    31	nmap <leader>snkC1 :s/Á/\\u00C1/e <CR><Esc><leader>snkC0
+    32	nmap <leader>snkC2 :s/Â/\\u00C2/e <CR><Esc><leader>snkC1
+    33	nmap <leader>snkC3 :s/Ã/\\u00C3/e <CR><Esc><leader>snkC2
+    34	nmap <leader>snkC4 :s/Ä/\\u00C4/e <CR><Esc><leader>snkC3
+    35	nmap <leader>snkC5 :s/Å/\\u00C5/e <CR><Esc><leader>snkC4
+    36	nmap <leader>snkC6 :s/Æ/\\u00C6/e <CR><Esc><leader>snkC5
+    37	nmap <leader>snkC7 :s/Ç/\\u00C7/e <CR><Esc><leader>snkC6
+    38	nmap <leader>snkC8 :s/È/\\u00C8/e <CR><Esc><leader>snkC7
+    39	nmap <leader>snkC9 :s/É/\\u00C9/e <CR><Esc><leader>snkC8
+    40	nmap <leader>snkCA :s/Ê/\\u00CA/e <CR><Esc><leader>snkC9
+    41	nmap <leader>snkCB :s/Ë/\\u00CB/e <CR><Esc><leader>snkCA
+    42	nmap <leader>snkCC :s/Ì/\\u00CC/e <CR><Esc><leader>snkCB
+    43	nmap <leader>snkCD :s/Í/\\u00CD/e <CR><Esc><leader>snkCC
+    44	nmap <leader>snkCE :s/Î/\\u00CE/e <CR><Esc><leader>snkCD
+    45	nmap <leader>snkCF :s/Ï/\\u00CF/e <CR><Esc><leader>snkCE
+    46	nmap <leader>snkD0 :s/Ð/\\u00D0/e <CR><Esc><leader>snkCF
+    47	nmap <leader>snkD1 :s/Ñ/\\u00D1/e <CR><Esc><leader>snkD0
+    48	nmap <leader>snkD2 :s/Ò/\\u00D2/e <CR><Esc><leader>snkD1
+    49	nmap <leader>snkD3 :s/Ó/\\u00D3/e <CR><Esc><leader>snkD2
+    50	nmap <leader>snkD4 :s/Ô/\\u00D4/e <CR><Esc><leader>snkD3
+    51	nmap <leader>snkD5 :s/Õ/\\u00D5/e <CR><Esc><leader>snkD4
+    52	nmap <leader>snkD6 :s/Ö/\\u00D6/e <CR><Esc><leader>snkD5
+    53	nmap <leader>snkD7 :s/×/\\u00D7/e <CR><Esc><leader>snkD6
+    54	nmap <leader>snkD8 :s/Ø/\\u00D8/e <CR><Esc><leader>snkD7
+    55	nmap <leader>snkD9 :s/Ù/\\u00D9/e <CR><Esc><leader>snkD8
+    56	nmap <leader>snkDA :s/Ú/\\u00DA/e <CR><Esc><leader>snkD9
+    57	nmap <leader>snkDB :s/Û/\\u00DB/e <CR><Esc><leader>snkDA
+    58	nmap <leader>snkDC :s/Ü/\\u00DC/e <CR><Esc><leader>snkDB
+    59	nmap <leader>snkDD :s/Ý/\\u00DD/e <CR><Esc><leader>snkDC
+    60	nmap <leader>snkDE :s/Þ/\\u00DE/e <CR><Esc><leader>snkDD
+    61	nmap <leader>snkDF :s/ß/\\u00DF/e <CR><Esc><leader>snkDE
+    62	nmap <leader>snkE0 :s/à/\\u00E0/e <CR><Esc><leader>snkDF
+    63	nmap <leader>snkE1 :s/á/\\u00E1/e <CR><Esc><leader>snkE0
+    64	nmap <leader>snkE2 :s/â/\\u00E2/e <CR><Esc><leader>snkE1
+    65	nmap <leader>snkE3 :s/ã/\\u00E3/e <CR><Esc><leader>snkE2
+    66	nmap <leader>snkE4 :s/ä/\\u00E4/e <CR><Esc><leader>snkE3
+    67	nmap <leader>snkE5 :s/å/\\u00E5/e <CR><Esc><leader>snkE4
+    68	nmap <leader>snkE6 :s/æ/\\u00E6/e <CR><Esc><leader>snkE5
+    69	nmap <leader>snkE7 :s/ç/\\u00E7/e <CR><Esc><leader>snkE6
+    70	nmap <leader>snkE8 :s/è/\\u00E8/e <CR><Esc><leader>snkE7
+    71	nmap <leader>snkE9 :s/é/\\u00E9/e <CR><Esc><leader>snkE8
+    72	nmap <leader>snkEA :s/ê/\\u00EA/e <CR><Esc><leader>snkE9
+    73	nmap <leader>snkEB :s/ë/\\u00EB/e <CR><Esc><leader>snkEA
+    74	nmap <leader>snkEC :s/ì/\\u00EC/e <CR><Esc><leader>snkEB
+    75	nmap <leader>snkED :s/í/\\u00ED/e <CR><Esc><leader>snkEC
+    76	nmap <leader>snkEE :s/î/\\u00EE/e <CR><Esc><leader>snkED
+    77	nmap <leader>snkEF :s/ï/\\u00EF/e <CR><Esc><leader>snkEE
+    78	nmap <leader>snkF0 :s/ð/\\u00F0/e <CR><Esc><leader>snkEF
+    79	nmap <leader>snkF1 :s/ñ/\\u00F1/e <CR><Esc><leader>snkF0
+    80	nmap <leader>snkF2 :s/ò/\\u00F2/e <CR><Esc><leader>snkF1
+    81	nmap <leader>snkF3 :s/ó/\\u00F3/e <CR><Esc><leader>snkF2
+    82	nmap <leader>snkF4 :s/ô/\\u00F4/e <CR><Esc><leader>snkF3
+    83	nmap <leader>snkF5 :s/õ/\\u00F5/e <CR><Esc><leader>snkF4
+    84	nmap <leader>snkF6 :s/ö/\\u00F6/e <CR><Esc><leader>snkF5
+    85	nmap <leader>snkF7 :s/÷/\\u00F7/e <CR><Esc><leader>snkF6
+    86	nmap <leader>snkF8 :s/ø/\\u00F8/e <CR><Esc><leader>snkF7
+    87	nmap <leader>snkF9 :s/ù/\\u00F9/e <CR><Esc><leader>snkF8
+    88	nmap <leader>snkFA :s/ú/\\u00FA/e <CR><Esc><leader>snkF9
+    89	nmap <leader>snkFB :s/û/\\u00FB/e <CR><Esc><leader>snkFA
+    90	nmap <leader>snkFC :s/ü/\\u00FC/e <CR><Esc><leader>snkFB
+    91	nmap <leader>snkFD :s/ý/\\u00FD/e <CR><Esc><leader>snkFC
+    92	nmap <leader>snkFE :s/þ/\\u00FE/e <CR><Esc><leader>snkFD
+    93	nmap ga :s/\%u00FF/\\uÿ00FF/e <CR><Esc><leader>snkFE
+    94	```
+     1	# Convert any character of portuguese to UTF8 code point
+     2	[UTF-8 table used as reference](http://www.utf8-chartable.de)
+     3	
+     4	## snk
+     5	
+     6	`<leader>snk` to start the engine :D
+     7	
+     8	First is the last of the list and will end at first
+     9	
+    10	```
+    11	nmap <leader>snkA7 :s/\%u00A7/\\u00A7/e <CR>
+    12	nmap <leader>snkA8 :s/\%u00A8/\\u00A8/e <CR><Esc><leader>snkA7
+    13	nmap <leader>snkAA :s/\%u00AA/\\u00AA/e <CR><Esc><leader>snkA8
+    14	nmap <leader>snkAB :s/\%u00AB/\\u00AB/e <CR><Esc><leader>snkAA
+    15	nmap <leader>snkAC :s/\%u00AC/\\u00AC/e <CR><Esc><leader>snkAB
+    16	nmap <leader>snkAE :s/\%u00AE/\\u00AE/e <CR><Esc><leader>snkAC
+    17	nmap <leader>snkAF :s/\%u00AF/\\u00AF/e <CR><Esc><leader>snkAE
+    18	nmap <leader>snkB0 :s/\%u00B0/\\u00B0/e <CR><Esc><leader>snkAF
+    19	nmap <leader>snkB1 :s/\%u00B1/\\u00B1/e <CR><Esc><leader>snkB0
+    20	nmap <leader>snkB2 :s/\%u00B2/\\u00B2/e <CR><Esc><leader>snkB1
+    21	nmap <leader>snkB3 :s/\%u00B3/\\u00B3/e <CR><Esc><leader>snkB2
+    22	nmap <leader>snkB5 :s/\%u00B5/\\u00B5/e <CR><Esc><leader>snkB3
+    23	nmap <leader>snkB6 :s/\%u00B6/\\u00B6/e <CR><Esc><leader>snkB5
+    24	nmap <leader>snkB9 :s/\%u00B9/\\u00B9/e <CR><Esc><leader>snkB6
+    25	nmap <leader>snkBA :s/\%u00BA/\\u00BA/e <CR><Esc><leader>snkB9
+    26	nmap <leader>snkBB :s/\%u00BB/\\u00BB/e <CR><Esc><leader>snkBA
+    27	nmap <leader>snkBC :s/\%u00BC/\\u00BC/e <CR><Esc><leader>snkBB
+    28	nmap <leader>snkBD :s/\%u00BD/\\u00BD/e <CR><Esc><leader>snkBC
+    29	nmap <leader>snkBE :s/\%u00BE/\\u00BE/e <CR><Esc><leader>snkBD
+    30	nmap <leader>snkC0 :s/\%u00C0/\\u00C0/e <CR><Esc><leader>snkBE
+    31	nmap <leader>snkC1 :s/\%u00C1/\\u00C1/e <CR><Esc><leader>snkC0
+    32	nmap <leader>snkC2 :s/\%u00C2/\\u00C2/e <CR><Esc><leader>snkC1
+    33	nmap <leader>snkC3 :s/\%u00C3/\\u00C3/e <CR><Esc><leader>snkC2
+    34	nmap <leader>snkC4 :s/\%u00C4/\\u00C4/e <CR><Esc><leader>snkC3
+    35	nmap <leader>snkC5 :s/\%u00C5/\\u00C5/e <CR><Esc><leader>snkC4
+    36	nmap <leader>snkC6 :s/\%u00C6/\\u00C6/e <CR><Esc><leader>snkC5
+    37	nmap <leader>snkC7 :s/\%u00C7/\\u00C7/e <CR><Esc><leader>snkC6
+    38	nmap <leader>snkC8 :s/\%u00C8/\\u00C8/e <CR><Esc><leader>snkC7
+    39	nmap <leader>snkC9 :s/\%u00C9/\\u00C9/e <CR><Esc><leader>snkC8
+    40	nmap <leader>snkCA :s/\%u00CA/\\u00CA/e <CR><Esc><leader>snkC9
+    41	nmap <leader>snkCB :s/\%u00CB/\\u00CB/e <CR><Esc><leader>snkCA
+    42	nmap <leader>snkCC :s/\%u00CC/\\u00CC/e <CR><Esc><leader>snkCB
+    43	nmap <leader>snkCD :s/\%u00CD/\\u00CD/e <CR><Esc><leader>snkCC
+    44	nmap <leader>snkCE :s/\%u00CE/\\u00CE/e <CR><Esc><leader>snkCD
+    45	nmap <leader>snkCF :s/\%u00CF/\\u00CF/e <CR><Esc><leader>snkCE
+    46	nmap <leader>snkD0 :s/\%u00D0/\\u00D0/e <CR><Esc><leader>snkCF
+    47	nmap <leader>snkD1 :s/\%u00D1/\\u00D1/e <CR><Esc><leader>snkD0
+    48	nmap <leader>snkD2 :s/\%u00D2/\\u00D2/e <CR><Esc><leader>snkD1
+    49	nmap <leader>snkD3 :s/\%u00D3/\\u00D3/e <CR><Esc><leader>snkD2
+    50	nmap <leader>snkD4 :s/\%u00D4/\\u00D4/e <CR><Esc><leader>snkD3
+    51	nmap <leader>snkD5 :s/\%u00D5/\\u00D5/e <CR><Esc><leader>snkD4
+    52	nmap <leader>snkD6 :s/\%u00D6/\\u00D6/e <CR><Esc><leader>snkD5
+    53	nmap <leader>snkD7 :s/\%u00D7/\\u00D7/e <CR><Esc><leader>snkD6
+    54	nmap <leader>snkD8 :s/\%u00D8/\\u00D8/e <CR><Esc><leader>snkD7
+    55	nmap <leader>snkD9 :s/\%u00D9/\\u00D9/e <CR><Esc><leader>snkD8
+    56	nmap <leader>snkDA :s/\%u00DA/\\u00DA/e <CR><Esc><leader>snkD9
+    57	nmap <leader>snkDB :s/\%u00DB/\\u00DB/e <CR><Esc><leader>snkDA
+    58	nmap <leader>snkDC :s/\%u00DC/\\u00DC/e <CR><Esc><leader>snkDB
+    59	nmap <leader>snkDD :s/\%u00DD/\\u00DD/e <CR><Esc><leader>snkDC
+    60	nmap <leader>snkDE :s/\%u00DE/\\u00DE/e <CR><Esc><leader>snkDD
+    61	nmap <leader>snkDF :s/\%u00DF/\\u00DF/e <CR><Esc><leader>snkDE
+    62	nmap <leader>snkE0 :s/\%u00E0/\\u00E0/e <CR><Esc><leader>snkDF
+    63	nmap <leader>snkE1 :s/\%u00E1/\\u00E1/e <CR><Esc><leader>snkE0
+    64	nmap <leader>snkE2 :s/\%u00E2/\\u00E2/e <CR><Esc><leader>snkE1
+    65	nmap <leader>snkE3 :s/\%u00E3/\\u00E3/e <CR><Esc><leader>snkE2
+    66	nmap <leader>snkE4 :s/\%u00E4/\\u00E4/e <CR><Esc><leader>snkE3
+    67	nmap <leader>snkE5 :s/\%u00E5/\\u00E5/e <CR><Esc><leader>snkE4
+    68	nmap <leader>snkE6 :s/\%u00E6/\\u00E6/e <CR><Esc><leader>snkE5
+    69	nmap <leader>snkE7 :s/\%u00E7/\\u00E7/e <CR><Esc><leader>snkE6
+    70	nmap <leader>snkE8 :s/\%u00E8/\\u00E8/e <CR><Esc><leader>snkE7
+    71	nmap <leader>snkE9 :s/\%u00E9/\\u00E9/e <CR><Esc><leader>snkE8
+    72	nmap <leader>snkEA :s/\%u00EA/\\u00EA/e <CR><Esc><leader>snkE9
+    73	nmap <leader>snkEB :s/\%u00EB/\\u00EB/e <CR><Esc><leader>snkEA
+    74	nmap <leader>snkEC :s/\%u00EC/\\u00EC/e <CR><Esc><leader>snkEB
+    75	nmap <leader>snkED :s/\%u00ED/\\u00ED/e <CR><Esc><leader>snkEC
+    76	nmap <leader>snkEE :s/\%u00EE/\\u00EE/e <CR><Esc><leader>snkED
+    77	nmap <leader>snkEF :s/\%u00EF/\\u00EF/e <CR><Esc><leader>snkEE
+    78	nmap <leader>snkF0 :s/\%u00F0/\\u00F0/e <CR><Esc><leader>snkEF
+    79	nmap <leader>snkF1 :s/\%u00F1/\\u00F1/e <CR><Esc><leader>snkF0
+    80	nmap <leader>snkF2 :s/\%u00F2/\\u00F2/e <CR><Esc><leader>snkF1
+    81	nmap <leader>snkF3 :s/\%u00F3/\\u00F3/e <CR><Esc><leader>snkF2
+    82	nmap <leader>snkF4 :s/\%u00F4/\\u00F4/e <CR><Esc><leader>snkF3
+    83	nmap <leader>snkF5 :s/\%u00F5/\\u00F5/e <CR><Esc><leader>snkF4
+    84	nmap <leader>snkF6 :s/\%u00F6/\\u00F6/e <CR><Esc><leader>snkF5
+    85	nmap <leader>snkF7 :s/\%u00F7/\\u00F7/e <CR><Esc><leader>snkF6
+    86	nmap <leader>snkF8 :s/\%u00F8/\\u00F8/e <CR><Esc><leader>snkF7
+    87	nmap <leader>snkF9 :s/\%u00F9/\\u00F9/e <CR><Esc><leader>snkF8
+    88	nmap <leader>snkFA :s/\%u00FA/\\u00FA/e <CR><Esc><leader>snkF9
+    89	nmap <leader>snkFB :s/\%u00FB/\\u00FB/e <CR><Esc><leader>snkFA
+    90	nmap <leader>snkFC :s/\%u00FC/\\u00FC/e <CR><Esc><leader>snkFB
+    91	nmap <leader>snkFD :s/\%u00FD/\\u00FD/e <CR><Esc><leader>snkFC
+    92	nmap <leader>snkFE :s/\%u00FE/\\u00FE/e <CR><Esc><leader>snkFD
+    93	nmap <leader>snk :s/\%u00FF/\\u00FF/e <CR><Esc><leader>snkFE
+    94	```
+     1	# Convert any character of portuguese to UTF8 code point
+     2	
+     3	[UTF-8 table used as reference](http://www.utf8-chartable.de)
+     4	
+     5	## utils
+     6	
+     7	`:g/^/call CP8()` : for each line of file
+     8	
+     9	`:2,19g/^/call CP8()` : range of lines
+    10	
+    11	`:19,$g/^/call CP8()` : range of lines
+    12	
+    13	`:call CP8()` : just call it
+    14	
+    15	`:CP8` mapped `command! CP8 call CP8()`
+    16	
+    17	function to change most of characters
+    18	
+    19	```
+    20	" after function: command! CP8 call CP8()
+    21	" replace most of special characters to its Unicode Code Point
+    22	function! CP8()
+    23	    silent! s/\%u00A7/\\u00A7/e
+    24	    silent! s/\%u00A8/\\u00A8/e
+    25	    silent! s/\%u00AA/\\u00AA/e
+    26	    silent! s/\%u00AB/\\u00AB/e
+    27	    silent! s/\%u00AC/\\u00AC/e
+    28	    silent! s/\%u00AE/\\u00AE/e
+    29	    silent! s/\%u00AF/\\u00AF/e
+    30	    silent! s/\%u00B0/\\u00B0/e
+    31	    silent! s/\%u00B1/\\u00B1/e
+    32	    silent! s/\%u00B2/\\u00B2/e
+    33	    silent! s/\%u00B3/\\u00B3/e
+    34	    silent! s/\%u00B5/\\u00B5/e
+    35	    silent! s/\%u00B6/\\u00B6/e
+    36	    silent! s/\%u00B9/\\u00B9/e
+    37	    silent! s/\%u00BA/\\u00BA/e
+    38	    silent! s/\%u00BB/\\u00BB/e
+    39	    silent! s/\%u00BC/\\u00BC/e
+    40	    silent! s/\%u00BD/\\u00BD/e
+    41	    silent! s/\%u00BE/\\u00BE/e
+    42	    silent! s/\%u00C0/\\u00C0/e
+    43	    silent! s/\%u00C1/\\u00C1/e
+    44	    silent! s/\%u00C2/\\u00C2/e
+    45	    silent! s/\%u00C3/\\u00C3/e
+    46	    silent! s/\%u00C4/\\u00C4/e
+    47	    silent! s/\%u00C5/\\u00C5/e
+    48	    silent! s/\%u00C6/\\u00C6/e
+    49	    silent! s/\%u00C7/\\u00C7/e
+    50	    silent! s/\%u00C8/\\u00C8/e
+    51	    silent! s/\%u00C9/\\u00C9/e
+    52	    silent! s/\%u00CA/\\u00CA/e
+    53	    silent! s/\%u00CB/\\u00CB/e
+    54	    silent! s/\%u00CC/\\u00CC/e
+    55	    silent! s/\%u00CD/\\u00CD/e
+    56	    silent! s/\%u00CE/\\u00CE/e
+    57	    silent! s/\%u00CF/\\u00CF/e
+    58	    silent! s/\%u00D0/\\u00D0/e
+    59	    silent! s/\%u00D1/\\u00D1/e
+    60	    silent! s/\%u00D2/\\u00D2/e
+    61	    silent! s/\%u00D3/\\u00D3/e
+    62	    silent! s/\%u00D4/\\u00D4/e
+    63	    silent! s/\%u00D5/\\u00D5/e
+    64	    silent! s/\%u00D6/\\u00D6/e
+    65	    silent! s/\%u00D7/\\u00D7/e
+    66	    silent! s/\%u00D8/\\u00D8/e
+    67	    silent! s/\%u00D9/\\u00D9/e
+    68	    silent! s/\%u00DA/\\u00DA/e
+    69	    silent! s/\%u00DB/\\u00DB/e
+    70	    silent! s/\%u00DC/\\u00DC/e
+    71	    silent! s/\%u00DD/\\u00DD/e
+    72	    silent! s/\%u00DE/\\u00DE/e
+    73	    silent! s/\%u00DF/\\u00DF/e
+    74	    silent! s/\%u00E0/\\u00E0/e
+    75	    silent! s/\%u00E1/\\u00E1/e
+    76	    silent! s/\%u00E2/\\u00E2/e
+    77	    silent! s/\%u00E3/\\u00E3/e
+    78	    silent! s/\%u00E4/\\u00E4/e
+    79	    silent! s/\%u00E5/\\u00E5/e
+    80	    silent! s/\%u00E6/\\u00E6/e
+    81	    silent! s/\%u00E7/\\u00E7/e
+    82	    silent! s/\%u00E8/\\u00E8/e
+    83	    silent! s/\%u00E9/\\u00E9/e
+    84	    silent! s/\%u00EA/\\u00EA/e
+    85	    silent! s/\%u00EB/\\u00EB/e
+    86	    silent! s/\%u00EC/\\u00EC/e
+    87	    silent! s/\%u00ED/\\u00ED/e
+    88	    silent! s/\%u00EE/\\u00EE/e
+    89	    silent! s/\%u00EF/\\u00EF/e
+    90	    silent! s/\%u00F0/\\u00F0/e
+    91	    silent! s/\%u00F1/\\u00F1/e
+    92	    silent! s/\%u00F2/\\u00F2/e
+    93	    silent! s/\%u00F3/\\u00F3/e
+    94	    silent! s/\%u00F4/\\u00F4/e
+    95	    silent! s/\%u00F5/\\u00F5/e
+    96	    silent! s/\%u00F6/\\u00F6/e
+    97	    silent! s/\%u00F7/\\u00F7/e
+    98	    silent! s/\%u00F8/\\u00F8/e
+    99	    silent! s/\%u00F9/\\u00F9/e
+   100	    silent! s/\%u00FA/\\u00FA/e
+   101	    silent! s/\%u00FB/\\u00FB/e
+   102	    silent! s/\%u00FC/\\u00FC/e
+   103	    silent! s/\%u00FD/\\u00FD/e
+   104	    silent! s/\%u00FE/\\u00FE/e
+   105	    silent! s/\%u00FF/\\u00FF/e
+   106	endfunction
+   107	
+   108	command! CP8 call CP8()
+   109	```
+     1	# Digraph on vim
+     2	
+     3	     ^@	NU	0x00	  0	NULL (NUL)
+     4	     ^A	SH	0x01	  1	START OF HEADING (SOH)
+     5	     ^B	SX	0x02	  2	START OF TEXT (STX)
+     6	     ^C	EX	0x03	  3	END OF TEXT (ETX)
+     7	     ^D	ET	0x04	  4	END OF TRANSMISSION (EOT)
+     8	     ^E	EQ	0x05	  5	ENQUIRY (ENQ)
+     9	     ^F	AK	0x06	  6	ACKNOWLEDGE (ACK)
+    10	     ^G	BL	0x07	  7	BELL (BEL)
+    11	     ^H	BS	0x08	  8	BACKSPACE (BS)
+    12	     ^I	HT	0x09	  9	CHARACTER TABULATION (HT)
+    13	     ^@	LF	0x0a	 10	LINE FEED (LF)
+    14	     ^K	VT	0x0b	 11	LINE TABULATION (VT)
+    15	     ^L	FF	0x0c	 12	FORM FEED (FF)
+    16	     ^M	CR	0x0d	 13	CARRIAGE RETURN (CR)
+    17	     ^N	SO	0x0e	 14	SHIFT OUT (SO)
+    18	     ^O	SI	0x0f	 15	SHIFT IN (SI)
+    19	     ^P	DL	0x10	 16	DATALINK ESCAPE (DLE)
+    20	     ^Q	D1	0x11	 17	DEVICE CONTROL ONE (DC1)
+    21	     ^R	D2	0x12	 18	DEVICE CONTROL TWO (DC2)
+    22	     ^S	D3	0x13	 19	DEVICE CONTROL THREE (DC3)
+    23	     ^T	D4	0x14	 20	DEVICE CONTROL FOUR (DC4)
+    24	     ^U	NK	0x15	 21	NEGATIVE ACKNOWLEDGE (NAK)
+    25	     ^V	SY	0x16	 22	SYNCHRONOUS IDLE (SYN)
+    26	     ^W	EB	0x17	 23	END OF TRANSMISSION BLOCK (ETB)
+    27	     ^X	CN	0x18	 24	CANCEL (CAN)
+    28	     ^Y	EM	0x19	 25	END OF MEDIUM (EM)
+    29	     ^Z	SB	0x1a	 26	SUBSTITUTE (SUB)
+    30	     ^[	EC	0x1b	 27	ESCAPE (ESC)
+    31	     ^\	FS	0x1c	 28	FILE SEPARATOR (IS4)
+    32	     ^]	GS	0x1d	 29	GROUP SEPARATOR (IS3)
+    33	     ^^	RS	0x1e	 30	RECORD SEPARATOR (IS2)
+    34	     ^_	US	0x1f	 31	UNIT SEPARATOR (IS1)
+    35	     	SP	0x20	 32	SPACE
+    36	     #	Nb	0x23	 35	NUMBER SIGN
+    37	     $	DO	0x24	 36	DOLLAR SIGN
+    38	     @	At	0x40	 64	COMMERCIAL AT
+    39	
+     1	Help Files
+     2	______
+     3	
+     4	Getting Started ~
+     5	|usr_01.txt|  About the manuals
+     6	|usr_02.txt|  The first steps in Vim
+     7	|usr_03.txt|  Moving around
+     8	|usr_04.txt|  Making small changes
+     9	|usr_05.txt|  Set your settings
+    10	|usr_06.txt|  Using syntax highlighting
+    11	|usr_07.txt|  Editing more than one file
+    12	|usr_08.txt|  Splitting windows
+    13	|usr_09.txt|  Using the GUI
+    14	|usr_10.txt|  Making big changes
+    15	|usr_11.txt|  Recovering from a crash
+    16	|usr_12.txt|  Clever tricks
+    17	
+    18	Editing Effectively ~
+    19	|usr_20.txt|  Typing command-line commands quickly
+    20	|usr_21.txt|  Go away and come back
+    21	|usr_22.txt|  Finding the file to edit
+    22	|usr_23.txt|  Editing other files
+    23	|usr_24.txt|  Inserting quickly
+    24	|usr_25.txt|  Editing formatted text
+    25	|usr_26.txt|  Repeating
+    26	|usr_27.txt|  Search commands and patterns
+    27	|usr_28.txt|  Folding
+    28	|usr_29.txt|  Moving through programs
+    29	|usr_30.txt|  Editing programs
+    30	|usr_31.txt|  Exploiting the GUI
+    31	|usr_32.txt|  The undo tree
+    32	
+    33	Tuning Vim ~
+    34	|usr_40.txt|  Make new commands
+    35	|usr_41.txt|  Write a Vim script
+    36	|usr_42.txt|  Add new menus
+    37	|usr_43.txt|  Using filetypes
+    38	|usr_44.txt|  Your own syntax highlighted
+    39	|usr_45.txt|  Select your language
+    40	
+    41	Making Vim Run ~
+    42	|usr_90.txt|  Installing Vim
+    43	
+    44	REFERENCE MANUAL: These files explain every detail of Vim.	*reference_toc*
+    45	
+    46	General subjects ~
+    47	|intro.txt|	general introduction to Vim; notation used in help files
+    48	|help.txt|	overview and quick reference (this file)
+    49	|helphelp.txt|	about using the help files
+    50	|index.txt|	alphabetical index of all commands
+    51	|help-tags|	all the tags you can jump to (index of tags)
+    52	|howto.txt|	how to do the most common editing tasks
+    53	|tips.txt|	various tips on using Vim
+    54	|message.txt|	(error) messages and explanations
+    55	|quotes.txt|	remarks from users of Vim
+    56	|todo.txt|	known problems and desired extensions
+    57	|develop.txt|	development of Vim
+    58	|debug.txt|	debugging Vim itself
+    59	|uganda.txt|	Vim distribution conditions and what to do with your money
+    60	
+    61	Basic editing ~
+    62	|starting.txt|	starting Vim, Vim command arguments, initialisation
+    63	|editing.txt|	editing and writing files
+    64	|motion.txt|	commands for moving around
+    65	|scroll.txt|	scrolling the text in the window
+    66	|insert.txt|	Insert and Replace mode
+    67	|change.txt|	deleting and replacing text
+    68	|indent.txt|	automatic indenting for C and other languages
+    69	|undo.txt|	Undo and Redo
+    70	|repeat.txt|	repeating commands, Vim scripts and debugging
+    71	|visual.txt|	using the Visual mode (selecting a text area)
+    72	|various.txt|	various remaining commands
+    73	|recover.txt|	recovering from a crash
+    74	
+    75	Advanced editing ~
+    76	|cmdline.txt|	Command-line editing
+    77	|options.txt|	description of all options
+    78	|pattern.txt|	regexp patterns and search commands
+    79	|map.txt|	key mapping and abbreviations
+    80	|tagsrch.txt|	tags and special searches
+    81	|quickfix.txt|	commands for a quick edit-compile-fix cycle
+    82	|windows.txt|	commands for using multiple windows and buffers
+    83	|tabpage.txt|	commands for using multiple tab pages
+    84	|syntax.txt|	syntax highlighting
+    85	|spell.txt|	spell checking
+    86	|diff.txt|	working with two to four versions of the same file
+    87	|autocmd.txt|	automatically executing commands on an event
+    88	|filetype.txt|	settings done specifically for a type of file
+    89	|eval.txt|	expression evaluation, conditional commands
+    90	|fold.txt|	hide (fold) ranges of lines
+    91	
+    92	Special issues ~
+    93	|print.txt|	printing
+    94	|remote.txt|	using Vim as a server or client
+    95	|term.txt|	using different terminals and mice
+    96	|digraph.txt|	list of available digraphs
+    97	|mbyte.txt|	multi-byte text support
+    98	|mlang.txt|	non-English language support
+    99	|arabic.txt|	Arabic language support and editing
+   100	|farsi.txt|	Farsi (Persian) editing
+   101	|hebrew.txt|	Hebrew language support and editing
+   102	|russian.txt|	Russian language support and editing
+   103	|ft_ada.txt|	Ada (the programming language) support
+   104	|ft_sql.txt|	about the SQL filetype plugin
+   105	|hangulin.txt|	Hangul (Korean) input mode
+   106	|rileft.txt|	right-to-left editing mode
+   107	
+   108	GUI ~
+   109	|gui.txt|	Graphical User Interface (GUI)
+   110	|gui_w16.txt|	Windows 3.1 GUI
+   111	|gui_w32.txt|	Win32 GUI
+   112	|gui_x11.txt|	X11 GUI
+   113	|gui_mac.txt|	MacVim GUI
+   114	
+   115	Interfaces ~
+   116	|if_cscop.txt|	using Cscope with Vim
+   117	|if_lua.txt|	Lua interface
+   118	|if_mzsch.txt|	MzScheme interface
+   119	|if_perl.txt|	Perl interface
+   120	|if_pyth.txt|	Python interface
+   121	|if_sniff.txt|	SNiFF+ interface
+   122	|if_tcl.txt|	Tcl interface
+   123	|if_ole.txt|	OLE automation interface for Win32
+   124	|if_ruby.txt|	Ruby interface
+   125	|debugger.txt|	Interface with a debugger
+   126	|workshop.txt|	Sun Visual Workshop interface
+   127	|netbeans.txt|	NetBeans External Editor interface
+   128	|sign.txt|	debugging signs
+   129	
+   130	Versions ~
+   131	|vi_diff.txt|	Main differences between Vim and Vi
+   132	|version4.txt|	Differences between Vim version 3.0 and 4.x
+   133	|version5.txt|	Differences between Vim version 4.6 and 5.x
+   134	|version6.txt|	Differences between Vim version 5.7 and 6.x
+   135	|version7.txt|	Differences between Vim version 6.4 and 7.x
+   136							*sys-file-list*
+   137	Remarks about specific systems ~
+   138	|os_390.txt|	OS/390 Unix
+   139	|os_amiga.txt|	Amiga
+   140	|os_beos.txt|	BeOS and BeBox
+   141	|os_dos.txt|	MS-DOS and MS-Windows NT/95 common items
+   142	|os_mac.txt|	Macintosh
+   143	|os_mint.txt|	Atari MiNT
+   144	|os_msdos.txt|	MS-DOS (plain DOS and DOS box under Windows)
+   145	|os_os2.txt|	OS/2
+   146	|os_qnx.txt|	QNX
+   147	|os_risc.txt|	RISC-OS
+   148	|os_unix.txt|	Unix
+   149	|os_vms.txt|	VMS
+   150	|os_win32.txt|	MS-Windows 95/98/NT
+   151							*standard-plugin-list*
+   152	Standard plugins ~
+   153	|pi_getscript.txt| Downloading latest version of Vim scripts
+   154	|pi_gzip.txt|      Reading and writing compressed files
+   155	|pi_netrw.txt|     Reading and writing files over a network
+   156	|pi_paren.txt|     Highlight matching parens
+   157	|pi_tar.txt|       Tar file explorer
+   158	|pi_vimball.txt|   Create a self-installing Vim script
+   159	|pi_zip.txt|       Zip archive explorer
+   160	
+   161	LOCAL ADDITIONS:				*local-additions*
+   162	|vundle.txt|          Vundle, a plug-in manager for Vim.             *vundle*
+   163	|ag.txt|   Plugin that integrates ag with Vim
+   164	|cocoa.txt|  Plugin for Cocoa/Objective-C development.
+   165	|colorv.txt|    Easier colors handling.
+   166	|ft-csv.txt|	For Vim version 7.4	Last Change: Thu, 15 Jan 2015
+   167	|ctrlp.txt|       Fuzzy file, buffer, mru, tag, ... finder. v1.79
+   168	|delimitMate.txt|   Trying to keep those beasts at bay! v2.7     *delimitMate*
+   169	|ember.txt|  Vim plugin for the Emberjs frontend framework.
+   170	|emmet.txt|        *Emmet* for Vim
+   171	|gifl|  Plugin for doing Google's I'm feeling Lucky
+   172	|Gist.vim| Vimscript for creating gists (http://gist.github.com)
+   173	|Join.txt|  A more powerful line join command in vim
+   174	|l9.txt|        Vim-script library
+   175	|matchit.txt|   Extended "%" matching
+   176	|matchtagalways.txt|  Always highlight enclosing tags
+   177	|NERD_tree.txt|   A tree explorer plugin that owns your momma!
+   178	|portkey.txt|     Navigate files at the speed of Vim
+   179	|QFEnter.txt|    Open a Quickfix item in a window you choose.
+   180	|supertab.txt|
+   181	|swap-parameters.txt| Swap parameters of a function with a single command.
+   182	|switch.txt|	Switch segments of text with predefined replacements
+   183	|syntastic.txt|   Syntax checking on the fly has never been so pimp.
+   184	|Tabular.txt|   Configurable, flexible, intuitive text aligning
+   185	|tcomment.txt|  An easily extensible & universal comment plugin
+   186	|textile.txt|              Textile for Vim       Last Change: November 3, 2008
+   187	|UltiSnips.txt|    For Vim version 7.0 or later.
+   188	|undotree.txt|  Display your undo history in a graph
+   189	|abolish.txt|  Language friendly searches, substitutions, and abbreviations
+   190	|airline.txt|  Lean and mean status/tabline that's light as air
+   191	|anzu.txt|		検索時の位置情報を表示するプラグインです。
+   192	|bundler.txt|  Support for Ruby's Bundler
+   193	|eunuch.txt|  File manipulation
+   194	|fugitive.txt|  A Git wrapper so awesome, it should be illegal
+   195	|indent_guides.txt|  A plugin for visually displaying indent levels in Vim.
+   196	|marked.vim|  Open the current Markdown buffer in Marked.app.
+   197	|misc.txt|  Miscellaneous auto-load Vim scripts
+   198	|rails.txt|	Plugin for working with Ruby on Rails applications
+   199	|rake.txt|  It's like rails.vim without the rails
+   200	|rubyrefactoring.txt|  Ruby Refactoring Tool for Vim
+   201	|vim-ruby.txt|
+   202	|session.txt|  Extended session management for Vim
+   203	|signify.txt| Indicate changed lines within a file using a VCS.
+   204	|startify.txt|  Showing recently used stuff like a boss.
+   205	|surround.txt|  Plugin for deleting, changing, and adding "surroundings"
+   206	|textobj-rubyblock.txt|	Text objects for ruby blocks
+   207	|textobj-user.txt|	Create your own text objects
+   208	|tmux-navigator.txt| Plugin to allow seamless navigation between tmux and vim
+   209	|togglecursor.txt|  Change cursor in insert mode
+   210	|turbux.txt|  Turbo Ruby tests with tmux
+   211	|unimpaired.txt|  Pairs of handy bracket mappings
+   212	|vimux.txt|   easily interact with tmux
+   213	|vimwiki.txt|   A Personal Wiki for Vim
+   214	|webapi-html.txt|			HTML parser written in pure vimscript.
+   215	|webapi-http.txt|				simple HTTP client library.
+   216	|webapi-json.txt|			JSON parser written in pure vimscript.
+   217	|webapi-xml.txt|			XML parser written in pure vimscript.
+   218	|youcompleteme|  YouCompleteMe: a code-completion engine for Vim
+   219	|ZoomWin.txt|	Zoom into/out-of a window		Jun 18, 2012
+   220	|vundle.txt|          Vundle, a plug-in manager for Vim.             *vundle*
+   221	
+   222	*usr_toc.txt*	For Vim version 7.4.  Last change: 2010 Jul 20
+   223	
+   224			     VIM USER MANUAL - by Bram Moolenaar
+   225	
+   226				      Table Of Contents			*user-manual*
+   227	
+   228	==============================================================================
+   229	Overview ~
+   230	
+   231	Getting Started
+   232	|usr_01.txt|  About the manuals
+   233	|usr_02.txt|  The first steps in Vim
+   234	|usr_03.txt|  Moving around
+   235	|usr_04.txt|  Making small changes
+   236	|usr_05.txt|  Set your settings
+   237	|usr_06.txt|  Using syntax highlighting
+   238	|usr_07.txt|  Editing more than one file
+   239	|usr_08.txt|  Splitting windows
+   240	|usr_09.txt|  Using the GUI
+   241	|usr_10.txt|  Making big changes
+   242	|usr_11.txt|  Recovering from a crash
+   243	|usr_12.txt|  Clever tricks
+   244	
+   245	Editing Effectively
+   246	|usr_20.txt|  Typing command-line commands quickly
+   247	|usr_21.txt|  Go away and come back
+   248	|usr_22.txt|  Finding the file to edit
+   249	|usr_23.txt|  Editing other files
+   250	|usr_24.txt|  Inserting quickly
+   251	|usr_25.txt|  Editing formatted text
+   252	|usr_26.txt|  Repeating
+   253	|usr_27.txt|  Search commands and patterns
+   254	|usr_28.txt|  Folding
+   255	|usr_29.txt|  Moving through programs
+   256	|usr_30.txt|  Editing programs
+   257	|usr_31.txt|  Exploiting the GUI
+   258	|usr_32.txt|  The undo tree
+   259	
+   260	Tuning Vim
+   261	|usr_40.txt|  Make new commands
+   262	|usr_41.txt|  Write a Vim script
+   263	|usr_42.txt|  Add new menus
+   264	|usr_43.txt|  Using filetypes
+   265	|usr_44.txt|  Your own syntax highlighted
+   266	|usr_45.txt|  Select your language
+   267	
+   268	Making Vim Run
+   269	|usr_90.txt|  Installing Vim
+   270	
+   271	Reference manual
+   272	|reference_toc|     More detailed information for all commands
+   273	
+   274	The user manual is available as a single, ready to print HTML and PDF file
+   275	here:
+   276		http://vimdoc.sf.net
+   277	
+   278	==============================================================================
+   279	Getting Started ~
+   280	
+   281	Read this from start to end to learn the essential commands.
+   282	
+   283	|usr_01.txt|  About the manuals
+   284			|01.1|	Two manuals
+   285			|01.2|	Vim installed
+   286			|01.3|	Using the Vim tutor
+   287			|01.4|	Copyright
+   288	
+   289	|usr_02.txt|  The first steps in Vim
+   290			|02.1|	Running Vim for the First Time
+   291			|02.2|	Inserting text
+   292			|02.3|	Moving around
+   293			|02.4|	Deleting characters
+   294			|02.5|	Undo and Redo
+   295			|02.6|	Other editing commands
+   296			|02.7|	Getting out
+   297			|02.8|	Finding help
+   298	
+   299	|usr_03.txt|  Moving around
+   300			|03.1|	Word movement
+   301			|03.2|	Moving to the start or end of a line
+   302			|03.3|	Moving to a character
+   303			|03.4|	Matching a paren
+   304			|03.5|	Moving to a specific line
+   305			|03.6|	Telling where you are
+   306			|03.7|	Scrolling around
+   307			|03.8|	Simple searches
+   308			|03.9|	Simple search patterns
+   309			|03.10|	Using marks
+   310	
+   311	|usr_04.txt|  Making small changes
+   312			|04.1|	Operators and motions
+   313			|04.2|	Changing text
+   314			|04.3|	Repeating a change
+   315			|04.4|	Visual mode
+   316			|04.5|	Moving text
+   317			|04.6|	Copying text
+   318			|04.7|	Using the clipboard
+   319			|04.8|	Text objects
+   320			|04.9|	Replace mode
+   321			|04.10|	Conclusion
+   322	
+   323	|usr_05.txt|  Set your settings
+   324			|05.1|	The vimrc file
+   325			|05.2|	The example vimrc file explained
+   326			|05.3|	Simple mappings
+   327			|05.4|	Adding a plugin
+   328			|05.5|	Adding a help file
+   329			|05.6|	The option window
+   330			|05.7|	Often used options
+   331	
+   332	|usr_06.txt|  Using syntax highlighting
+   333			|06.1|	Switching it on
+   334			|06.2|	No or wrong colors?
+   335			|06.3|	Different colors
+   336			|06.4|	With colors or without colors
+   337			|06.5|	Printing with colors
+   338			|06.6|	Further reading
+   339	
+   340	|usr_07.txt|  Editing more than one file
+   341			|07.1|	Edit another file
+   342			|07.2|	A list of files
+   343			|07.3|	Jumping from file to file
+   344			|07.4|	Backup files
+   345			|07.5|	Copy text between files
+   346			|07.6|	Viewing a file
+   347			|07.7|	Changing the file name
+   348	
+   349	|usr_08.txt|  Splitting windows
+   350			|08.1|	Split a window
+   351			|08.2|	Split a window on another file
+   352			|08.3|	Window size
+   353			|08.4|	Vertical splits
+   354			|08.5|	Moving windows
+   355			|08.6|	Commands for all windows
+   356			|08.7|	Viewing differences with vimdiff
+   357			|08.8|	Various
+   358	
+   359	|usr_09.txt|  Using the GUI
+   360			|09.1|	Parts of the GUI
+   361			|09.2|	Using the mouse
+   362			|09.3|	The clipboard
+   363			|09.4|	Select mode
+   364	
+   365	|usr_10.txt|  Making big changes
+   366			|10.1|	Record and playback commands
+   367			|10.2|	Substitution
+   368			|10.3|	Command ranges
+   369			|10.4|	The global command
+   370			|10.5|	Visual block mode
+   371			|10.6|	Reading and writing part of a file
+   372			|10.7|	Formatting text
+   373			|10.8|	Changing case
+   374			|10.9|	Using an external program
+   375	
+   376	|usr_11.txt|  Recovering from a crash
+   377			|11.1|	Basic recovery
+   378			|11.2|	Where is the swap file?
+   379			|11.3|	Crashed or not?
+   380			|11.4|	Further reading
+   381	
+   382	|usr_12.txt|  Clever tricks
+   383			|12.1|	Replace a word
+   384			|12.2|	Change "Last, First" to "First Last"
+   385			|12.3|	Sort a list
+   386			|12.4|	Reverse line order
+   387			|12.5|	Count words
+   388			|12.6|	Find a man page
+   389			|12.7|	Trim blanks
+   390			|12.8|	Find where a word is used
+   391	
+   392	==============================================================================
+   393	Editing Effectively ~
+   394	
+   395	Subjects that can be read independently.
+   396	
+   397	|usr_20.txt|  Typing command-line commands quickly
+   398			|20.1|	Command line editing
+   399			|20.2|	Command line abbreviations
+   400			|20.3|	Command line completion
+   401			|20.4|	Command line history
+   402			|20.5|	Command line window
+   403	
+   404	|usr_21.txt|  Go away and come back
+   405			|21.1|	Suspend and resume
+   406			|21.2|	Executing shell commands
+   407			|21.3|	Remembering information; viminfo
+   408			|21.4|	Sessions
+   409			|21.5|	Views
+   410			|21.6|	Modelines
+   411	
+   412	|usr_22.txt|  Finding the file to edit
+   413			|22.1|	The file explorer
+   414			|22.2|	The current directory
+   415			|22.3|	Finding a file
+   416			|22.4|	The buffer list
+   417	
+   418	|usr_23.txt|  Editing other files
+   419			|23.1|	DOS, Mac and Unix files
+   420			|23.2|	Files on the internet
+   421			|23.3|	Encryption
+   422			|23.4|	Binary files
+   423			|23.5|	Compressed files
+   424	
+   425	|usr_24.txt|  Inserting quickly
+   426			|24.1|	Making corrections
+   427			|24.2|	Showing matches
+   428			|24.3|	Completion
+   429			|24.4|	Repeating an insert
+   430			|24.5|	Copying from another line
+   431			|24.6|	Inserting a register
+   432			|24.7|	Abbreviations
+   433			|24.8|	Entering special characters
+   434			|24.9|	Digraphs
+   435			|24.10|	Normal mode commands
+   436	
+   437	|usr_25.txt|  Editing formatted text
+   438			|25.1|	Breaking lines
+   439			|25.2|	Aligning text
+   440			|25.3|	Indents and tabs
+   441			|25.4|	Dealing with long lines
+   442			|25.5|	Editing tables
+   443	
+   444	|usr_26.txt|  Repeating
+   445			|26.1|	Repeating with Visual mode
+   446			|26.2|	Add and subtract
+   447			|26.3|	Making a change in many files
+   448			|26.4|	Using Vim from a shell script
+   449	
+   450	|usr_27.txt|  Search commands and patterns
+   451			|27.1|	Ignoring case
+   452			|27.2|	Wrapping around the file end
+   453			|27.3|	Offsets
+   454			|27.4|	Matching multiple times
+   455			|27.5|	Alternatives
+   456			|27.6|	Character ranges
+   457			|27.7|	Character classes
+   458			|27.8|	Matching a line break
+   459			|27.9|	Examples
+   460	
+   461	|usr_28.txt|  Folding
+   462			|28.1|	What is folding?
+   463			|28.2|	Manual folding
+   464			|28.3|	Working with folds
+   465			|28.4|	Saving and restoring folds
+   466			|28.5|	Folding by indent
+   467			|28.6|	Folding with markers
+   468			|28.7|	Folding by syntax
+   469			|28.8|	Folding by expression
+   470			|28.9|	Folding unchanged lines
+   471			|28.10|	Which fold method to use?
+   472	
+   473	|usr_29.txt|  Moving through programs
+   474			|29.1|	Using tags
+   475			|29.2|	The preview window
+   476			|29.3|	Moving through a program
+   477			|29.4|	Finding global identifiers
+   478			|29.5|	Finding local identifiers
+   479	
+   480	|usr_30.txt|  Editing programs
+   481			|30.1|	Compiling
+   482			|30.2|	Indenting C files
+   483			|30.3|	Automatic indenting
+   484			|30.4|	Other indenting
+   485			|30.5|	Tabs and spaces
+   486			|30.6|	Formatting comments
+   487	
+   488	|usr_31.txt|  Exploiting the GUI
+   489			|31.1|	The file browser
+   490			|31.2|	Confirmation
+   491			|31.3|	Menu shortcuts
+   492			|31.4|	Vim window position and size
+   493			|31.5|	Various
+   494	
+   495	|usr_32.txt|  The undo tree
+   496			|32.1|	Undo up to a file write
+   497			|32.2|	Numbering changes
+   498			|32.3|	Jumping around the tree
+   499			|32.4|	Time travelling
+   500	
+   501	==============================================================================
+   502	Tuning Vim ~
+   503	
+   504	Make Vim work as you like it.
+   505	
+   506	|usr_40.txt|  Make new commands
+   507			|40.1|	Key mapping
+   508			|40.2|	Defining command-line commands
+   509			|40.3|	Autocommands
+   510	
+   511	|usr_41.txt|  Write a Vim script
+   512			|41.1|	Introduction
+   513			|41.2|	Variables
+   514			|41.3|	Expressions
+   515			|41.4|	Conditionals
+   516			|41.5|	Executing an expression
+   517			|41.6|	Using functions
+   518			|41.7|	Defining a function
+   519			|41.8|	Lists and Dictionaries
+   520			|41.9|	Exceptions
+   521			|41.10|	Various remarks
+   522			|41.11|	Writing a plugin
+   523			|41.12|	Writing a filetype plugin
+   524			|41.13|	Writing a compiler plugin
+   525			|41.14|	Writing a plugin that loads quickly
+   526			|41.15|	Writing library scripts
+   527			|41.16|	Distributing Vim scripts
+   528	
+   529	|usr_42.txt|  Add new menus
+   530			|42.1|	Introduction
+   531			|42.2|	Menu commands
+   532			|42.3|	Various
+   533			|42.4|	Toolbar and popup menus
+   534	
+   535	|usr_43.txt|  Using filetypes
+   536			|43.1|	Plugins for a filetype
+   537			|43.2|	Adding a filetype
+   538	
+   539	|usr_44.txt|  Your own syntax highlighted
+   540			|44.1|	Basic syntax commands
+   541			|44.2|	Keywords
+   542			|44.3|	Matches
+   543			|44.4|	Regions
+   544			|44.5|	Nested items
+   545			|44.6|	Following groups
+   546			|44.7|	Other arguments
+   547			|44.8|	Clusters
+   548			|44.9|	Including another syntax file
+   549			|44.10|	Synchronizing
+   550			|44.11|	Installing a syntax file
+   551			|44.12|	Portable syntax file layout
+   552	
+   553	|usr_45.txt|  Select your language
+   554			|45.1|	Language for Messages
+   555			|45.2|	Language for Menus
+   556			|45.3|	Using another encoding
+   557			|45.4|	Editing files with a different encoding
+   558			|45.5|	Entering language text
+   559	
+   560	==============================================================================
+   561	Making Vim Run ~
+   562	
+   563	Before you can use Vim.
+   564	
+   565	|usr_90.txt|  Installing Vim
+   566			|90.1|	Unix
+   567			|90.2|	MS-Windows
+   568			|90.3|	Upgrading
+   569			|90.4|	Common installation issues
+   570			|90.5|	Uninstalling Vim
+   571	
+   572	==============================================================================
+   573	
+     1	# Installing Vim on Windows 7
+     2	
+     3	***
+     4	## `export $HOME=C:/Users/snk/`
+     5	***
+     6	
+     7	### Simple Installation
+     8	
+     9	1. Download gvim and install it using **$HOME** as root dir of Vim.
+    10	
+    11	0. Copy all files of `/Google Drive/___backup-no-sync/geek/dotvim-win7`
+    12	and paste it at **$HOME**.
+    13	
+    14	4. Rename the folder from 'dotvim' to '.vim', windows do not allow this
+    15	renaming made with **F2**. Use the `rename-dot-vim.bat`, **cmd.exe** or
+    16	**bash** to do the job.
+    17	
+    18	5. Copy 'vimrc' file (~/.vim/vimrc) at (~/).
+    19	    I did not achive this using a link, just copy it
+    20	
+    21	### Known
+    22	
+    23	> plugins that doesn't work by default with windows:
+    24	>    YouCompleteMe -> cygwin solved
+    25	>     Ag -> Requires the the_silver_searcher, which is available on cygwin
+    26	>         fix is at end of file.
+    27	>     Valloric/MatchTagAlways
+    28	>     mutewinter/swap-parameters
+    29	>     'SirVer/ultisnips'
+    30	>
+    31	>
+     1	Vim Basic
+     2	---------
+     3	
+     4	#### Acronyms and Terms
+     5	
+     6	**EOF** End Of Line.
+     7	
+     8	**BOL** Begin Of Line.
+     9	
+    10	**BOF** Begin Of File.
+    11	
+    12	**EOF** End Of File.
+    13	
+    14	**Soft** When **soft BOL**, means the first non-blank character of line.
+    15	
+    16	#### Keyboard Map
+    17	
+    18	| key                                                      | function                            |
+    19	| -------------------------------------------------------- | ----------------------------------- |
+    20	| `~`                                                      | toggle case of letter under cursor. |
+    21	| `` ` ``                                                     | go to mark. |
+    22	| ``` ``                                                     | go to mark. |
+    23	| `````                                                     | go to mark. |
+    24	| `!` | external filter **???**.|
+    25	| `@` | play macro.|
+    26	| `#` | search the word under cursor and go to previous hit.|
+    27	| `$` | go to EOL.|
+    28	| `%` | go to match `( ), [ ], { }` **PS1**.|
+    29	| `^` | soft BOL.|
+    30	| `&` | repeat `:s` **???**.|
+    31	| `*` | search the word under cursor and go to next hit.|
+    32	| `(` | go to begin of sentence.|
+    33	| `)` | go to begin of next sentence.|
+    34	| `_` | soft BOL.|
+    35	| `-` | go to previous line.|
+    36	| `+` | go to next line.|
+    37	| `=` | auto format.|
+    38	| `{` | go to begin of paragraph.|
+    39	| `}` | go to end of paragraph.|
+    40	| `[` | misc **???**.|
+    41	| `]` | misc **???**.|
+    42	| `\` | *not used*.|
+    43	| `|` | BOL.|
+    44	| `;` | *re-mapped*.|
+    45	| `:` | *cmd line*.|
+    46	| `'` | goto mk. BOL **???**.|
+    47	| `"` | reg. spec. **???**.|
+    48	| `/` | find.|
+    49	| `?` | find (reverse).|
+    50	| `.` | repeat command.|
+    51	| `,` | reverse t/T/f/F **???**.|
+    52	| `<` | un-indente.|
+    53	| `>` | indent.|
+    54	| `a` | append.|
+    55	| `A` | append at EOL.|
+    56	| `b` | previous word.|
+    57	| `B` | previous WORD.|
+    58	| `c` | change.|
+    59	| `C` | change to EOL.|
+    60	| `d` | delete.|
+    61	| `D` | delete to EOL.|
+    62	| `e` | goto end of word.|
+    63	| `E` | goto end of WORD.|
+    64	| `f` | find char.|
+    65	| `F` | "back" find char.|
+    66	| `g` | *extra commands*.|
+    67	| `G` | goto EOF.|
+    68	| `h` | *navegation*.|
+    69	| `H` | goto top of screen.|
+    70	| `i` | *insert mode*.|
+    71	| `I` | *insert mode* at BOL.|
+    72	| `j` | *navegation*.|
+    73	| `J` | join lines.|
+    74	| `k` | *navegation*.|
+    75	| `K` | *help*.|
+    76	| `l` | *navegation*.|
+    77	| `L` | goto bottom of screen.|
+    78	| `m` | set mark.|
+    79	| `M` | goto middle of screen.|
+    80	| `n` | next (find).|
+    81	| `N` | previous (find).|
+    82	| `o` | new line below.|
+    83	| `O` | new line above.|
+    84	| `p` | paste after.|
+    85	| `P` | paste before.|
+    86	| `q` | record macro.|
+    87	| `Q` | ex mode **???**.|
+    88	| `r` | replace char.|
+    89	| `R` | *replace mode*.|
+    90	| `s` | substitute char.|
+    91	| `S` | substitute line.|
+    92	| `t` | **till**.|
+    93	| `T` | **back till**.|
+    94	| `u` | undo.|
+    95	| `U` | undo line.|
+    96	| `v` | *visual mode*.|
+    97	| `V` | visual lines.|
+    98	| `w` | next word.|
+    99	| `W` | next WORD.|
+   100	| `x` | delete char.|
+   101	| `X` | backspace.|
+   102	| `y` | yank.|
+   103	| `Y` | yank line.|
+   104	| `z` | *extra cmds*.|
+   105	| `Z` | quit.|
+   106	
+   107	#### Post Scriptum
+   108	
+   109	`%` go to match `( ), [ ], { }`, this key has 4 behaviors:
+   110	
+   111	1. When pressed in a text inside of `( ), [ ], { }`, the cursor will jump to the
+   112	openning `(, [, {`.
+   113	2. When pressed on the openning `(, [, {` the cursor will jump to the closures.
+   114	3. When pressed on the closures it will jump to the openers.
+   115	4. When pressed over text which isn't inside any of them, it will do nothing.
+     1	# Mapping
+     2	
+     3	`<silent>` the keys will not be printed at command bar
+     4	
+     5	***
+     6	
+     7	When `*` is used to find next match, it jump to next.
+     8	
+     9	To prevent the jump at first match:
+    10	
+    11	```
+    12	"nnoremap <silent> * :let stay_star_view = winsaveview()<cr>*:call winrestview(stay_star_view)<cr>
+    13	```
+    14	
+    15	***
+    16	
+    17	" Previous Window
+    18	nnoremap <silent> gp :wincmd p<CR>
+    19	" Equal Size Windows
+    20	nnoremap <silent> g= :wincmd =<CR>
+    21	" Swap Windows
+    22	nnoremap <silent> gx :wincmd x<CR>
+    23	
+    24	" Scroll larger amounts with C-j / C-k
+    25	nnoremap <C-j> 15gjzz
+    26	nnoremap <C-k> 15gkzz
+    27	vnoremap <C-j> 15gjzz
+    28	vnoremap <C-k> 15gkzz
+    29	" Underline the current line with '-'
+    30	nnoremap <silent> <leader>ul :t.\|s/./-/\|:nohls<cr>
+    31	
+    32	" Underline the current line with '='
+    33	nnoremap <silent> <leader>uul :t.\|s/./=/\|:nohls<cr>
+    34	
+    35	" copy current file name (relative/absolute) to system clipboard
+    36	" from http://stackoverflow.com/a/17096082/22423
+    37	if has("mac") || has("gui_macvim") || has("gui_mac")
+    38	  " relative path  (src/foo.txt)
+    39	  nnoremap <silent> <leader>yp :let @*=expand("%")<CR>
+    40	
+    41	  " absolute path  (/something/src/foo.txt)
+    42	  nnoremap <silent> <leader>yP :let @*=expand("%:p")<CR>
+    43	
+    44	  " filename       (foo.txt)
+    45	  nnoremap <silent> <leader>yf :let @*=expand("%:t")<CR>
+    46	
+    47	  " directory name (/something/src)
+    48	  nnoremap <silent> <leader>yd :let @*=expand("%:p:h")<CR>
+    49	endif
+    50	
+    51	## Vim Modes
+    52	
+    53	Vim can behave and do several things, and depending on the mode it is on the
+    54	momemnt, list of vim modes:
+    55	
+    56	| mode | help file |
+    57	| :-------     |:---------------------|
+    58	| normal       | :help Normal-mode       |
+    59	| insert       | :help Insert-mode       |
+    60	| visual       | :help Visual-mode       |
+    61	| select       | :help Select-mode       |
+    62	| command-line | :help Command-line-mode |
+    63	| Ex-mode      | :help Ex-mode           |
+    64	
+    65	#### Mapping with :map or :noremap
+    66	
+    67	':map' Is recursive and ':noremap' Isn't.
+    68	
+    69	What does this mean?
+    70	
+    71	An example:
+    72	
+    73	```
+    74	:map a b
+    75	:map b gg
+    76	:noremap x a
+    77	```
+    78	
+    79	That mapping will map the `a` in `b` and `b` in `gg`.
+    80	As said before the `:map` is recursive, which means when `a` is hit, it will do
+    81	`gg`.
+    82	
+    83	That does not happens when `x` is hit, because `:noremap` is not recursive, so
+    84	the `a` will not trigger other mapping.
+    85	
+    86	#### Clear last search highlight
+    87	
+    88	Map the `<esc>` key to call `:noh` which clear the highlight, so:
+    89	
+    90	```
+    91	nnoremap <silent> <esc> :noh<cr><esc>
+    92	```
+     1	# ranges in vim commands
+     2	
+     3	A range can be specified using line numbers or special characters, as in these
+     4	examples:
+     5	
+     6	| Range | Description                                | Example           |
+     7	| :---- | :---------                                 | ----:             |
+     8	| 21    | line 21                                    | :21s/old/new/g    |
+     9	| 1     | first line                                 | :1s/old/new/g     |
+    10	| $     | last line                                  | :$s/old/new/g     |
+    11	| .     | current line                               | :.w single.txt    |
+    12	| %     | all lines (same as 1,$)                    | :%s/old/new/g     |
+    13	| 21,25 | lines 21 to 25 inclusive                   | :21,25s/old/new/g |
+    14	| 21,$  | lines 21 to end                            | :21,$s/old/new/g  |
+    15	| .,$   | current line to end                        | :.,$s/old/new/g   |
+    16	| .+1,$ | line after current line to end             | :.+1,$s/old/new/g |
+    17	| .,.+5 | six lines (current to current+5 inclusive) | :.,.+5s/old/new/g |
+    18	| .,.5  | same (.5 is interpreted as .+5)            | :.,.5s/old/new/g  |
+    19	
+     1	Useful Regex
+     2	============
+     3	
+     4	#### Delete blank lines
+     5	
+     6	```
+     7	:g/^$/d
+     8	```
+     9	
+    10	How does it works?
+    11	
+    12	`:g` will execute a command on lines which match a regex.
+    13	The regex is 'blank line' and the command is `d` (delete)
+    14	
+    15	#### Replace with new line
+    16	
+    17	Replace a new line using `\r` instead of `\n`.  [stackoverflow](http://stackoverflow.com/questions/71323/how-to-replace-a-character-by-a-newline-in-vim)
+    18	
+    19	```
+    20	:%s/x/\r/g
+    21	```
+    22	
+    23	#### Capitalizing Text
+    24	
+    25	##### Selected Text to Uppercase or Lowercase
+    26	
+    27	`gU` : to *UPPERCASE*
+    28	
+    29	`gu` : to *lowercase*
+    30	
+    31	##### Current Line to Uppercase or Lowercase
+    32	
+    33	`gUU` : to *UPPERCASE*
+    34	
+    35	`guu` : to *lowercase*
+    36	
+    37	##### First Letter Only
+    38	
+    39	`:%s/\<./\u&/g` : to _lowercase_
+    40	
+    41	`:%s/\<./\U&/g` : to _UPPERCASE_
+    42	
+    43	How does the above tricks words:
+    44	
+    45	* `\<` Matches the start of a word
+    46	* `.`  Matches the first character of a word
+    47	* `\u` Tells Vim to uppercase the following character in the substitution string (&)
+    48	* `&`  Means substitute whatever was matched on the LHS
+    49	
+    50	This was got on [stackoverflow](http://stackoverflow.com/questions/17440659/capitalize-first-letter-of-each-word-in-a-selection-using-vim)
+    51	there are alternatives to do the same.
+    52	
+    53	#### Utils
+    54	
+    55	`:%s#<[^>]\+>##g` erase all html tags keeping the content.
+    56	
+    57	`:%s/^\(.*\)\n\1$/\1/` delete repeated lines
+    58	
+    59	#### My Regex
+    60	
+    61	* `:%s/\d\{1,}\./*`
+    62	In lines where first character is a number followed by a dot, replaces it by an
+    63	asteristic.
+    64	Used in markdown files.
+    65	
+    66	#### Search for one or other
+    67	
+    68	`/public\|protected\|private` : this example will match any of the words:
+    69	'public', 'protected' or 'private'
+    70	
+    71	#### Match First
+    72	
+    73	`^\([^ ]*\)` match everything till first space
+    74	
+    75	`[^ ]` means, any but space
+    76	
+    77	`^.\{-}:` means, all until find an **:**
+    78	
+     1	Simple Vim Commands
+     2	-------------------
+     3	
+     4	#### Vim Change Verb 'c'
+     5	
+     6	`cw`, `ciw` change the word under cursor.
+     7	
+     8	`caw` change word under cursor, the right space is lost.
+     9	
+    10	`ci"` change text inside of double quotes, keeps the quotes.
+    11	
+    12	`ci'` change text inside of single quotes, keeps the quotes.
+    13	
+    14	``ci` `` change text inside of backtick/backquote, keeps the quotes.
+    15	
+    16	`ci(` change text inside parentesis, keeps the parentesis.
+    17	
+    18	`ci{` change text inside braces, keeps the braces.
+    19	
+    20	`ci[` change text inside brackets, keep the brackets.
+    21	
+    22	`ci<` change text inside less than and greater than, keep the brackets.
+    23	
+    24	`cc` change whole line.
+    25	
+    26	* Above was used the _opening_ sign for brace, bracket, parenthesis and less
+    27	* than sign, but the _close_ equivalent sign will perform the same function.
+    28	
+    29	#### Vim Yank Verb 'y'
+    30	
+    31	Basically, all commands using the **change** verb will works with **yank**.
+    32	
+    33	To avoid a future changes on **change** commands, all commands will be
+    34	"duplicated" here.
+    35	
+    36	`yw`, `yiw` yank the word under cursor.
+    37	
+    38	`yaw` yank word under cursor, the right space is lost.
+    39	
+    40	`yi"` yank text inside of double quotes, keeps the quotes.
+    41	
+    42	`yi'` yank text inside of single quotes, keeps the quotes.
+    43	
+    44	``yi` `` yank text inside of backtick/backquote, keeps the quotes.
+    45	
+    46	`yi(` yank text inside parentesis, keeps the parentesis.
+    47	
+    48	`yi{` yank text inside braces, keeps the braces.
+    49	
+    50	`yi[` yank text inside brackets, keep the brackets.
+    51	
+    52	`yi<` yank text inside less than and greater than, keep the brackets.
+    53	
+    54	`yy` yank whole line.
+    55	
+     1	Sort
+     2	====
+     3	
+     4	yank all file/buffer `gy`
+     5	
+     6	```
+     7	nnoremap gy :0,$ y<cr>
+     8	```
+     9	
+    10	***
+    11	
+    12	select entire buffer/file `vy`
+    13	
+    14	```
+    15	nnoremap vy ggVG
+    16	```
+    17	
+    18	***
+    19	
+    20	Create newlines without entering insert mode
+    21	
+    22	```
+    23	nnoremap go o<Esc>k
+    24	nnoremap gO O<Esc>j
+    25	```
+    26	
+    27	***
+    28	
+    29	remap U to <C-r> for easier redo
+    30	from http://vimbits.com/bits/356
+    31	
+    32	  nnoremap U <C-r>
+    33	
+    34	***
+    35	
+    36	```
+    37	# se iniciar com tabulação + id=, substitui por 'id=', remove a tabulação
+    38	:%s/^I\(id=\)/\1/g
+    39	```
+    40	
+    41	print the line number on document
+    42	`map <F1> :execute "normal! i" . ( line(".") + 1 )<cr>`
+    43	
+    44	all mapped key to file
+    45	```
+    46	:redir! > vim_keys.txt
+    47	:silent verbose map
+    48	:redir END
+    49	```
+    50	
+    51	***
+    52	in normal mode
+    53	`q:` `q/` `q?` open the command-line window.
+    54	
+    55	***
+    56	
+    57	the mapping with **iabbrev**
+    58	
+    59	```
+    60	" Insert date
+    61	iabbrev ddate <C-R>=strftime("%Y-%m-%d")<CR>
+    62	
+    63	" Insert a console statements
+    64	iabbrev clg console.log
+    65	iabbrev cld console.debug
+    66	iabbrev clda console.debug(arguments)
+    67	```
+    68	
+    69	***
+    70	
+    71	# How to paste yanked text into Vim command line?
+    72	
+    73	Yes. Hit Ctrl-R then ". If you have literal control characters in what you have yanked, use Ctrl-R, Ctrl-O, ".
+    74	
+    75	[stackoverflow](http://stackoverflow.com/questions/3997078/how-to-paste-yanked-text-into-vim-command-line)
+     1	Studying Vim
+     2	------------
+     3	
+     4	#### Search
+     5	
+     6	Basic search:
+     7	
+     8	`/word` search for *word*
+     9	
+    10	`?word` search for *word*
+    11	
+    12	To use the **OR** when searching, use brackets, staying inside the brackets the
+    13	terms which **OR** will be used.
+    14	
+    15	`/word[s]` will search for *word* **OR** *words*
+    16	
+    17	`/mari[oa]` will search for *mari* **OR** *maria* **OR** *mario*
+    18	
+    19	Search for begin or end of an word or expression, use `\<` for start and `\>`
+    20	for end.
+    21	
+    22	`/\<sta` search for words that starts with *sta*, will match the begining words
+    23	like *start*, *staying* etc.
+    24	
+    25	`/ing\>` search for words ending with *ing*, will match the tail of words like
+    26	*studying*, *staying* etc.
+    27	
+    28	`/\<word\>` search for *word*.
+    29	
+    30	Search for words with a specific number of characters.
+    31	
+    32	`/\<...\>` search for words with 3 letters
+    33	
+    34	`/\<\d\d\d\d\>` search for 4 digits.
+    35	
+    36	`/word\|verb` search for *word* **OR** *verb*, inclusive.
+    37	
+    38	Search for repeated things:
+    39	
+    40	`/ \{2}` look for two blank space in a roll.
+    41	
+    42	`:%s#<[^>]\+>##g` erase all html tags keeping the content.
+    43	
+     1	# Tabularize
+     2	
+     3	### Align with few black
+     4	
+     5	:Tabularize /pattern/l0
+     1	Utils
+     2	=====
+     3	
+     4	#### Wrap existing text
+     5	
+     6	`gqgq` Will wrap the line where cursor is.
+     7	
+     8	If text is selected `gq`.
+     9	
+    10	#### Files
+    11	
+    12	| cmd  | function                  |
+    13	| ---- | ------------------------- |
+    14	| `gf` | Open file in same windown |
+    15	| `<c-w>f` | open in new horizontal window |
+    16	| `<c-w>gf` | open in tab |
+    17	| `<c-6>` | go to file before `gf` |
+     1	Things about vimrc
+     2	==================
+     1	map L $
+     2	map H ^
+     3	map ; :
+     4	set autoindent
+     5	set ignorecase
+     6	set smartcase
+     7	unmap ga
+     8	
+     9	nmap <leader>snkA7 :s/§/\\u00A7/e <CR><Esc>
+    10	nmap <leader>snkA8 :s/¨/\\u00A8/e <CR><Esc><leader>snkA7
+    11	nmap <leader>snkAA :s/ª/\\u00AA/e <CR><Esc><leader>snkA8
+    12	nmap <leader>snkAB :s/«/\\u00AB/e <CR><Esc><leader>snkAA
+    13	nmap <leader>snkAC :s/¬/\\u00AC/e <CR><Esc><leader>snkAB
+    14	nmap <leader>snkAE :s/®/\\u00AE/e <CR><Esc><leader>snkAC
+    15	nmap <leader>snkAF :s/¯/\\u00AF/e <CR><Esc><leader>snkAE
+    16	nmap <leader>snkB0 :s/°/\\u00B0/e <CR><Esc><leader>snkAF
+    17	nmap <leader>snkB1 :s/±/\\u00B1/e <CR><Esc><leader>snkB0
+    18	nmap <leader>snkB2 :s/²/\\u00B2/e <CR><Esc><leader>snkB1
+    19	nmap <leader>snkB3 :s/³/\\u00B3/e <CR><Esc><leader>snkB2
+    20	nmap <leader>snkB5 :s/µ/\\u00B5/e <CR><Esc><leader>snkB3
+    21	nmap <leader>snkB6 :s/¶/\\u00B6/e <CR><Esc><leader>snkB5
+    22	nmap <leader>snkB9 :s/¹/\\u00B9/e <CR><Esc><leader>snkB6
+    23	nmap <leader>snkBA :s/º/\\u00BA/e <CR><Esc><leader>snkB9
+    24	nmap <leader>snkBB :s/»/\\u00BB/e <CR><Esc><leader>snkBA
+    25	nmap <leader>snkBC :s/¼/\\u00BC/e <CR><Esc><leader>snkBB
+    26	nmap <leader>snkBD :s/½/\\u00BD/e <CR><Esc><leader>snkBC
+    27	nmap <leader>snkBE :s/¾/\\u00BE/e <CR><Esc><leader>snkBD
+    28	nmap <leader>snkC0 :s/À/\\u00C0/e <CR><Esc><leader>snkBE
+    29	nmap <leader>snkC1 :s/Á/\\u00C1/e <CR><Esc><leader>snkC0
+    30	nmap <leader>snkC2 :s/Â/\\u00C2/e <CR><Esc><leader>snkC1
+    31	nmap <leader>snkC3 :s/Ã/\\u00C3/e <CR><Esc><leader>snkC2
+    32	nmap <leader>snkC4 :s/Ä/\\u00C4/e <CR><Esc><leader>snkC3
+    33	nmap <leader>snkC5 :s/Å/\\u00C5/e <CR><Esc><leader>snkC4
+    34	nmap <leader>snkC6 :s/Æ/\\u00C6/e <CR><Esc><leader>snkC5
+    35	nmap <leader>snkC7 :s/Ç/\\u00C7/e <CR><Esc><leader>snkC6
+    36	nmap <leader>snkC8 :s/È/\\u00C8/e <CR><Esc><leader>snkC7
+    37	nmap <leader>snkC9 :s/É/\\u00C9/e <CR><Esc><leader>snkC8
+    38	nmap <leader>snkCA :s/Ê/\\u00CA/e <CR><Esc><leader>snkC9
+    39	nmap <leader>snkCB :s/Ë/\\u00CB/e <CR><Esc><leader>snkCA
+    40	nmap <leader>snkCC :s/Ì/\\u00CC/e <CR><Esc><leader>snkCB
+    41	nmap <leader>snkCD :s/Í/\\u00CD/e <CR><Esc><leader>snkCC
+    42	nmap <leader>snkCE :s/Î/\\u00CE/e <CR><Esc><leader>snkCD
+    43	nmap <leader>snkCF :s/Ï/\\u00CF/e <CR><Esc><leader>snkCE
+    44	nmap <leader>snkD0 :s/Ð/\\u00D0/e <CR><Esc><leader>snkCF
+    45	nmap <leader>snkD1 :s/Ñ/\\u00D1/e <CR><Esc><leader>snkD0
+    46	nmap <leader>snkD2 :s/Ò/\\u00D2/e <CR><Esc><leader>snkD1
+    47	nmap <leader>snkD3 :s/Ó/\\u00D3/e <CR><Esc><leader>snkD2
+    48	nmap <leader>snkD4 :s/Ô/\\u00D4/e <CR><Esc><leader>snkD3
+    49	nmap <leader>snkD5 :s/Õ/\\u00D5/e <CR><Esc><leader>snkD4
+    50	nmap <leader>snkD6 :s/Ö/\\u00D6/e <CR><Esc><leader>snkD5
+    51	nmap <leader>snkD7 :s/×/\\u00D7/e <CR><Esc><leader>snkD6
+    52	nmap <leader>snkD8 :s/Ø/\\u00D8/e <CR><Esc><leader>snkD7
+    53	nmap <leader>snkD9 :s/Ù/\\u00D9/e <CR><Esc><leader>snkD8
+    54	nmap <leader>snkDA :s/Ú/\\u00DA/e <CR><Esc><leader>snkD9
+    55	nmap <leader>snkDB :s/Û/\\u00DB/e <CR><Esc><leader>snkDA
+    56	nmap <leader>snkDC :s/Ü/\\u00DC/e <CR><Esc><leader>snkDB
+    57	nmap <leader>snkDD :s/Ý/\\u00DD/e <CR><Esc><leader>snkDC
+    58	nmap <leader>snkDE :s/Þ/\\u00DE/e <CR><Esc><leader>snkDD
+    59	nmap <leader>snkDF :s/ß/\\u00DF/e <CR><Esc><leader>snkDE
+    60	nmap <leader>snkE0 :s/à/\\u00E0/e <CR><Esc><leader>snkDF
+    61	nmap <leader>snkE1 :s/á/\\u00E1/e <CR><Esc><leader>snkE0
+    62	nmap <leader>snkE2 :s/â/\\u00E2/e <CR><Esc><leader>snkE1
+    63	nmap <leader>snkE3 :s/ã/\\u00E3/e <CR><Esc><leader>snkE2
+    64	nmap <leader>snkE4 :s/ä/\\u00E4/e <CR><Esc><leader>snkE3
+    65	nmap <leader>snkE5 :s/å/\\u00E5/e <CR><Esc><leader>snkE4
+    66	nmap <leader>snkE6 :s/æ/\\u00E6/e <CR><Esc><leader>snkE5
+    67	nmap <leader>snkE7 :s/ç/\\u00E7/e <CR><Esc><leader>snkE6
+    68	nmap <leader>snkE8 :s/è/\\u00E8/e <CR><Esc><leader>snkE7
+    69	nmap <leader>snkE9 :s/é/\\u00E9/e <CR><Esc><leader>snkE8
+    70	nmap <leader>snkEA :s/ê/\\u00EA/e <CR><Esc><leader>snkE9
+    71	nmap <leader>snkEB :s/ë/\\u00EB/e <CR><Esc><leader>snkEA
+    72	nmap <leader>snkEC :s/ì/\\u00EC/e <CR><Esc><leader>snkEB
+    73	nmap <leader>snkED :s/í/\\u00ED/e <CR><Esc><leader>snkEC
+    74	nmap <leader>snkEE :s/î/\\u00EE/e <CR><Esc><leader>snkED
+    75	nmap <leader>snkEF :s/ï/\\u00EF/e <CR><Esc><leader>snkEE
+    76	nmap <leader>snkF0 :s/ð/\\u00F0/e <CR><Esc><leader>snkEF
+    77	nmap <leader>snkF1 :s/ñ/\\u00F1/e <CR><Esc><leader>snkF0
+    78	nmap <leader>snkF2 :s/ò/\\u00F2/e <CR><Esc><leader>snkF1
+    79	nmap <leader>snkF3 :s/ó/\\u00F3/e <CR><Esc><leader>snkF2
+    80	nmap <leader>snkF4 :s/ô/\\u00F4/e <CR><Esc><leader>snkF3
+    81	nmap <leader>snkF5 :s/õ/\\u00F5/e <CR><Esc><leader>snkF4
+    82	nmap <leader>snkF6 :s/ö/\\u00F6/e <CR><Esc><leader>snkF5
+    83	nmap <leader>snkF7 :s/÷/\\u00F7/e <CR><Esc><leader>snkF6
+    84	nmap <leader>snkF8 :s/ø/\\u00F8/e <CR><Esc><leader>snkF7
+    85	nmap <leader>snkF9 :s/ù/\\u00F9/e <CR><Esc><leader>snkF8
+    86	nmap <leader>snkFA :s/ú/\\u00FA/e <CR><Esc><leader>snkF9
+    87	nmap <leader>snkFB :s/û/\\u00FB/e <CR><Esc><leader>snkFA
+    88	nmap <leader>snkFC :s/ü/\\u00FC/e <CR><Esc><leader>snkFB
+    89	nmap <leader>snkFD :s/ý/\\u00FD/e <CR><Esc><leader>snkFC
+    90	nmap <leader>snkFE :s/þ/\\u00FE/e <CR><Esc><leader>snkFD
+    91	nmap ga :s/\%u00FF/\\uÿ00FF/e <CR><Esc><leader>snkFE
+    92	
+     1	windows
+     2	=======
+     3	
+     4	### Split Window
+     5	
+     6	#### Vertically
+     7	
+     8	| cmd | function |
+     9	|:---|:----|
+    10	|`:vnew`, `:vne` | new vertical window at left side |
+    11	|`:[N]vnew`, `:[N]vne`| like `:vnew`, but will have `[N]` columns|
+    12	|`:rightb`, `:rightbelow` | if `vnew` is passed as option, the new window will be on right side |
+    13	|`:bel`, `:belowright`| if `vnew` is passed as option, the new window will be on right side |
+    14	|`:lefta`, `:leftabove`| if `vnew` is passed as option, the new window will be on left side |
+    15	|`:abo`, `:aboveleft`| if `vnew` is passed as option, the new window will be on left side |
+    16	
+    17	#### Options
+    18	
+    19	First of all, lets learn how to use the options that will be listed here.
+    20	
+    21	As a example, without knowing what the option does, lets apply the option
+    22	`splitright`.
+    23	
+    24	This options is like all those which is setted on `.vimrc` file, there is two
+    25	ways to apply it:
+    26	
+    27	1. Use the command `:set` in *normal mode* to apply the configuration, but this
+    28	will not persist, so when *vim* be closed and re-open the configuration is
+    29	lost.
+    30	```
+    31	:set splitright
+    32	```
+    33	
+    34	2. The second way to do it, and this will persist when closing is inserting the
+    35	option inside `.vimrc` file, as follow:
+    36	```
+    37	set splitright
+    38	```
+    39	
+    40	The list of options:
+    41	
+    42	`nosplitright`, `nospr` : make the `:vnew` split to left side (this is the default)
+    43	`splitright`, `spr` : make the `:vnew` split to right side  (disabled as default)
+    44	
