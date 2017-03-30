@@ -1,0 +1,4 @@
+add no applicationResources
+
+javax.faces.validator.BeanValidator.MESSAGE={0}
+javax.faces.validator.BeanValidator.MESSAGE_detail={0}
