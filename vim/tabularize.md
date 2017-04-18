@@ -2,4 +2,4 @@
 
 ### Align with few black
 
-:Tabularize /pattern/l0
+`:Tabularize /pattern/l0`

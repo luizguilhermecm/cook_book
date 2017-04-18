@@ -41,3 +41,49 @@ Search for repeated things:
 
 `:%s#<[^>]\+>##g` erase all html tags keeping the content.
 
+
+### "Escaped" characters or metacharacters
+
+
+`.` : any character except new line
+
+`\s` : whitespace character
+
+`\S` : non-whitespace character
+
+`\d` : digit
+
+`\D` : non-digit
+
+`\x` : hex digit
+
+`\X` : non-hex digit
+
+`\o` : octal digit
+
+`\O` : non-octal digit
+
+`\h` : head of word character (a,b,c...z,A,B,C...Z and _)
+
+`\H` : non-head of word character
+
+`\p` : printable character
+
+`\P` : like \p, but excluding digits
+
+`\w` : word character
+
+`\W` : non-word character
+
+`\a` : alphabetic character
+
+`\A` : non-alphabetic character
+
+`\l` : lowercase character
+
+`\L` : non-lowercase character
+
+`\u` : uppercase character
+
+`\U` : non-uppercase character
+

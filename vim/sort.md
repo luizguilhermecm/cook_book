@@ -78,3 +78,10 @@ iabbrev clda console.debug(arguments)
 Yes. Hit Ctrl-R then ". If you have literal control characters in what you have yanked, use Ctrl-R, Ctrl-O, ".
 
 [stackoverflow](http://stackoverflow.com/questions/3997078/how-to-paste-yanked-text-into-vim-command-line)
+
+
+***
+
+calculator
+select the numbers
+!bc

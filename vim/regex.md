@@ -78,3 +78,6 @@ Used in markdown files.
 
 `^.\{-}:` means, all until find an **:**
 
+
+
+%s/^.*href// # match all until find the word HREF then remove it

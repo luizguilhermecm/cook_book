@@ -3,17 +3,18 @@ Utils
 
 #### Wrap existing text
 
-`gqgq` Will wrap the line where cursor is.
+`gqgq` : wrap the line where cursor is.
 
-If text is selected `gq`.
+`gq` : wrap the selected text
 
 
 #### Files
 
 
-| cmd  | function                  |
-| ---- | ------------------------- |
-| `gf` | Open file in same windown |
-| `<c-w>f` | open in new horizontal window |
-| `<c-w>gf` | open in tab |
-| `<c-6>` | go to file before `gf` |
+`gf` : open file in current windown
+
+`<c-w>f` : open file in new horizontal window
+
+`<c-w>gf` : open file in tab
+
+`<c-6>` : go to file before `gf`

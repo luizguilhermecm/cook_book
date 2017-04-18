@@ -18,7 +18,7 @@ Another option is to use shell variables:
 red=`tput setaf 1`
 green=`tput setaf 2`
 reset=`tput sgr0`
-echo "${red}red text ${green}green text${reset}"
+echo "${red}red text ${E.green}green text${reset}"
 tput produces character sequences that are interpreted by the terminal as having a special meaning. They will not be shown themselves. Note that they can still be saved into files or processed as input by programs other than the terminal.
 
 Command substitution
