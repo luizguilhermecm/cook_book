@@ -1,0 +1,27 @@
+		<dependency>
+    		<groupId>org.apache.commons</groupId>
+    		<artifactId>commons-csv</artifactId>
+    		<version>1.4</version>
+		</dependency>
+
+
+    CSVFormat csvFormat = CSVFormat.RFC4180.withDelimiter(',');
+        CSVPrinter csvPrinter;
+		try {
+			final ByteArrayOutputStream outB = new ByteArrayOutputStream();
+		    Writer out = new BufferedWriter(new OutputStreamWriter(outB));
+			csvPrinter = new CSVPrinter(out , csvFormat);
+			csvPrinter.printRecord("Name", "Price");
+            List<String> data = new ArrayList();
+            data.add("Lu,iz");
+            data.add("560");
+			csvPrinter.printRecord(data);
+
+			csvPrinter.flush();
+			csvPrinter.close();
+			
+			return outB.toByteArray();
+
+		} catch (IOException e1) {
+			throw new AppException();
+		}
