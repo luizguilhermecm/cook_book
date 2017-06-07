@@ -1,0 +1,12 @@
+log4j.logger.org.hibernate.type=TRACE # show parameters binding
+log4j.logger.org.hibernate.SQL=DEBUG # shows sql
+
+
+
+persistence.xml
+
+<property name="hibernate.format_sql" value="true"/>
+<property name="hibernate.show_sql" value="true"/> 
+
+
+PS: se utilizar o log4j hibernate.SQL=DEBUG e o property show_sql ao mesmo tempo, a query será duplicada no log.
