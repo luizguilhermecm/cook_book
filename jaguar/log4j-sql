@@ -8,5 +8,6 @@ persistence.xml
 <property name="hibernate.format_sql" value="true"/>
 <property name="hibernate.show_sql" value="true"/> 
 
+log4j.rootLogger=INFO, A2 # verificar qual é o console e adicionar ou verificar se já está, geralmente é o A1
 
 PS: se utilizar o log4j hibernate.SQL=DEBUG e o property show_sql ao mesmo tempo, a query será duplicada no log.
