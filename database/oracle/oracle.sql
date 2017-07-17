@@ -95,3 +95,16 @@ data_inicial = to_date('30/12/2015','dd/mm/yyyy')
 alter table sada.ejud_andamento_requerimento modify (MOTIVO null);
 
 ALTER USER luizmartins IDENTIFIED BY novasenha;
+
+-- tabelas que fazem referencia a uma chave
+SELECT a.table_name, a.column_name, a.constraint_name, c.owner, 
+       -- referenced pk
+       c.r_owner, c_pk.table_name r_table_name, c_pk.constraint_name r_pk
+  FROM all_cons_columns a
+  JOIN all_constraints c ON a.owner = c.owner
+                        AND a.constraint_name = c.constraint_name
+  JOIN all_constraints c_pk ON c.r_owner = c_pk.owner
+                           AND c.r_constraint_name = c_pk.constraint_name
+ WHERE c.constraint_type = 'R'
+   AND a.COLUMN_NAME = 'MAT_SERVIDOR'
+   and c_pk.TABLE_NAME = 'SERVIDOR'
