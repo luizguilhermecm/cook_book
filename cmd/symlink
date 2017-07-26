@@ -1,0 +1,3 @@
+
+# PARA - DE
+mklink /J "C:\Users\luizmartins\.kettle" "C:\Users\luizmartins\.kettle_2"
