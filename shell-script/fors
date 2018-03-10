@@ -1,0 +1,28 @@
+for id in $ids
+do
+    echo $id >> out.txt
+    twolinefunc $id
+done
+
+for file in ./* ; do
+  if [ -e "$file" ] ; then
+    cat "$file"
+  fi
+done
+
+nb=0
+for FILE_NAME in *.srt;
+do
+    nb=$((nb+1))
+    mv "${FILE_NAME}" "$1 $nb".srt
+done
+
+for file in $(find . -type f ! -name "$controlchars") ; do
+    cat "$file"
+  done 
+
+
+#for ((i=1;i<=$#;i++)) 
+do
+    echo $i
+done

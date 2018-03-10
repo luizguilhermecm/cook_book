@@ -1,0 +1,32 @@
+    if [[ $# -lt 1 ||  $1 = "-h" || $1 == "--h" || $1 == "-help" ]]; then
+        echo $help_str
+        return;
+    fi;
+
+
+if [ -n "$1" ]; then
+    echo "not empty"
+else
+    echo "empty"
+fi
+
+if [ ! -f "${SOURCEPATH}/../etc/pushover.cfg" ]; then
+   error "Please locate the pushover.cfg to send notifications to Pushover."
+  else
+    # Grab variables from the config file
+    source "${SOURCEPATH}/../etc/pushover.cfg"
+fi;
+
+
+if [ $a == $b ]
+then
+   echo "a is equal to b"
+elif [ $a -gt $b ]
+then
+   echo "a is greater than b"
+elif [ $a -lt $b ]
+then
+   echo "a is less than b"
+else
+   echo "None of the condition met"
+fi

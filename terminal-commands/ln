@@ -1,0 +1,10 @@
+
+# create a new syslink with force (-f)
+ln -s -f "/path/to/target" "/path/to/syslink/name_alias"
+
+# example
+# if pwd=/Volumes/snk-hdd/Dropbox
+# the line below will create a syslink to ~/tmp
+# at $(pwd) named "tmp-dir-at-home"
+ln -s "~/tmp" "tmp-dir-at-home"
+

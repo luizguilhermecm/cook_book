@@ -1,0 +1,49 @@
+
+..
+
+$ 0= /Volumes/snk-hdd/Dropbox/home/projects/cookbook/terminal-commands/seNs_output
+
+	seNs
+
+
+[DEBUG] creating directory. 
+	$ mkdir -p 20170418_205829 
+
+[DEBUG] checking parameters INTERVAL and STOP_TIME 
+
+
+[INFO] Parameters values:
+
+[INFO]	STOP_TIME=2122
+[INFO]	INTERVAL=3
+
+[INFO]	SCREEN_HOME= 
+/Volumes/snk-hdd/Dropbox/home/projects/cookbook/terminal-commands/seNs_output/
+
+[INFO]	DIR_SENS= 
+./20170418_205829/
+
+[DEBUG]	DIR_SENS= 
+/Volumes/snk-hdd/Dropbox/home/projects/cookbook/terminal-commands/seNs_output/20170418_205829/
+
+[DEBUG]	LOG_DIR= 
+./00_logs/
+
+[DEBUG]	LOG_DIR= 
+/Volumes/snk-hdd/Dropbox/home/projects/cookbook/terminal-commands/seNs_output/00_logs
+
+[DEBUG]	LOG_FILE= 
+/Volumes/snk-hdd/Dropbox/home/projects/cookbook/terminal-commands/seNs_output/00_logs/20170418_205829.log
+
+
+[DEBUG] while
+$ while (( 2058 < 2122 )) ; do
+   screencapture -T 3 -x -C /Volumes/snk-hdd/Dropbox/home/projects/cookbook/terminal-commands/seNs_output/20170418_205829/
+done 
+#EOF
+
+/Volumes/snk-hdd/Dropbox/home/projects/cookbook/terminal-commands/seNs_output/20170418_205829/20170418+205829.png
+/Volumes/snk-hdd/Dropbox/home/projects/cookbook/terminal-commands/seNs_output/20170418_205829/20170418+205833.png
+/Volumes/snk-hdd/Dropbox/home/projects/cookbook/terminal-commands/seNs_output/20170418_205829/20170418+205836.png
+/Volumes/snk-hdd/Dropbox/home/projects/cookbook/terminal-commands/seNs_output/20170418_205829/20170418+205839.png
+/Volumes/snk-hdd/Dropbox/home/projects/cookbook/terminal-commands/seNs_output/20170418_205829/20170418+205843.png

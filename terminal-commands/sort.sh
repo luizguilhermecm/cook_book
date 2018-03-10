@@ -25,3 +25,6 @@ less 2016-07-13_aai-git.zip # to peed inside of zip file content
 # print now() date
 date "+%Y-%m-%d"
 count files in dir: ls -F |grep -v / | wc -l
+date "+%Y%m%d+%H%M%S"
+20170418+180031
+20170418+205818

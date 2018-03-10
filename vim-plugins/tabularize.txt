@@ -1,0 +1,66 @@
+:AddTabularPattern first_comma /^[^,]*\zs,/r0c0l0
+=> Tabularize first_comma
+
+
+Tabularize /,/l0
+Tabularize /,/r0
+Tabularize /,/c0
+Tabularize /,/c0r1l0
+
+-----sample------
+Não, irei.
+Não irei, mas ...
+-----------------
+`Tabularize /,/r0`
+     Não,  irei.
+Não irei,mas ...
+----------------
+`Tabularize /,/r0l1`
+     Não,   irei.
+Não irei, mas ...
+-----------------
+`Tabularize /,/r0l2`
+     Não,    irei.
+Não irei,  mas ...
+-----------------
+`Tabularize /,/r2l2`
+     Não  ,    irei.
+Não irei  ,  mas ...
+-----------------
+`Tabularize /,/`
+Não, irei.
+Não irei, mas ...
+-----------------
+`Tabularize /,/c0`
+   Não  , irei.
+Não irei,mas ...
+-----------------
+`Tabularize /,/c1`
+   Não   ,  irei.
+Não irei , mas ...
+-----------------
+`Tabularize /,/l0r1c0`
+Não     ,     irei.
+Não     , irei mas ...
+Não irei,    mas ...
+-----------------
+`Tabularize /,/l0r1`
+Não     , irei.
+Não     , irei mas ...
+Não irei, mas ...
+-----------------
+`Tabularize /,/l0`
+Não     ,irei.
+Não     ,irei mas ...
+Não irei,mas ...
+-----------------
+`Tabularize /,/l1`
+Não      , irei.
+Não      , irei mas ...
+Não irei , mas ...
+-----------------
+`Tabularize /,/c1`
+   Não   ,     irei.
+   Não   , irei mas ...
+Não irei ,    mas ...
+-----------------
