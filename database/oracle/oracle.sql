@@ -38,6 +38,20 @@ c.CONSTRAINT_NAME, c.TABLE_NAME, a.COLUMN_NAME
 FROM all_cons_columns a
 join all_constraints c on c.CONSTRAINT_NAME = a.CONSTRAINT_NAME 
 where a.table_name like 'RQSDE_%'
+
+-- lista conexões abertas
+select pid,
+       sid,
+       b.serial#,
+       b.machine,
+       b.username,
+       b.server,
+       b.osuser,
+       b.program
+  from v$session b, v$process a
+ where b.paddr = a.addr
+   and type = 'USER'
+ order by spid;
 and c.constraint_type = 'R'
 
 
