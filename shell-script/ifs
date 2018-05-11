@@ -10,6 +10,13 @@ else
     echo "empty"
 fi
 
+
+# if inline return error 
+[[ ! -f "${VS_HOME}/a" ]] && return 1
+
+
+[[ ! -f "${VS_HOME}/pushover.cfg" ]] && return 0 ; return 0
+
 if [ ! -f "${SOURCEPATH}/../etc/pushover.cfg" ]; then
    error "Please locate the pushover.cfg to send notifications to Pushover."
   else

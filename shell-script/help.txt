@@ -1,0 +1,63 @@
+### Paths when running a script
+
+*** long story short ***
+
+$0         => relative path of script file
+dirname $0 => relative path of script file directory
+pwd        => absolute path from where it was invoked
+
+***
+
+EXAMPLE_PATHS
+
+script_filename: script.sh
+script_path: /Users/snk/tmp/script.sh
+script_home: /Users/snk/tmp/
+script_parent_path: /Users/snk
+actual_path: /Volumes/hdd/dropbox
+
+What is the value of commands when used inside of a script.
+
+--------------------------------------------------------------------------------
+$ pwd 
+
+always the absolute path of location where script was invoked.
+
+| invoked from       | output               |
+| :----------------- | :------------------- |
+| script_home        | script_home          |
+| script_parent_path | script_parent_path   |
+| actual_path        | actual_path          |
+
+--------------------------------------------------------------------------------
+"$0" 
+
+relative path of the file from the path from where it was invoked
+** if invoked using the absolute path of script file the "$0" value will be the 
+    absolute path to.
+
+
+| invoked from       | output                   |
+| :----------------- | :----------------------- |
+| script_home        | ./script.sh              | ** when invoked using ./script_filename
+| script_home        | /Users/snk/tmp/script.sh | ** when invoked using the script_path 
+| script_parent_path | ./tmp/script.sh          |
+| actual_path        | /Users/snk/tmp/script.sh | ** script_path
+
+
+--------------------------------------------------------------------------------
+dirname $0
+
+relative path of directory home of script from the path from where it was invoked
+** if invoked using the absolute path of script file the "$0" value will be the 
+    absolute path to.
+
+
+| invoked from       | output                   |
+| :----------------- | :----------------------- |
+| script_home        | .                        | ** when invoked using ./script_filename
+| script_home        | /Users/snk/tmp           | ** when invoked using the script_path 
+| script_parent_path | ./tmp/script.sh          |
+| actual_path        | /Users/snk/tmp           | ** script_path
+
+--------------------------------------------------------------------------------
