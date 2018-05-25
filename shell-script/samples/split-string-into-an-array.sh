@@ -1,3 +1,5 @@
+#!/usr/local/bin/zsh
+
 # split a string into an array in zsh
 
 # string which can be a param sent to a function or any kind of string
