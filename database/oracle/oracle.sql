@@ -39,6 +39,11 @@ FROM all_cons_columns a
 join all_constraints c on c.CONSTRAINT_NAME = a.CONSTRAINT_NAME 
 where a.table_name like 'RQSDE_%'
 
+
+-- identificar qual o valor ASCII de um caracter para dpeois usar o CHR(asc_nb) em strings.
+select ASCII('…') from dual;
+select CHR(133) from dual;
+
 -- lista conexões abertas
 select pid,
        sid,
