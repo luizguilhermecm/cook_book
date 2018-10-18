@@ -127,3 +127,17 @@ SELECT a.table_name, a.column_name, a.constraint_name, c.owner,
  WHERE c.constraint_type = 'R'
    AND a.COLUMN_NAME = 'MAT_SERVIDOR'
    and c_pk.TABLE_NAME = 'SERVIDOR'
+
+-- System privileges for a user:
+SELECT *
+  FROM sys.dba_sys_privs
+ WHERE grantee =  'USERNAME';
+SELECT * 
+  FROM dba_role_privs rp JOIN role_sys_privs rsp ON (rp.granted_role = rsp.role)
+ WHERE rp.grantee = 'USERNAME'
+ ORDER BY 1;
+-- Direct grants to tables/views: 
+ SELECT owner, table_name, select_priv, insert_priv, delete_priv, update_priv, references_priv, alter_priv, index_priv 
+  FROM table_privileges
+ WHERE grantee = 'USERNAME'
+ ORDER BY owner, table_name;
