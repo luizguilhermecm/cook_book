@@ -149,3 +149,5 @@ SELECT *
   FROM dba_role_privs rp JOIN role_tab_privs rtp ON (rp.granted_role = rtp.role)
  WHERE rp.grantee = 'USERNAME'
  ORDER BY owner, table_name;
+
+SELECT * FROM V$VERSION
